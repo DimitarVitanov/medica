@@ -43,7 +43,7 @@ const currentYear = new Date().getFullYear();
                 <!-- Brand Column -->
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                     <a href="/" class="d-inline-block text-decoration-none mb-3">
-                        <img src="/images/logo.png" alt="Медика" class="footer-logo">
+                        <img src="/images/logo.png" alt="Медика" class="footer-logo" loading="lazy">
                     </a>
                     <p class="text-white-50 small lh-lg mb-4">
                         {{ t('footer.description') }}

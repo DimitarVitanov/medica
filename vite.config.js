@@ -17,4 +17,21 @@ export default defineConfig({
             },
         }),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['vue', '@inertiajs/vue3'],
+                    swiper: ['swiper'],
+                },
+            },
+        },
+        cssCodeSplit: true,
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+            },
+        },
+    },
 });
