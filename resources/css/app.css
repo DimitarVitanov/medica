@@ -1,0 +1,112 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+    --primary-color: #6B4C9A;
+    --primary-light: #8B6BAE;
+    --primary-dark: #5B3C8A;
+}
+
+body {
+    font-family: 'Figtree', sans-serif;
+}
+
+.btn-purple {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+}
+
+.btn-purple:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    color: white;
+}
+
+.bg-purple {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%) !important;
+}
+
+.text-purple {
+    color: var(--primary-color);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 0.25rem rgba(107, 76, 154, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Scroll Animation Styles */
+.animate-init {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-init.animated {
+    opacity: 1;
+}
+
+/* Fade Up */
+.animate-init[data-animate="fade-up"] {
+    transform: translateY(40px);
+}
+
+.animate-init.animated.animate-fade-up {
+    transform: translateY(0);
+}
+
+/* Fade Down */
+.animate-init[data-animate="fade-down"] {
+    transform: translateY(-40px);
+}
+
+.animate-init.animated.animate-fade-down {
+    transform: translateY(0);
+}
+
+/* Fade Left */
+.animate-init[data-animate="fade-left"] {
+    transform: translateX(40px);
+}
+
+.animate-init.animated.animate-fade-left {
+    transform: translateX(0);
+}
+
+/* Fade Right */
+.animate-init[data-animate="fade-right"] {
+    transform: translateX(-40px);
+}
+
+.animate-init.animated.animate-fade-right {
+    transform: translateX(0);
+}
+
+/* Fade In */
+.animate-init[data-animate="fade-in"] {
+    transform: scale(0.95);
+}
+
+.animate-init.animated.animate-fade-in {
+    transform: scale(1);
+}
+
+/* Zoom In */
+.animate-init[data-animate="zoom-in"] {
+    transform: scale(0.8);
+}
+
+.animate-init.animated.animate-zoom-in {
+    transform: scale(1);
+}
+
+/* Stagger children animations */
+.animate-init[data-animate-delay="100"] { transition-delay: 0.1s; }
+.animate-init[data-animate-delay="200"] { transition-delay: 0.2s; }
+.animate-init[data-animate-delay="300"] { transition-delay: 0.3s; }
+.animate-init[data-animate-delay="400"] { transition-delay: 0.4s; }
+.animate-init[data-animate-delay="500"] { transition-delay: 0.5s; }
+.animate-init[data-animate-delay="600"] { transition-delay: 0.6s; }

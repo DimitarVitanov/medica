@@ -1,0 +1,376 @@
+<script setup>
+import { Head } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import Navbar from '@/Components/Navbar.vue';
+import Footer from '@/Components/Footer.vue';
+import AppointmentModal from '@/Components/AppointmentModal.vue';
+
+const props = defineProps({
+    slug: {
+        type: String,
+        default: 'kovid-19'
+    },
+    blog: Object,
+    relatedBlogs: Array,
+    socialLinks: Object,
+});
+
+const showAppointmentModal = ref(false);
+
+const blogs = {
+    'kovid-19': {
+        id: 1,
+        slug: 'kovid-19',
+        title: 'Ковид-19',
+        author: 'Д-р Тони Витанов',
+        date: '07-09-2020',
+        category: 'Здравје',
+        image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&h=600&fit=crop',
+        content: `
+            <p class="lead">Коронавирусна болест (КОВИД-19) е заразна болест предизвикана од новооткриен коронавирус.</p>
+            
+            <p>Повеќето луѓе заразени со вирусот КОВИД-19 ќе доживеат блага до умерена респираторна болест и ќе закрепнат без да бараат посебен третман. Постарите луѓе и оние со основни медицински проблеми како кардиоваскуларни болести, дијабетес, хронични респираторни заболувања и карцином имаат поголема веројатност да развијат сериозни болести.</p>
+            
+            <h4>Превенција</h4>
+            <p>Најдобар начин за спречување и забавување на пренесувањето е добро информиран за вирусот COVID-19, болеста што ја предизвикува и како се шири. Заштитете се себе си и другите од инфекција со миење на рацете или често триење на алкохол и не допирање на лицето.</p>
+            
+            <h4>Како се шири вирусот?</h4>
+            <p>Вирусот КОВИД-19 се шири првенствено преку капки плунка или исцедок од носот кога заразено лице кашла или кива, па затоа е важно да практикувате и етикета за дишење (на пример, со кашлање во свиткан лакт).</p>
+            
+            <h4>Третман</h4>
+            <p>Во тоа време, нема специфични вакцини или третмани за КОВИД-19. Сепак, постојат многу тековни клинички испитувања кои проценуваат потенцијални третмани.</p>
+        `
+    },
+    'mezoterapija': {
+        id: 2,
+        slug: 'mezoterapija',
+        title: 'Мезотерапија',
+        author: 'Д-р Вера Витанова',
+        date: '15-03-2021',
+        category: 'Естетика',
+        image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&h=600&fit=crop',
+        content: `
+            <p class="lead">Мезотерапијата е медицинска техника на уфрлување на различни активни супстанции во слоевите на кожата и поткожното масно ткиво.</p>
+            
+            <p>Денеска е најмодерна медицинска постапка во современата anti aging медицина. Нејзината цел е да се продолжи нашата виталност, младост и сите други атрибути на добриот изглед.</p>
+            
+            <h4>Што е мезотерапија?</h4>
+            <p>Се работи за микроинекцио натерапија, третмани на освежување, подмладување, хидратација, затегнување на кожа на лице, врат, деколте и раце.</p>
+            
+            <h4>Цени</h4>
+            <div class="bg-light p-4 rounded-3 mb-4">
+                <p class="mb-2"><strong>MESOGLOW</strong> (Витамини и хијалуронска киселина)</p>
+                <p class="mb-3">Нормална цена: <del>2400 ден.</del> <span class="text-success fw-bold">Со попуст: 1900 ден.</span></p>
+                
+                <p class="mb-2"><strong>MESOLIFT</strong> (Витамини+Хијалуронска киселина+Rich)</p>
+                <p class="mb-0">Нормална цена: <del>6000 ден.</del> <span class="text-success fw-bold">Со попуст: 4800 ден.</span></p>
+            </div>
+            
+            <h4>Контакт информации</h4>
+            <ul>
+                <li><strong>Телефон:</strong> 070/214-016 и 034/320-444</li>
+                <li><strong>Работно време:</strong> од понеделник до петок од 12:00 до 17:00 часот</li>
+                <li><strong>Локација:</strong> ул. Братство и Единство бр.41 во близина на Општа Болница-Струмица</li>
+            </ul>
+        `
+    },
+    'dexa-scan': {
+        id: 3,
+        slug: 'dexa-scan',
+        title: 'Dexa-scan',
+        author: 'Д-р Тони Витанов',
+        date: '20-05-2022',
+        category: 'Дијагностика',
+        image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&h=600&fit=crop',
+        content: `
+            <p class="lead">Скенирање на коскената густина, исто така познатa како DEXA, помагаат да се разреши ризикот од кршење на коска.</p>
+            
+            <p>DEXA - scan често се користи за да помогне во дијагностицирање на здравствени проблеми поврзани со коските, како што е остеопорозата, или да се процени ризикот од нивно заболување.</p>
+            
+            <h4>За што се користи?</h4>
+            <p>Скенирање на вкупната густина на коските во телото исто така може да се користи за мерење на коскената количина, маснотии и мускули во телото. Овој вид на скенирање рутински се користи кај деца, но се користи само како дел од истражувачка студија кај возрасни.</p>
+            
+            <h4>Како се извршува DEXA скенирањето?</h4>
+            <p>Легнувате на грб на рамна, отворена рендгенска маса. Додека се извршува скенирањето треба да бидете во мирна состојба за сликите да не бидат заматени. Скенирањето обично ќе го изврши радиограф, специјалист за сликање на Х-зраци.</p>
+            
+            <p>За време на скенирањето, голема рамка за скенирање ќе се пренесе преку вашето тело за да се измери густината на коските во центарот на скелетот.</p>
+            
+            <h4>Процедура</h4>
+            <p>Бидејќи рамката за скенирање се поместува полека над вашето тело, тесен зрак со ниски дози на Х-зраци ќе се пренесе преку делот од вашето тело што се испитуваат. Ова обично ќе биде вашиот колк и долниот дел на 'рбетот за да проверите дали има слаби коски (остеопороза).</p>
+            
+            <p>Но, бидејќи густината на коските варира во различни делови на скелетот, може да се скенираат повеќе од еден дел од вашето тело. Подлактицата може да се скенира за одредени здравствени проблеми, како што е хиперпаратироидизам или доколку скенирањето не е можно на подлактицата скенирањето се врши преку колкот или 'рбетот.</p>
+            
+            <h4>Како функционира?</h4>
+            <p>Некои од Х-зраците што се пренесуваат преку вашето тело ќе бидат апсорбирани од ткиво, како што се маснотиите. Х-зраци детектор во скенирачката рамка ја мери количината на Х-зраци што поминале низ вашето тело. Оваа информација ќе се искористи за производство на слика на скенираната област.</p>
+            
+            <p><strong>Скенирањето обично трае од 10 до 20 минути.</strong></p>
+        `
+    }
+};
+
+const blog = computed(() => blogs[props.slug] || blogs['kovid-19']);
+
+const relatedBlogs = computed(() => {
+    return Object.values(blogs).filter(b => b.slug !== props.slug).slice(0, 2);
+});
+</script>
+
+<template>
+    <Head>
+        <title>{{ blog.title }} - ПЗУ Медика Струмица | Медицински Блог</title>
+        <meta name="description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 155) + '...'" />
+        <meta name="keywords" :content="`${blog.title}, ${blog.category}, медицина струмица, здравје, ПЗУ Медика, ${blog.author}`" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="author" :content="blog.author" />
+        <link rel="canonical" :href="`https://medica.mk/news/${blog.slug}`" />
+        
+        <!-- Open Graph -->
+        <meta property="og:title" :content="`${blog.title} - ПЗУ Медика Струмица`" />
+        <meta property="og:description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 155)" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" :content="`https://medica.mk/news/${blog.slug}`" />
+        <meta property="og:image" :content="blog.image" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="mk_MK" />
+        <meta property="og:site_name" content="ПЗУ Медика" />
+        <meta property="article:author" :content="blog.author" />
+        <meta property="article:published_time" :content="blog.date" />
+        <meta property="article:section" :content="blog.category" />
+        
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" :content="`${blog.title} - ПЗУ Медика`" />
+        <meta name="twitter:description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 120)" />
+        <meta name="twitter:image" :content="blog.image" />
+    </Head>
+    
+    <div class="blog-page">
+        <Navbar :dark="true" :logo-height="80" @open-appointment="showAppointmentModal = true" />
+        
+        <!-- Hero Image -->
+        <section class="blog-hero position-relative">
+            <img :src="blog.image" :alt="blog.title" class="hero-img">
+            <div class="hero-overlay"></div>
+            <div class="container position-relative h-100 d-flex align-items-end pb-5">
+                <div class="text-white pb-4">
+                    <span class="badge bg-white text-purple mb-3 px-3 py-2">{{ blog.category }}</span>
+                    <h1 class="display-4 fw-bold mb-3">{{ blog.title }}</h1>
+                    <div class="d-flex align-items-center gap-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="author-avatar bg-white rounded-circle d-flex align-items-center justify-content-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B4C9A" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <span>{{ blog.author }}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <span>{{ blog.date }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Blog Content -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <!-- Breadcrumb -->
+                        <nav aria-label="breadcrumb" class="mb-4">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/" class="text-purple">Почетна</a></li>
+                                <li class="breadcrumb-item"><a href="/news" class="text-purple">Блог</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ blog.title }}</li>
+                            </ol>
+                        </nav>
+                        
+                        <!-- Article Content -->
+                        <article class="blog-content bg-white rounded-4 shadow-sm p-4 p-lg-5">
+                            <div v-html="blog.content" class="article-body"></div>
+                            
+                            <!-- Share -->
+                            <div class="border-top pt-4 mt-5">
+                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-muted">Сподели:</span>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <a href="/news" class="btn btn-purple rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                                        </svg>
+                                        <span>Назад кон блог</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <!-- Related Articles -->
+                        <div class="mt-5">
+                            <h4 class="fw-bold mb-4">Поврзани статии</h4>
+                            <div class="row g-4">
+                                <div v-for="related in relatedBlogs" :key="related.id" class="col-md-6">
+                                    <article class="related-card bg-white rounded-4 overflow-hidden shadow-sm h-100">
+                                        <div class="related-img-wrapper">
+                                            <img :src="related.image" :alt="related.title" class="related-img">
+                                        </div>
+                                        <div class="p-3">
+                                            <span class="badge bg-purple-soft text-purple small mb-2">{{ related.category }}</span>
+                                            <h6 class="fw-bold mb-2">
+                                                <a :href="`/news/${related.slug}`" class="text-decoration-none text-dark">{{ related.title }}</a>
+                                            </h6>
+                                            <p class="text-muted small mb-0">{{ related.author }}</p>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <Footer :socialLinks="socialLinks" />
+        
+        <AppointmentModal :show="showAppointmentModal" @close="showAppointmentModal = false" />
+    </div>
+</template>
+
+<style scoped>
+.blog-page {
+    min-height: 100vh;
+    background: #F8F9FA;
+}
+
+.text-purple {
+    color: #6B4C9A !important;
+}
+
+.bg-purple {
+    background: linear-gradient(135deg, #6B4C9A 0%, #8B6BAE 100%) !important;
+}
+
+.bg-purple-soft {
+    background-color: rgba(107, 76, 154, 0.1) !important;
+}
+
+.btn-purple {
+    background: linear-gradient(135deg, #6B4C9A 0%, #8B6BAE 100%);
+    color: white;
+    border: none;
+}
+
+.btn-purple:hover {
+    background: linear-gradient(135deg, #5B3C8A 0%, #7B5B9E 100%);
+    color: white;
+}
+
+/* Hero */
+.blog-hero {
+    height: 450px;
+    overflow: hidden;
+    padding-top: 100px;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+}
+
+.author-avatar {
+    width: 36px;
+    height: 36px;
+}
+
+/* Article */
+.article-body :deep(h4) {
+    color: #6B4C9A;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.article-body :deep(p) {
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.article-body :deep(.lead) {
+    font-size: 1.15rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.article-body :deep(ul) {
+    padding-left: 1.5rem;
+}
+
+.article-body :deep(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+}
+
+/* Related */
+.related-card {
+    transition: all 0.3s ease;
+}
+
+.related-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(107, 76, 154, 0.12) !important;
+}
+
+.related-img-wrapper {
+    height: 150px;
+    overflow: hidden;
+}
+
+.related-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.related-card:hover .related-img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 767px) {
+    .blog-hero {
+        height: 350px;
+    }
+    
+    .display-4 {
+        font-size: 1.75rem;
+    }
+}
+</style>
