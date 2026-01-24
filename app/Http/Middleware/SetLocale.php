@@ -13,12 +13,16 @@ class SetLocale
 
     public function handle(Request $request, Closure $next)
     {
-        $locale = $request->query('lang') 
-            ?? Session::get('locale') 
-            ?? config('app.locale', 'mk');
+        // Check for explicit language change via query param
+        if ($request->has('lang')) {
+            $locale = $request->query('lang');
+        } else {
+            // Use session locale if set, otherwise default to Macedonian
+            $locale = Session::get('locale', 'mk');
+        }
 
         if (!in_array($locale, $this->supportedLocales)) {
-            $locale = config('app.locale', 'mk');
+            $locale = 'mk';
         }
 
         App::setLocale($locale);
