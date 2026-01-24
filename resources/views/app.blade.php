@@ -22,6 +22,11 @@
         <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
 
+        <!-- Preload hero image for LCP optimization -->
+        @if(isset($page['props']['sliders']) && count($page['props']['sliders']) > 0 && $page['props']['sliders'][0]['image'])
+            <link rel="preload" as="image" href="/storage/{{ $page['props']['sliders'][0]['image'] }}" fetchpriority="high">
+        @endif
+
         <!-- Scripts -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
