@@ -41,15 +41,28 @@ const highlights = [
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v2H9z"/><path d="M10 5v6.5L6 20h12l-4-8.5V5"/><path d="M8.5 14h7"/></svg>`,
         title: 'Лабораторија',
     },
+    {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/><path d="M12 12h.01"/></svg>`,
+        title: 'Трудова Медицина',
+    },
+    {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        title: 'Семејна Медицина',
+    },
+    {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>`,
+        title: 'Естетска Медицина',
+    },
 ];
 </script>
 
 <template>
     <section id="aboutus" class="about-section">
         <div class="container py-5">
-            <div class="row align-items-center g-5">
+            <!-- Top Row: Text + Stats -->
+            <div class="row align-items-center g-5 mb-5">
                 <!-- Left Side - Content -->
-                <div class="col-lg-6">
+                <div class="col-lg-7">
                     <div class="about-content">
                         <span class="section-badge">За нас</span>
                         <h2 class="section-title" v-html="aboutContent.title?.replace(' наш приоритет', ' <span class=\'highlight\'>наш приоритет</span>') || 'Вашето здравје е <span class=\'highlight\'>наш приоритет</span>'">
@@ -63,23 +76,11 @@ const highlights = [
                             {{ aboutContent.description }}
                         </p>
                         
-                        <p class="body-text">
+                        <p class="body-text mb-4">
                             {{ aboutContent.additional_text }}
                         </p>
                         
-                        <!-- Highlights -->
-                        <div class="highlights-grid">
-                            <div 
-                                v-for="(item, index) in highlights" 
-                                :key="index"
-                                class="highlight-item"
-                            >
-                                <div class="highlight-icon" v-html="item.icon"></div>
-                                <span class="highlight-text">{{ item.title }}</span>
-                            </div>
-                        </div>
-                        
-                        <a href="/about" class="btn-learn-more">
+                        <a href="/services" class="btn-learn-more">
                             <span>Дознај повеќе</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -88,28 +89,33 @@ const highlights = [
                     </div>
                 </div>
                 
-                <!-- Right Side - Stats & Visual -->
-                <div class="col-lg-6">
-                    <div class="about-visual">
-                        <!-- Stats Grid -->
-                        <div class="stats-grid">
-                            <div 
-                                v-for="(stat, index) in stats" 
-                                :key="index"
-                                class="stat-card"
-                                :class="{ 'featured': index === 0 }"
-                            >
-                                <span class="stat-number">{{ stat.number }}</span>
-                                <span class="stat-label">{{ stat.label }}</span>
-                            </div>
+                <!-- Right Side - Stats -->
+                <div class="col-lg-5">
+                    <div class="stats-grid">
+                        <div 
+                            v-for="(stat, index) in stats" 
+                            :key="index"
+                            class="stat-card"
+                            :class="{ 'featured': index === 0 }"
+                        >
+                            <span class="stat-number">{{ stat.number }}</span>
+                            <span class="stat-label">{{ stat.label }}</span>
                         </div>
-                        
-                        <!-- Decorative Elements -->
-                        <div class="deco-circle deco-1"></div>
-                        <div class="deco-circle deco-2"></div>
-                        <div class="deco-dots"></div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Bottom Row: Services as horizontal pills -->
+            <div class="services-row">
+                <a 
+                    v-for="(item, index) in highlights" 
+                    :key="index"
+                    href="/services"
+                    class="service-pill"
+                >
+                    <div class="service-pill-icon" v-html="item.icon"></div>
+                    <span class="service-pill-text">{{ item.title }}</span>
+                </a>
             </div>
         </div>
     </section>
@@ -249,9 +255,68 @@ const highlights = [
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
     position: relative;
     z-index: 2;
+}
+
+/* Services Row - Clean Grid */
+.services-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #6B4C9A 0%, #8B6BAE 100%);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(107, 76, 154, 0.25);
+}
+
+.service-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.service-pill:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.service-pill:hover .service-pill-icon,
+.service-pill:hover .service-pill-text {
+    color: #6B4C9A;
+}
+
+.service-pill-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.service-pill-icon :deep(svg) {
+    width: 28px;
+    height: 28px;
+}
+
+.service-pill-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    transition: color 0.3s ease;
+    text-align: center;
+    line-height: 1.3;
 }
 
 .stat-card {
@@ -334,8 +399,29 @@ const highlights = [
         font-size: 2rem;
     }
     
-    .about-visual {
+    .stats-grid {
         margin-top: 2rem;
+    }
+    
+    .services-row {
+        grid-template-columns: repeat(4, 1fr);
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .services-row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    
+    .service-pill {
+        padding: 1rem 0.25rem;
+    }
+    
+    .service-pill-text {
+        font-size: 0.65rem;
     }
 }
 

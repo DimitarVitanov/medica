@@ -24,7 +24,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'sliders' => Slider::with('translations')->active()->ordered()->get(),
         'services' => Service::with('translations')->active()->ordered()->get(),
-        'blogs' => Blog::with('translations')->published()->latest()->take(3)->get(),
+        'blogs' => Blog::with('translations')->orderBy('id','desc')->take(3)->get(),
         'aboutUs' => Section::getData('about_us'),
         'stats' => Section::getData('stats'),
         'workingHours' => Section::getData('working_hours'),
