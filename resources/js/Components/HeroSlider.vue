@@ -304,6 +304,10 @@ onUnmounted(() => {
 }
 
 @media (max-width: 991px) {
+    .hero-section {
+        overflow-x: hidden;
+    }
+    
     .hero-title {
         font-size: 2rem;
     }
@@ -315,11 +319,17 @@ onUnmounted(() => {
     .gradient-shape-wrapper {
         width: 100%;
         height: 50%;
+        overflow: hidden;
     }
     
     .hero-image-wrapper {
         margin-top: 2rem;
         padding-left: 0;
+        max-width: 100%;
+    }
+    
+    .image-outer-frame {
+        max-width: 100%;
     }
 }
 

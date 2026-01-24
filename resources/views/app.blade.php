@@ -38,8 +38,9 @@
                 --primary-light: #8B6BAE;
                 --primary-dark: #5B3C8A;
             }
-            body {
+            html, body {
                 font-family: 'Figtree', sans-serif;
+                overflow-x: hidden;
             }
             .btn-purple {
                 background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
