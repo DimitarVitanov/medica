@@ -101,9 +101,6 @@ const locations = computed(() => {
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Decorative corner -->
-                    <div class="card-corner"></div>
                 </div>
             </div>
         </div>
@@ -113,15 +110,12 @@ const locations = computed(() => {
 <style scoped>
 .working-hours-section {
     position: relative;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    background: linear-gradient(135deg, #5B3C8A 0%, #6B4C9A 25%, #7B5CAA 50%, #8B6BAE 75%, #9B7BBE 100%);
     overflow: hidden;
 }
 
 .bg-overlay {
-    position: absolute;
-    inset: 0;
-    background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1920&h=400&fit=crop') center/cover;
-    opacity: 0.15;
+    display: none;
 }
 
 .hours-grid {
@@ -132,12 +126,12 @@ const locations = computed(() => {
 }
 
 .hours-card {
-    background: linear-gradient(135deg, #6B4C9A 0%, #8B6BAE 100%);
+    background: transparent;
     padding: 2rem 1.5rem;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .hours-card:last-child {
@@ -145,11 +139,11 @@ const locations = computed(() => {
 }
 
 .hours-card:hover {
-    background: linear-gradient(135deg, #7B5CAA 0%, #9B7BBE 100%);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .hours-card.card-accent {
-    background: linear-gradient(135deg, #5B3C8A 0%, #7B5CAA 100%);
+    background: transparent;
 }
 
 .card-content {
@@ -203,15 +197,6 @@ const locations = computed(() => {
     opacity: 1;
 }
 
-.card-corner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
 
 /* Tablet */
 @media (max-width: 1199px) {
@@ -265,13 +250,22 @@ const locations = computed(() => {
 
 /* Mobile portrait */
 @media (max-width: 480px) {
+    .working-hours-section {
+        background: linear-gradient(180deg, #5B3C8A 0%, #6B4C9A 20%, #7B5CAA 40%, #8B6BAE 60%, #9B7BBE 80%, #AB8BCE 100%);
+    }
+    
     .hours-grid {
         grid-template-columns: 1fr;
     }
     
     .hours-card {
         border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         padding: 1.25rem 1rem;
+    }
+    
+    .hours-card:last-child {
+        border-bottom: none;
     }
     
     .card-department {
