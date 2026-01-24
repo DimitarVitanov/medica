@@ -11,6 +11,12 @@ const props = defineProps({
     },
 });
 
+const getImageUrl = (image) => {
+    if (!image) return 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop';
+    if (image.startsWith('http')) return image;
+    return `/storage/${image}`;
+};
+
 const slides = computed(() => {
     if (props.sliders && props.sliders.length > 0) {
         return props.sliders.map(slider => ({
@@ -22,7 +28,7 @@ const slides = computed(() => {
             button2_text: translateModel(slider, 'button2_text'),
             button_link: slider.button_link,
             button2_link: slider.button2_link,
-            image: slider.image || 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop',
+            image: getImageUrl(slider.image),
         }));
     }
     return [

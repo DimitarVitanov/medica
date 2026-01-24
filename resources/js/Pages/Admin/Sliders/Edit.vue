@@ -20,9 +20,10 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(`/admin/sliders/${props.slider.id}`, {
+    form.transform((data) => ({
+        ...data,
         _method: 'PUT',
-    });
+    })).post(`/admin/sliders/${props.slider.id}`);
 };
 </script>
 
