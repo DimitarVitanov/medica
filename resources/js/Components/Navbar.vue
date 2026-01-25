@@ -69,9 +69,12 @@ const switchLocale = (loc) => {
                 type="button" 
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                :aria-expanded="isMenuOpen"
+                aria-label="Toggle navigation menu"
                 @click="isMenuOpen = !isMenuOpen"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" :stroke="dark && !isScrolled ? '#fff' : '#333'" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" :stroke="dark && !isScrolled ? '#fff' : '#333'" stroke-width="2" aria-hidden="true">
                     <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
                 </svg>
             </button>

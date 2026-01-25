@@ -51,6 +51,14 @@ const translateCategory = (category) => {
     return key ? t(key) : category;
 };
 
+// Optimize Unsplash URLs for better performance
+const optimizeUnsplashUrl = (url) => {
+    if (!url || !url.includes('unsplash.com')) return url;
+    // Add auto=format for WebP support, q=75 for quality, fit=crop
+    const baseUrl = url.split('?')[0];
+    return `${baseUrl}?w=600&h=400&fit=crop&auto=format&q=75`;
+};
+
 const blogs = computed(() => {
     if (props.blogs && props.blogs.length > 0) {
         return props.blogs.map(blog => ({
@@ -62,7 +70,7 @@ const blogs = computed(() => {
             category: translateCategory(blog.category),
             categoryColor: categoryColors[blog.category] || 'bg-purple',
             excerpt: translateModel(blog, 'short_description') || translateModel(blog, 'excerpt'),
-            image: blog.image ? (blog.image.startsWith('http') ? blog.image : `/storage/${blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop',
+            image: blog.image ? (blog.image.startsWith('http') ? optimizeUnsplashUrl(blog.image) : `/storage/${blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop&auto=format&q=75',
         }));
     }
     return [];

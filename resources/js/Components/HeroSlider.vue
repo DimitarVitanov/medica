@@ -137,12 +137,15 @@ onUnmounted(() => {
                                 </div>
                                 
                                 <!-- Slider dots -->
-                                <div class="d-flex gap-2 mt-4">
+                                <div class="d-flex gap-2 mt-4" role="tablist" aria-label="Slider navigation">
                                     <button 
                                         v-for="(slide, index) in slides" 
                                         :key="slide.id"
                                         class="slider-dot"
                                         :class="{ active: currentSlide === index }"
+                                        :aria-label="`Go to slide ${index + 1}`"
+                                        :aria-selected="currentSlide === index"
+                                        role="tab"
                                         @click="goToSlide(index)"
                                     ></button>
                                 </div>

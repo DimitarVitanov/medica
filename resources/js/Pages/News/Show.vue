@@ -42,6 +42,13 @@ const translateCategory = (category) => {
     return key ? t(key) : category;
 };
 
+// Optimize Unsplash URLs for better performance
+const optimizeUnsplashUrl = (url, width = 1200, height = 600) => {
+    if (!url || !url.includes('unsplash.com')) return url;
+    const baseUrl = url.split('?')[0];
+    return `${baseUrl}?w=${width}&h=${height}&fit=crop&auto=format&q=80`;
+};
+
 // Use blog from props (database) with translations
 const blog = computed(() => {
     if (props.blog) {
@@ -52,7 +59,7 @@ const blog = computed(() => {
             author: props.blog.author,
             date: formatDate(props.blog.published_at),
             category: translateCategory(props.blog.category),
-            image: props.blog.image ? (props.blog.image.startsWith('http') ? props.blog.image : `/storage/${props.blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&h=600&fit=crop',
+            image: props.blog.image ? (props.blog.image.startsWith('http') ? optimizeUnsplashUrl(props.blog.image, 1200, 600) : `/storage/${props.blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&h=600&fit=crop&auto=format&q=80',
             content: translateModel(props.blog, 'description') || props.blog.description || '',
             excerpt: translateModel(props.blog, 'short_description') || props.blog.short_description || '',
         };
@@ -69,7 +76,7 @@ const displayRelatedBlogs = computed(() => {
             author: b.author,
             date: formatDate(b.published_at),
             category: translateCategory(b.category),
-            image: b.image ? (b.image.startsWith('http') ? b.image : `/storage/${b.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop',
+            image: b.image ? (b.image.startsWith('http') ? optimizeUnsplashUrl(b.image, 600, 400) : `/storage/${b.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop&auto=format&q=75',
             excerpt: translateModel(b, 'short_description') || b.short_description || '',
         }));
     }

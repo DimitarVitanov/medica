@@ -1,11 +1,24 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, defineAsyncComponent } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import { useTranslate } from '@/composables/useTranslate';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
+
+// Lazy load Swiper to reduce initial bundle and avoid forced reflow on page load
+const Swiper = defineAsyncComponent(() => 
+    import('swiper/vue').then(m => m.Swiper)
+);
+const SwiperSlide = defineAsyncComponent(() => 
+    import('swiper/vue').then(m => m.SwiperSlide)
+);
+
+// Import CSS only when needed
+let swiperCssLoaded = false;
+const loadSwiperCss = () => {
+    if (swiperCssLoaded) return;
+    import('swiper/css');
+    import('swiper/css/pagination');
+    swiperCssLoaded = true;
+};
 
 const { t, translateModel } = useTranslate();
 
@@ -16,7 +29,20 @@ const props = defineProps({
     },
 });
 
-const modules = [Pagination, Autoplay];
+// Lazy load modules
+const modules = ref([]);
+const swiperReady = ref(false);
+
+onMounted(() => {
+    // Delay Swiper initialization to avoid blocking main thread
+    requestIdleCallback(() => {
+        loadSwiperCss();
+        import('swiper/modules').then(({ Pagination, Autoplay }) => {
+            modules.value = [Pagination, Autoplay];
+            swiperReady.value = true;
+        });
+    }, { timeout: 500 });
+});
 
 const serviceIcons = {
     'opsta-medicina': `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>`,
@@ -77,8 +103,9 @@ const activeCard = ref(null);
             </div>
             
             <!-- Desktop Swiper (hidden on mobile) -->
-            <div class="services-swiper-wrapper">
+            <div class="services-swiper-wrapper" style="contain: layout style;">
                 <Swiper
+                    v-if="swiperReady"
                     :modules="modules"
                     :slides-per-view="3"
                     :space-between="20"
