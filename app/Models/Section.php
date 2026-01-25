@@ -9,7 +9,7 @@ class Section extends Model
 {
     use HasTranslations;
 
-    protected array $translatable = ['title', 'content', 'data.address', 'data.description', 'data.lead_text', 'data.additional_text'];
+    protected array $translatable = ['title', 'content', 'data.address', 'data.description', 'data.lead_text', 'data.additional_text', 'data.locations'];
     protected $fillable = [
         'key',
         'title',

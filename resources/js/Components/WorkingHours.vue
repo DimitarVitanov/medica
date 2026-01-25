@@ -1,8 +1,10 @@
 <script setup>
 import { computed } from 'vue';
 import { useTranslate } from '@/composables/useTranslate';
+import { usePage } from '@inertiajs/vue3';
 
-const { t, translateModel } = useTranslate();
+const { t } = useTranslate();
+const page = usePage();
 
 const props = defineProps({
     workingData: Object,
@@ -12,65 +14,16 @@ const props = defineProps({
     },
 });
 
-// Map department keys to translation keys (multiple variations for flexibility)
-const departmentTranslationMap = {
-    // Exact matches
-    'Општа и Психијатриска Ординација': 'services.generalPsychiatric',
-    'General & Psychiatric Clinic': 'services.generalPsychiatric',
-    'Општа и Трудова Ординација': 'services.generalLabor',
-    'General & Occupational Clinic': 'services.generalLabor',
-    'Општа, Семејна и Трудова Ординација': 'services.generalLabor',
-    'Гинеколошка Ординација': 'services.gynecology',
-    'Gynecology': 'services.gynecology',
-    'Гинекологија': 'services.gynecology',
-    'Лабораторија': 'services.laboratory',
-    'Laboratory': 'services.laboratory',
-    'Ординација по Естетска Медицина': 'services.aestheticMedicine',
-    'Aesthetic Medicine': 'services.aestheticMedicine',
-    'Естетска Медицина': 'services.aestheticMedicine',
-};
+// Get current locale
+const currentLocale = computed(() => page.props.locale || 'mk');
+const isEnglish = computed(() => currentLocale.value === 'en');
 
-const translateDepartment = (dept) => {
-    if (!dept) return '';
-    const key = departmentTranslationMap[dept];
-    return key ? t(key) : dept;
-};
-
-// Address translation mapping
-const addressTranslationMap = {
-    'Вањо Китанов бр. 19': 'addresses.vanjoKitanov',
-    'ул. Вањо Китанов бр. 19': 'addresses.vanjoKitanov',
-    'Ганче Пешев': 'addresses.ganchePeshev',
-    'Панче Пешев': 'addresses.ganchePeshev',
-    'Благој Јанков Мучето бр. 56': 'addresses.blagojJankov',
-    'ул. Благој Јанков Мучето бр. 56': 'addresses.blagojJankov',
-    'Братство Единство бр. 41': 'addresses.bratstvoEdinstvo',
-    'ул. Братство Единство бр. 41': 'addresses.bratstvoEdinstvo',
-    'Братство и Единство бр. 41': 'addresses.bratstvoEdinstvo',
-};
-
-const translateAddress = (address) => {
-    if (!address) return '';
-    for (const [mk, key] of Object.entries(addressTranslationMap)) {
-        if (address.includes(mk)) {
-            return t(key);
-        }
+// Get translated field based on locale
+const getLocalizedField = (loc, field) => {
+    if (isEnglish.value && loc[`${field}_en`]) {
+        return loc[`${field}_en`];
     }
-    return address;
-};
-
-// Translate hours string (replace Macedonian day names with translated ones)
-const translateHours = (hoursStr) => {
-    if (!hoursStr) return `${t('workingHours.monFri')}: 08:00 - 16:00`;
-    // Replace common Macedonian patterns with translations
-    return hoursStr
-        .replace(/Пон до Петок/gi, t('workingHours.monFri'))
-        .replace(/Пон - Пет/gi, t('workingHours.monFri'))
-        .replace(/Mon - Fri/gi, t('workingHours.monFri'))
-        .replace(/Саб/gi, t('workingHours.sat'))
-        .replace(/Sat/gi, t('workingHours.sat'))
-        .replace(/Нед/gi, t('workingHours.sun'))
-        .replace(/Sun/gi, t('workingHours.sun'));
+    return loc[field] || '';
 };
 
 const locations = computed(() => {
@@ -79,11 +32,11 @@ const locations = computed(() => {
         return props.workingData.locations.map((loc, index) => ({
             id: index + 1,
             title: t('workingHours.title'),
-            department: translateDepartment(loc.department),
-            hours: translateHours(loc.hours),
-            address: translateAddress(loc.address),
+            department: getLocalizedField(loc, 'department'),
+            hours: getLocalizedField(loc, 'hours'),
+            address: getLocalizedField(loc, 'address'),
             phone: loc.phone || '034-360-444',
-            doctor: loc.doctor || '',
+            doctor: getLocalizedField(loc, 'doctor'),
         }));
     }
     

@@ -68,10 +68,14 @@ const addWorkingHoursItem = () => {
     }
     form.section_data.locations.push({
         department: '',
+        department_en: '',
         hours: '',
+        hours_en: '',
         address: '',
+        address_en: '',
         phone: '',
         doctor: '',
+        doctor_en: '',
     });
 };
 
@@ -178,6 +182,9 @@ const removeStatItem = (index) => {
                                             <span class="fw-semibold">Ординација {{ index + 1 }}</span>
                                             <button type="button" @click="removeWorkingHoursItem(index)" class="btn btn-sm btn-outline-danger">Избриши</button>
                                         </div>
+                                        
+                                        <!-- Macedonian Fields -->
+                                        <h6 class="text-muted small mb-2 mt-3">🇲🇰 Македонски</h6>
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Оддел/Ординација</label>
@@ -185,19 +192,44 @@ const removeStatItem = (index) => {
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Работно време</label>
-                                                <input v-model="location.hours" type="text" class="form-control" placeholder="Пон до Петок 08:00 - 15:00">
+                                                <input v-model="location.hours" type="text" class="form-control" placeholder="Пон - Пет 08:00 - 15:00">
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <label class="form-label">Адреса</label>
-                                                <input v-model="location.address" type="text" class="form-control" placeholder="Вањо Китанов бр. 19">
+                                                <input v-model="location.address" type="text" class="form-control" placeholder="ул. Вањо Китанов бр. 19">
                                             </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Телефон</label>
-                                                <input v-model="location.phone" type="text" class="form-control" placeholder="034-360-444">
-                                            </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <label class="form-label">Доктор (опционално)</label>
                                                 <input v-model="location.doctor" type="text" class="form-control" placeholder="Др. Име Презиме">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- English Fields -->
+                                        <h6 class="text-muted small mb-2 mt-4">🇬🇧 English</h6>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Department</label>
+                                                <input v-model="location.department_en" type="text" class="form-control" placeholder="General & Psychiatric Clinic">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Working Hours</label>
+                                                <input v-model="location.hours_en" type="text" class="form-control" placeholder="Mon - Fri 08:00 - 15:00">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Address</label>
+                                                <input v-model="location.address_en" type="text" class="form-control" placeholder="19 Vanjo Kitanov St.">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Doctor (optional)</label>
+                                                <input v-model="location.doctor_en" type="text" class="form-control" placeholder="Dr. Name Surname">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Phone (same for both languages) -->
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Телефон / Phone</label>
+                                                <input v-model="location.phone" type="text" class="form-control" placeholder="034-360-444">
                                             </div>
                                         </div>
                                     </div>
