@@ -1,4 +1,4 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+/* Bootstrap CSS is loaded from CDN in app.blade.php */
 
 :root {
     --primary-color: #6B4C9A;

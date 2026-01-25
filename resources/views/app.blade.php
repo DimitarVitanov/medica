@@ -18,7 +18,8 @@
         <link rel="preload" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet"></noscript>
 
-        <!-- Bootstrap CSS is bundled via Vite in app.css -->
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Preload hero image for LCP optimization -->
         @if(isset($page['props']['sliders']) && count($page['props']['sliders']) > 0)
