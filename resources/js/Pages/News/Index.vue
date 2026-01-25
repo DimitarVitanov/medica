@@ -30,7 +30,28 @@ const formatDate = (dateString) => {
     });
 };
 
-const displayBlogs = computed(() => {
+// Category colors and translation mapping
+const categoryColors = {
+    'Здравје': 'bg-danger',
+    'Health': 'bg-danger',
+    'Естетика': 'bg-success',
+    'Aesthetics': 'bg-success',
+    'Дијагностика': 'bg-info',
+    'Diagnostics': 'bg-info',
+};
+
+const categoryTranslations = {
+    'Здравје': 'news.categoryHealth',
+    'Естетика': 'news.categoryAesthetics',
+    'Дијагностика': 'news.categoryDiagnostics',
+};
+
+const translateCategory = (category) => {
+    const key = categoryTranslations[category];
+    return key ? t(key) : category;
+};
+
+const blogs = computed(() => {
     if (props.blogs && props.blogs.length > 0) {
         return props.blogs.map(blog => ({
             id: blog.id,
@@ -38,50 +59,14 @@ const displayBlogs = computed(() => {
             title: translateModel(blog, 'title'),
             author: blog.author,
             date: formatDate(blog.published_at),
-            category: blog.category,
-            categoryColor: 'bg-purple',
-            excerpt: translateModel(blog, 'excerpt'),
-            image: blog.image || 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop',
+            category: translateCategory(blog.category),
+            categoryColor: categoryColors[blog.category] || 'bg-purple',
+            excerpt: translateModel(blog, 'short_description') || translateModel(blog, 'excerpt'),
+            image: blog.image ? (blog.image.startsWith('http') ? blog.image : `/storage/${blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop',
         }));
     }
     return [];
 });
-
-const blogs = [
-    {
-        id: 1,
-        slug: 'kovid-19',
-        title: 'Ковид-19',
-        author: 'Д-р Тони Витанов',
-        date: '07-09-2020',
-        category: 'Здравје',
-        categoryColor: 'bg-danger',
-        excerpt: 'Коронавирусна болест (КОВИД-19) е заразна болест предизвикана од новооткриен коронавирус. Повеќето луѓе заразени со вирусот КОВИД-19 ќе...',
-        image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop',
-    },
-    {
-        id: 2,
-        slug: 'mezoterapija',
-        title: 'Мезотерапија',
-        author: 'Д-р Вера Витанова',
-        date: '15-03-2021',
-        category: 'Естетика',
-        categoryColor: 'bg-success',
-        excerpt: 'Мезотерапијата е медицинска техника на уфрлување на различни активни супстанции во слоевите на кожата и поткожното масно ткиво...',
-        image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=400&fit=crop',
-    },
-    {
-        id: 3,
-        slug: 'dexa-scan',
-        title: 'Dexa-scan',
-        author: 'Д-р Тони Витанов',
-        date: '20-05-2022',
-        category: 'Дијагностика',
-        categoryColor: 'bg-info',
-        excerpt: 'Скенирање на коскената густина, исто така познатa како DEXA, помагаат да се разреши ризикот од кршење на коска...',
-        image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&h=400&fit=crop',
-    },
-];
 </script>
 
 <template>
@@ -145,15 +130,9 @@ const blogs = [
                                         {{ blog.title }}
                                     </a>
                                 </h3>
-                                <p class="text-purple small mb-3 fw-semibold">Автор - {{ blog.author }}</p>
+                                <p class="text-purple small mb-3 fw-semibold">{{ t('news.author') }} - {{ blog.author }}</p>
                                 <p class="text-muted mb-4">{{ blog.excerpt }}</p>
                                 <div class="d-flex align-items-center justify-content-between border-top pt-3">
-                                    <div class="d-flex align-items-center gap-2 text-muted small">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                                        </svg>
-                                        <span>Д-р</span>
-                                    </div>
                                     <div class="d-flex align-items-center gap-2 text-muted small">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
@@ -165,8 +144,8 @@ const blogs = [
                         </article>
                     </div>
                     
-                    <!-- Third blog - full width horizontal card -->
-                    <div class="col-12">
+                    <!-- Third blog - full width horizontal card (only if 3+ blogs) -->
+                    <div v-if="blogs.length > 2" class="col-12">
                         <article class="blog-card blog-card-horizontal d-flex flex-column flex-md-row bg-white rounded-4 overflow-hidden shadow-sm">
                             <a :href="`/news/${blogs[2].slug}`" class="blog-img-wrapper-horizontal">
                                 <img :src="blogs[2].image" :alt="blogs[2].title" class="blog-img">
@@ -180,15 +159,9 @@ const blogs = [
                                         {{ blogs[2].title }}
                                     </a>
                                 </h3>
-                                <p class="text-purple small mb-3 fw-semibold">Автор - {{ blogs[2].author }}</p>
+                                <p class="text-purple small mb-3 fw-semibold">{{ t('news.author') }} - {{ blogs[2].author }}</p>
                                 <p class="text-muted mb-4">{{ blogs[2].excerpt }}</p>
                                 <div class="d-flex align-items-center gap-4">
-                                    <div class="d-flex align-items-center gap-2 text-muted small">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                                        </svg>
-                                        <span>Д-р</span>
-                                    </div>
                                     <div class="d-flex align-items-center gap-2 text-muted small">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>

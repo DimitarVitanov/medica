@@ -41,14 +41,52 @@ const formSubmitted = ref(false);
 const departmentTranslationMap = {
     'Општа и Психијатриска Ординација': 'services.generalPsychiatric',
     'Општа и Трудова Ординација': 'services.generalLabor',
+    'Општа, Семејна и Трудова Ординација': 'services.generalLabor',
     'Гинеколошка Ординација': 'services.gynecology',
+    'Гинекологија': 'services.gynecology',
     'Лабораторија': 'services.laboratory',
     'Ординација по Естетска Медицина': 'services.aestheticMedicine',
+    'Естетска Медицина': 'services.aestheticMedicine',
 };
 
 const translateDepartment = (dept) => {
     const key = departmentTranslationMap[dept];
     return key ? t(key) : dept;
+};
+
+// Address translation mapping
+const addressTranslationMap = {
+    'Вањо Китанов бр. 19': 'addresses.vanjoKitanov',
+    'ул. Вањо Китанов бр. 19': 'addresses.vanjoKitanov',
+    'Ганче Пешев': 'addresses.ganchePeshev',
+    'Панче Пешев': 'addresses.ganchePeshev',
+    'Благој Јанков Мучето бр. 56': 'addresses.blagojJankov',
+    'ул. Благој Јанков Мучето бр. 56': 'addresses.blagojJankov',
+    'Братство Единство бр. 41': 'addresses.bratstvoEdinstvo',
+    'ул. Братство Единство бр. 41': 'addresses.bratstvoEdinstvo',
+    'Братство и Единство бр. 41': 'addresses.bratstvoEdinstvo',
+};
+
+const translateAddress = (address) => {
+    if (!address) return '';
+    for (const [mk, key] of Object.entries(addressTranslationMap)) {
+        if (address.includes(mk)) {
+            return t(key) + ', ' + t('addresses.strumica');
+        }
+    }
+    return address;
+};
+
+// Translate hours (Mon-Fri etc)
+const translateHours = (hours) => {
+    if (!hours) return '';
+    return hours
+        .replace(/Пон до Петок/g, t('workingHours.monFri'))
+        .replace(/Пон - Петок/g, t('workingHours.monFri'))
+        .replace(/Пон-Пет/g, t('workingHours.monFri'))
+        .replace(/Пон до Пет/g, t('workingHours.monFri'))
+        .replace(/Саб/g, t('workingHours.sat'))
+        .replace(/Нед/g, t('workingHours.sun'));
 };
 
 // Dynamic locations from database
@@ -57,20 +95,20 @@ const locations = computed(() => {
         return props.workingHours.locations.map((loc, index) => ({
             id: index + 1,
             name: translateDepartment(loc.department),
-            address: loc.address || '',
+            address: translateAddress(loc.address),
             phone: loc.phone || '',
-            hours: loc.hours || '',
+            hours: translateHours(loc.hours),
             doctor: loc.doctor || '',
         }));
     }
     
     // Fallback data
     return [
-        { id: 1, name: t('services.generalPsychiatric'), address: 'ул. Вањо Китанов бр. 19, Струмица', phone: '034-360-444', hours: `${t('workingHours.monFri')}: 08:00 - 15:00` },
-        { id: 2, name: t('services.generalLabor'), address: 'ул. Ганче Пешев, Струмица', phone: '034-326-301', hours: `${t('workingHours.monFri')}: 08:00 - 20:00` },
-        { id: 3, name: t('services.gynecology'), address: 'ул. Благој Јанков Мучето бр. 56, Струмица', phone: '034-322-991', hours: `${t('workingHours.monFri')}: 09:00 - 16:00` },
-        { id: 4, name: t('services.laboratory'), address: 'ул. Братство и Единство бр. 41, Струмица', phone: '034-323-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
-        { id: 5, name: t('services.aestheticMedicine'), address: 'ул. Братство и Единство бр. 41, Струмица', phone: '034-320-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
+        { id: 1, name: t('services.generalPsychiatric'), address: `${t('addresses.vanjoKitanov')}, ${t('addresses.strumica')}`, phone: '034-360-444', hours: `${t('workingHours.monFri')}: 08:00 - 15:00` },
+        { id: 2, name: t('services.generalLabor'), address: `${t('addresses.ganchePeshev')}, ${t('addresses.strumica')}`, phone: '034-326-301', hours: `${t('workingHours.monFri')}: 08:00 - 20:00` },
+        { id: 3, name: t('services.gynecology'), address: `${t('addresses.blagojJankov')}, ${t('addresses.strumica')}`, phone: '034-322-991', hours: `${t('workingHours.monFri')}: 09:00 - 16:00` },
+        { id: 4, name: t('services.laboratory'), address: `${t('addresses.bratstvoEdinstvo')}, ${t('addresses.strumica')}`, phone: '034-323-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
+        { id: 5, name: t('services.aestheticMedicine'), address: `${t('addresses.bratstvoEdinstvo')}, ${t('addresses.strumica')}`, phone: '034-320-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
     ];
 });
 

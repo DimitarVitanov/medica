@@ -4,11 +4,14 @@ import { ref, computed } from 'vue';
 import Navbar from '@/Components/Navbar.vue';
 import Footer from '@/Components/Footer.vue';
 import AppointmentModal from '@/Components/AppointmentModal.vue';
+import { useTranslate } from '@/composables/useTranslate';
+
+const { t, translateModel } = useTranslate();
 
 const props = defineProps({
     slug: {
         type: String,
-        default: 'kovid-19'
+        default: ''
     },
     blog: Object,
     relatedBlogs: Array,
@@ -17,101 +20,60 @@ const props = defineProps({
 
 const showAppointmentModal = ref(false);
 
-const blogs = {
-    'kovid-19': {
-        id: 1,
-        slug: 'kovid-19',
-        title: 'Ковид-19',
-        author: 'Д-р Тони Витанов',
-        date: '07-09-2020',
-        category: 'Здравје',
-        image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&h=600&fit=crop',
-        content: `
-            <p class="lead">Коронавирусна болест (КОВИД-19) е заразна болест предизвикана од новооткриен коронавирус.</p>
-            
-            <p>Повеќето луѓе заразени со вирусот КОВИД-19 ќе доживеат блага до умерена респираторна болест и ќе закрепнат без да бараат посебен третман. Постарите луѓе и оние со основни медицински проблеми како кардиоваскуларни болести, дијабетес, хронични респираторни заболувања и карцином имаат поголема веројатност да развијат сериозни болести.</p>
-            
-            <h4>Превенција</h4>
-            <p>Најдобар начин за спречување и забавување на пренесувањето е добро информиран за вирусот COVID-19, болеста што ја предизвикува и како се шири. Заштитете се себе си и другите од инфекција со миење на рацете или често триење на алкохол и не допирање на лицето.</p>
-            
-            <h4>Како се шири вирусот?</h4>
-            <p>Вирусот КОВИД-19 се шири првенствено преку капки плунка или исцедок од носот кога заразено лице кашла или кива, па затоа е важно да практикувате и етикета за дишење (на пример, со кашлање во свиткан лакт).</p>
-            
-            <h4>Третман</h4>
-            <p>Во тоа време, нема специфични вакцини или третмани за КОВИД-19. Сепак, постојат многу тековни клинички испитувања кои проценуваат потенцијални третмани.</p>
-        `
-    },
-    'mezoterapija': {
-        id: 2,
-        slug: 'mezoterapija',
-        title: 'Мезотерапија',
-        author: 'Д-р Вера Витанова',
-        date: '15-03-2021',
-        category: 'Естетика',
-        image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&h=600&fit=crop',
-        content: `
-            <p class="lead">Мезотерапијата е медицинска техника на уфрлување на различни активни супстанции во слоевите на кожата и поткожното масно ткиво.</p>
-            
-            <p>Денеска е најмодерна медицинска постапка во современата anti aging медицина. Нејзината цел е да се продолжи нашата виталност, младост и сите други атрибути на добриот изглед.</p>
-            
-            <h4>Што е мезотерапија?</h4>
-            <p>Се работи за микроинекцио натерапија, третмани на освежување, подмладување, хидратација, затегнување на кожа на лице, врат, деколте и раце.</p>
-            
-            <h4>Цени</h4>
-            <div class="bg-light p-4 rounded-3 mb-4">
-                <p class="mb-2"><strong>MESOGLOW</strong> (Витамини и хијалуронска киселина)</p>
-                <p class="mb-3">Нормална цена: <del>2400 ден.</del> <span class="text-success fw-bold">Со попуст: 1900 ден.</span></p>
-                
-                <p class="mb-2"><strong>MESOLIFT</strong> (Витамини+Хијалуронска киселина+Rich)</p>
-                <p class="mb-0">Нормална цена: <del>6000 ден.</del> <span class="text-success fw-bold">Со попуст: 4800 ден.</span></p>
-            </div>
-            
-            <h4>Контакт информации</h4>
-            <ul>
-                <li><strong>Телефон:</strong> 070/214-016 и 034/320-444</li>
-                <li><strong>Работно време:</strong> од понеделник до петок од 12:00 до 17:00 часот</li>
-                <li><strong>Локација:</strong> ул. Братство и Единство бр.41 во близина на Општа Болница-Струмица</li>
-            </ul>
-        `
-    },
-    'dexa-scan': {
-        id: 3,
-        slug: 'dexa-scan',
-        title: 'Dexa-scan',
-        author: 'Д-р Тони Витанов',
-        date: '20-05-2022',
-        category: 'Дијагностика',
-        image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&h=600&fit=crop',
-        content: `
-            <p class="lead">Скенирање на коскената густина, исто така познатa како DEXA, помагаат да се разреши ризикот од кршење на коска.</p>
-            
-            <p>DEXA - scan често се користи за да помогне во дијагностицирање на здравствени проблеми поврзани со коските, како што е остеопорозата, или да се процени ризикот од нивно заболување.</p>
-            
-            <h4>За што се користи?</h4>
-            <p>Скенирање на вкупната густина на коските во телото исто така може да се користи за мерење на коскената количина, маснотии и мускули во телото. Овој вид на скенирање рутински се користи кај деца, но се користи само како дел од истражувачка студија кај возрасни.</p>
-            
-            <h4>Како се извршува DEXA скенирањето?</h4>
-            <p>Легнувате на грб на рамна, отворена рендгенска маса. Додека се извршува скенирањето треба да бидете во мирна состојба за сликите да не бидат заматени. Скенирањето обично ќе го изврши радиограф, специјалист за сликање на Х-зраци.</p>
-            
-            <p>За време на скенирањето, голема рамка за скенирање ќе се пренесе преку вашето тело за да се измери густината на коските во центарот на скелетот.</p>
-            
-            <h4>Процедура</h4>
-            <p>Бидејќи рамката за скенирање се поместува полека над вашето тело, тесен зрак со ниски дози на Х-зраци ќе се пренесе преку делот од вашето тело што се испитуваат. Ова обично ќе биде вашиот колк и долниот дел на 'рбетот за да проверите дали има слаби коски (остеопороза).</p>
-            
-            <p>Но, бидејќи густината на коските варира во различни делови на скелетот, може да се скенираат повеќе од еден дел од вашето тело. Подлактицата може да се скенира за одредени здравствени проблеми, како што е хиперпаратироидизам или доколку скенирањето не е можно на подлактицата скенирањето се врши преку колкот или 'рбетот.</p>
-            
-            <h4>Како функционира?</h4>
-            <p>Некои од Х-зраците што се пренесуваат преку вашето тело ќе бидат апсорбирани од ткиво, како што се маснотиите. Х-зраци детектор во скенирачката рамка ја мери количината на Х-зраци што поминале низ вашето тело. Оваа информација ќе се искористи за производство на слика на скенираната област.</p>
-            
-            <p><strong>Скенирањето обично трае од 10 до 20 минути.</strong></p>
-        `
-    }
+const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('mk-MK', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
 };
 
-const blog = computed(() => blogs[props.slug] || blogs['kovid-19']);
+// Category translation mapping
+const categoryTranslations = {
+    'Здравје': 'news.categoryHealth',
+    'Естетика': 'news.categoryAesthetics',
+    'Дијагностика': 'news.categoryDiagnostics',
+};
 
-const relatedBlogs = computed(() => {
-    return Object.values(blogs).filter(b => b.slug !== props.slug).slice(0, 2);
+const translateCategory = (category) => {
+    const key = categoryTranslations[category];
+    return key ? t(key) : category;
+};
+
+// Use blog from props (database) with translations
+const blog = computed(() => {
+    if (props.blog) {
+        return {
+            id: props.blog.id,
+            slug: props.blog.slug,
+            title: translateModel(props.blog, 'title'),
+            author: props.blog.author,
+            date: formatDate(props.blog.published_at),
+            category: translateCategory(props.blog.category),
+            image: props.blog.image ? (props.blog.image.startsWith('http') ? props.blog.image : `/storage/${props.blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&h=600&fit=crop',
+            content: translateModel(props.blog, 'description') || props.blog.description || '',
+            excerpt: translateModel(props.blog, 'short_description') || props.blog.short_description || '',
+        };
+    }
+    return null;
+});
+
+const displayRelatedBlogs = computed(() => {
+    if (props.relatedBlogs && props.relatedBlogs.length > 0) {
+        return props.relatedBlogs.map(b => ({
+            id: b.id,
+            slug: b.slug,
+            title: translateModel(b, 'title'),
+            author: b.author,
+            date: formatDate(b.published_at),
+            category: translateCategory(b.category),
+            image: b.image ? (b.image.startsWith('http') ? b.image : `/storage/${b.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop',
+            excerpt: translateModel(b, 'short_description') || b.short_description || '',
+        }));
+    }
+    return [];
 });
 </script>
 
@@ -184,8 +146,8 @@ const relatedBlogs = computed(() => {
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb" class="mb-4">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/" class="text-purple">Почетна</a></li>
-                                <li class="breadcrumb-item"><a href="/news" class="text-purple">Блог</a></li>
+                                <li class="breadcrumb-item"><a href="/" class="text-purple">{{ t('nav.home') }}</a></li>
+                                <li class="breadcrumb-item"><a href="/news" class="text-purple">{{ t('news.title') }}</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">{{ blog.title }}</li>
                             </ol>
                         </nav>
@@ -198,7 +160,7 @@ const relatedBlogs = computed(() => {
                             <div class="border-top pt-4 mt-5">
                                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                                     <div class="d-flex align-items-center gap-2">
-                                        <span class="text-muted">Сподели:</span>
+                                        <span class="text-muted">{{ t('news.share') }}:</span>
                                         <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -219,7 +181,7 @@ const relatedBlogs = computed(() => {
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M19 12H5M12 19l-7-7 7-7"/>
                                         </svg>
-                                        <span>Назад кон блог</span>
+                                        <span>{{ t('newsPage.backToBlog') }}</span>
                                     </a>
                                 </div>
                             </div>
@@ -227,7 +189,7 @@ const relatedBlogs = computed(() => {
                         
                         <!-- Related Articles -->
                         <div class="mt-5">
-                            <h4 class="fw-bold mb-4">Поврзани статии</h4>
+                            <h4 class="fw-bold mb-4">{{ t('news.relatedPosts') }}</h4>
                             <div class="row g-4">
                                 <div v-for="related in relatedBlogs" :key="related.id" class="col-md-6">
                                     <article class="related-card bg-white rounded-4 overflow-hidden shadow-sm h-100">

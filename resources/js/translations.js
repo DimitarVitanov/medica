@@ -110,6 +110,14 @@ export const translations = {
             closed: 'Затворено',
             callToBook: 'Јавете се за закажување',
         },
+        // Addresses
+        addresses: {
+            vanjoKitanov: 'ул. Вањо Китанов бр. 19',
+            ganchePeshev: 'Ганче Пешев',
+            blagojJankov: 'ул. Благој Јанков Мучето бр. 56',
+            bratstvoEdinstvo: 'ул. Братство Единство бр. 41',
+            strumica: 'Струмица',
+        },
         // News/Blog
         news: {
             title: 'Вести',
@@ -120,6 +128,9 @@ export const translations = {
             views: 'Прегледи',
             relatedPosts: 'Поврзани написи',
             share: 'Сподели',
+            categoryHealth: 'Здравје',
+            categoryAesthetics: 'Естетика',
+            categoryDiagnostics: 'Дијагностика',
         },
         // Footer
         footer: {
@@ -147,6 +158,10 @@ export const translations = {
             ctaTitle: 'Закажете преглед денес',
             ctaSubtitle: 'Нашиот тим на специјалисти е тука за вас',
             moreFeatures: 'повеќе',
+        },
+        // News Page
+        newsPage: {
+            backToBlog: 'Назад кон блог',
         },
     },
     en: {
@@ -260,6 +275,14 @@ export const translations = {
             closed: 'Closed',
             callToBook: 'Call to book',
         },
+        // Addresses
+        addresses: {
+            vanjoKitanov: 'Vanjo Kitanov St. 19',
+            ganchePeshev: 'Ganche Peshev',
+            blagojJankov: 'Blagoj Jankov Mucheto St. 56',
+            bratstvoEdinstvo: 'Bratstvo Edinstvo St. 41',
+            strumica: 'Strumica',
+        },
         // News/Blog
         news: {
             title: 'News',
@@ -270,6 +293,9 @@ export const translations = {
             views: 'Views',
             relatedPosts: 'Related Posts',
             share: 'Share',
+            categoryHealth: 'Health',
+            categoryAesthetics: 'Aesthetics',
+            categoryDiagnostics: 'Diagnostics',
         },
         // Footer
         footer: {
@@ -297,6 +323,10 @@ export const translations = {
             ctaTitle: 'Book an Appointment Today',
             ctaSubtitle: 'Our team of specialists is here for you',
             moreFeatures: 'more',
+        },
+        // News Page
+        newsPage: {
+            backToBlog: 'Back to Blog',
         },
     },
 };
