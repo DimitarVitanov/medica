@@ -78,7 +78,16 @@
 
         @inertia
 
-        <!-- Bootstrap JS - defer loading -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+        <!-- Bootstrap JS - only Collapse component needed for navbar -->
+        <script defer>
+            document.addEventListener('DOMContentLoaded',function(){
+                document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function(btn){
+                    btn.addEventListener('click',function(){
+                        var target=document.querySelector(this.getAttribute('data-bs-target'));
+                        if(target){target.classList.toggle('show');}
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

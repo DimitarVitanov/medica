@@ -9,6 +9,7 @@ use Intervention\Image\Laravel\Facades\Image;
 class ImageService
 {
     protected array $sizes = [
+        'xs' => 320,
         'sm' => 480,
         'md' => 768,
         'lg' => 1200,

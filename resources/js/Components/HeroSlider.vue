@@ -26,9 +26,9 @@ const getImageSrcset = (image) => {
     const directory = pathInfo.join('/');
     const [name, ext] = filename.split('.');
     
-    const sizes = [480, 768, 1200, 1600];
+    const sizes = [320, 480, 768, 1200, 1600];
     const srcset = sizes.map(size => {
-        const sizeName = size === 480 ? 'sm' : size === 768 ? 'md' : size === 1200 ? 'lg' : 'xl';
+        const sizeName = size === 320 ? 'xs' : size === 480 ? 'sm' : size === 768 ? 'md' : size === 1200 ? 'lg' : 'xl';
         return `/storage/${directory}/${name}-${sizeName}.webp ${size}w`;
     });
     
@@ -166,7 +166,7 @@ onUnmounted(() => {
                                             <source 
                                                 v-if="slides[currentSlide].srcset"
                                                 :srcset="slides[currentSlide].srcset"
-                                                sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1200px) 1200px, 1600px"
+                                                sizes="(max-width: 480px) 320px, (max-width: 768px) 480px, (max-width: 1200px) 768px, 1200px"
                                                 type="image/webp"
                                             />
                                             <img 
