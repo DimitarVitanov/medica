@@ -20,13 +20,28 @@ export default defineConfig({
     build: {
         rollupOptions: {
             output: {
-                manualChunks: {
-                    vendor: ['vue', '@inertiajs/vue3'],
-                    swiper: ['swiper'],
+                manualChunks(id) {
+                    // Split Vue core separately
+                    if (id.includes('node_modules/vue')) {
+                        return 'vue';
+                    }
+                    // Split Inertia separately
+                    if (id.includes('@inertiajs')) {
+                        return 'inertia';
+                    }
+                    // Split Swiper (lazy loaded anyway)
+                    if (id.includes('swiper')) {
+                        return 'swiper';
+                    }
+                    // Other vendor modules
+                    if (id.includes('node_modules')) {
+                        return 'vendor';
+                    }
                 },
             },
         },
         cssCodeSplit: true,
         minify: 'esbuild',
+        target: 'es2020',
     },
 });

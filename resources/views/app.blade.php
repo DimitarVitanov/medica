@@ -18,17 +18,26 @@
         <link rel="preload" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet"></noscript>
 
-        <!-- Bootstrap CSS - load async -->
-        <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+        <!-- Bootstrap CSS is bundled via Vite in app.css -->
 
         <!-- Preload hero image for LCP optimization -->
-        @if(isset($page['props']['sliders']) && count($page['props']['sliders']) > 0 && $page['props']['sliders'][0]['image'])
+        @if(isset($page['props']['sliders']) && count($page['props']['sliders']) > 0)
             @php
-                $heroImage = $page['props']['sliders'][0]['image'];
-                $heroImageUrl = str_starts_with($heroImage, 'http') ? $heroImage : '/storage/' . $heroImage;
+                // Find first slider with an image
+                $heroSlider = collect($page['props']['sliders'])->first(fn($s) => !empty($s['image']));
+                if ($heroSlider) {
+                    $heroImage = $heroSlider['image'];
+                    $heroImageUrl = str_starts_with($heroImage, 'http') ? $heroImage : '/storage/' . $heroImage;
+                    // Generate srcset for responsive preload
+                    $pathInfo = pathinfo($heroImage);
+                    $dir = $pathInfo['dirname'];
+                    $name = $pathInfo['filename'];
+                    $srcset = "/storage/{$dir}/{$name}-xs.webp 320w, /storage/{$dir}/{$name}-sm.webp 480w, /storage/{$dir}/{$name}-md.webp 768w, /storage/{$dir}/{$name}-lg.webp 1200w";
+                }
             @endphp
-            <link rel="preload" as="image" href="{{ $heroImageUrl }}" fetchpriority="high">
+            @if(isset($heroSlider))
+            <link rel="preload" as="image" href="{{ $heroImageUrl }}" imagesrcset="{{ $srcset }}" imagesizes="(max-width: 480px) 320px, (max-width: 768px) 480px, (max-width: 1200px) 768px, 1200px" fetchpriority="high">
+            @endif
         @endif
 
         <!-- Scripts -->
