@@ -9,7 +9,10 @@ import { Link } from '@inertiajs/vue3';
                 <div class="col-md-5 col-lg-4">
                     <div class="text-center mb-4">
                         <Link href="/">
-                            <img src="/images/logo.png" alt="Медика" class="guest-logo" height="80">
+                            <picture>
+                                <source srcset="/images/logo.webp" type="image/webp">
+                                <img src="/images/logo.png" alt="Медика" class="guest-logo" height="80">
+                            </picture>
                         </Link>
                     </div>
                     

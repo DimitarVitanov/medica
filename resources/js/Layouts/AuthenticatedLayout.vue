@@ -32,7 +32,10 @@ const logout = () => {
                 <div class="brand">
                     <Link href="/admin" class="brand-link">
                         <div class="brand-icon">
-                            <img src="/images/logo.png" alt="M">
+                            <picture>
+                                <source srcset="/images/logo.webp" type="image/webp">
+                                <img src="/images/logo.png" alt="M">
+                            </picture>
                         </div>
                         <span class="brand-name">ПЗУ Медика</span>
                     </Link>
