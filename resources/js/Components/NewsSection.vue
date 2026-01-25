@@ -28,6 +28,17 @@ const getImageUrl = (image) => {
     return `/storage/${image}`;
 };
 
+// Generate srcset for responsive images
+const getImageSrcset = (image) => {
+    if (!image || image.startsWith('http')) return '';
+    const pathInfo = image.split('/');
+    const filename = pathInfo.pop();
+    const directory = pathInfo.join('/');
+    const name = filename.replace('.webp', '').replace('.jpg', '').replace('.png', '');
+    
+    return `/storage/${directory}/${name}-xs.webp 320w, /storage/${directory}/${name}-sm.webp 480w, /storage/${directory}/${name}-md.webp 768w`;
+};
+
 const news = computed(() => {
     if (props.blogs && props.blogs.length > 0) {
         return props.blogs.map(blog => ({
@@ -37,6 +48,7 @@ const news = computed(() => {
             date: formatDate(blog.published_at),
             excerpt: translateModel(blog, 'excerpt'),
             image: getImageUrl(blog.image),
+            srcset: getImageSrcset(blog.image),
             slug: blog.slug,
             category: blog.category,
         }));
@@ -70,7 +82,16 @@ const news = computed(() => {
                 <!-- Featured Article (First) -->
                 <div class="col-lg-6">
                     <article class="news-card news-card-featured h-100 position-relative overflow-hidden rounded-4">
-                        <img :src="news[0].image" :alt="news[0].title" class="featured-img">
+                        <img 
+                            :src="news[0].image" 
+                            :srcset="news[0].srcset"
+                            sizes="(max-width: 768px) 320px, 480px"
+                            :alt="news[0].title" 
+                            class="featured-img"
+                            loading="lazy"
+                            width="480"
+                            height="320"
+                        >
                         <div class="featured-overlay"></div>
                         <div class="featured-content position-absolute bottom-0 start-0 p-4 text-white">
                             <span class="badge bg-white text-purple mb-3">{{ news[0].category }}</span>
@@ -98,7 +119,16 @@ const news = computed(() => {
                         <div v-for="item in news.slice(1)" :key="item.id" class="col-12">
                             <article class="news-card news-card-horizontal d-flex bg-white rounded-4 overflow-hidden shadow-sm h-100">
                                 <div class="news-img-wrapper">
-                                    <img :src="item.image" :alt="item.title" class="news-img">
+                                    <img 
+                                        :src="item.image" 
+                                        :srcset="item.srcset"
+                                        sizes="(max-width: 768px) 320px, 285px"
+                                        :alt="item.title" 
+                                        class="news-img"
+                                        loading="lazy"
+                                        width="285"
+                                        height="190"
+                                    >
                                 </div>
                                 <div class="p-4 d-flex flex-column justify-content-center">
                                     <span class="badge bg-purple-soft text-purple rounded-pill align-self-start mb-2">{{ item.category }}</span>

@@ -44,7 +44,11 @@ const currentYear = new Date().getFullYear();
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                     <a href="/" class="d-inline-block text-decoration-none mb-3">
                         <picture>
-                            <source srcset="/images/logo.webp" type="image/webp">
+                            <source 
+                                srcset="/images/logo-80.webp 80w, /images/logo-100.webp 100w, /images/logo-120.webp 120w"
+                                sizes="(max-width: 768px) 100px, 120px"
+                                type="image/webp"
+                            >
                             <img src="/images/logo.png" alt="Медика" class="footer-logo" loading="lazy" width="120" height="50">
                         </picture>
                     </a>

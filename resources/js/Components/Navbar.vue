@@ -62,7 +62,11 @@ const switchLocale = (loc) => {
         <div class="container">
             <a class="navbar-brand" href="/">
                 <picture>
-                    <source srcset="/images/logo.webp" type="image/webp">
+                    <source 
+                        srcset="/images/logo-50.webp 50w, /images/logo-80.webp 80w, /images/logo-100.webp 100w, /images/logo-120.webp 120w"
+                        sizes="(max-width: 768px) 80px, 120px"
+                        type="image/webp"
+                    >
                     <img src="/images/logo.png" alt="Медика - Приватна Здравствена Установа" class="navbar-logo" :style="logoStyle" width="120" height="50">
                 </picture>
             </a>

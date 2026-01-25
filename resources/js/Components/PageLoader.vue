@@ -56,8 +56,12 @@ onUnmounted(() => {
             <div class="loader-content">
                 <div class="logo-wrapper">
                     <picture>
-                        <source srcset="/images/logo.webp" type="image/webp">
-                        <img src="/images/logo.png" alt="Медика" class="loader-logo">
+                        <source 
+                            srcset="/images/logo-80.webp 80w, /images/logo-100.webp 100w"
+                            sizes="90px"
+                            type="image/webp"
+                        >
+                        <img src="/images/logo.png" alt="Медика" class="loader-logo" width="90" height="90">
                     </picture>
                     <div class="pulse-ring"></div>
                     <div class="pulse-ring delay-1"></div>
