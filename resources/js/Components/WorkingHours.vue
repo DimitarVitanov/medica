@@ -56,8 +56,7 @@ const locations = computed(() => {
         <!-- Background Image Overlay -->
         <div class="bg-overlay"></div>
         
-        <div class="container-fluid px-0">
-            <div class="hours-grid">
+        <div class="hours-grid">
                 <div 
                     v-for="(location, index) in locations" 
                     :key="location.id" 
@@ -103,17 +102,13 @@ const locations = computed(() => {
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 </template>
 
 <style scoped>
 .working-hours-section {
-    position: relative;
     background: linear-gradient(135deg, #5B3C8A 0%, #6B4C9A 25%, #7B5CAA 50%, #8B6BAE 75%, #9B7BBE 100%);
     overflow: hidden;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
 }
 
 .bg-overlay {

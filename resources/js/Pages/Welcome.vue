@@ -50,9 +50,7 @@ const showAppointmentModal = ref(false);
         <div data-animate="fade-up">
             <NewsSection :blogs="blogs" />
         </div>
-        <div data-animate="fade-in">
-            <WorkingHours :workingData="workingHours" />
-        </div>
+        <WorkingHours :workingData="workingHours" />
         <Footer :contactData="contactInfo" :socialLinks="socialLinks" />
         
         <AppointmentModal :show="showAppointmentModal" @close="showAppointmentModal = false" />
