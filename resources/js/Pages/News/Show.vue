@@ -60,8 +60,8 @@ const blog = computed(() => {
             date: formatDate(props.blog.published_at),
             category: translateCategory(props.blog.category),
             image: props.blog.image ? (props.blog.image.startsWith('http') ? optimizeUnsplashUrl(props.blog.image, 1200, 600) : `/storage/${props.blog.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&h=600&fit=crop&auto=format&q=80',
-            content: translateModel(props.blog, 'description') || props.blog.description || '',
-            excerpt: translateModel(props.blog, 'short_description') || props.blog.short_description || '',
+            content: translateModel(props.blog, 'description') || props.blog.content || '',
+            excerpt: translateModel(props.blog, 'short_description') || translateModel(props.blog, 'excerpt') || props.blog.excerpt || '',
         };
     }
     return null;
@@ -77,7 +77,7 @@ const displayRelatedBlogs = computed(() => {
             date: formatDate(b.published_at),
             category: translateCategory(b.category),
             image: b.image ? (b.image.startsWith('http') ? optimizeUnsplashUrl(b.image, 600, 400) : `/storage/${b.image}`) : 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&h=400&fit=crop&auto=format&q=75',
-            excerpt: translateModel(b, 'short_description') || b.short_description || '',
+            excerpt: translateModel(b, 'short_description') || translateModel(b, 'excerpt') || b.excerpt || '',
         }));
     }
     return [];
@@ -198,7 +198,7 @@ const displayRelatedBlogs = computed(() => {
                         <div class="mt-5">
                             <h4 class="fw-bold mb-4">{{ t('news.relatedPosts') }}</h4>
                             <div class="row g-4">
-                                <div v-for="related in relatedBlogs" :key="related.id" class="col-md-6">
+                                <div v-for="related in displayRelatedBlogs" :key="related.id" class="col-md-6">
                                     <article class="related-card bg-white rounded-4 overflow-hidden shadow-sm h-100">
                                         <div class="related-img-wrapper">
                                             <img :src="related.image" :alt="related.title" class="related-img">

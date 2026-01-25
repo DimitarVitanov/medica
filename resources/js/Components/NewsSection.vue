@@ -81,67 +81,69 @@ const news = computed(() => {
             <div class="row g-4">
                 <!-- Featured Article (First) -->
                 <div class="col-lg-6">
-                    <article class="news-card news-card-featured h-100 position-relative overflow-hidden rounded-4">
-                        <img 
-                            :src="news[0].image" 
-                            :srcset="news[0].srcset"
-                            sizes="(max-width: 768px) 320px, 480px"
-                            :alt="news[0].title" 
-                            class="featured-img"
-                            loading="lazy"
-                            width="480"
-                            height="320"
-                        >
-                        <div class="featured-overlay"></div>
-                        <div class="featured-content position-absolute bottom-0 start-0 p-4 text-white">
-                            <span class="badge bg-white text-purple mb-3">{{ news[0].category }}</span>
-                            <h3 class="fw-bold mb-2">{{ news[0].title }}</h3>
-                            <p class="mb-3 opacity-75">{{ news[0].excerpt }}</p>
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="author-avatar bg-white rounded-circle d-flex align-items-center justify-content-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B4C9A" stroke-width="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                                        </svg>
+                    <a :href="`/news/${news[0].slug}`" class="text-decoration-none">
+                        <article class="news-card news-card-featured h-100 position-relative overflow-hidden rounded-4">
+                            <img 
+                                :src="news[0].image" 
+                                :srcset="news[0].srcset"
+                                sizes="(max-width: 768px) 320px, 480px"
+                                :alt="news[0].title" 
+                                class="featured-img"
+                                loading="lazy"
+                                width="480"
+                                height="320"
+                            >
+                            <div class="featured-overlay"></div>
+                            <div class="featured-content position-absolute bottom-0 start-0 p-4 text-white">
+                                <span class="badge bg-white text-purple mb-3">{{ news[0].category }}</span>
+                                <h3 class="fw-bold mb-2">{{ news[0].title }}</h3>
+                                <p class="mb-3 opacity-75">{{ news[0].excerpt }}</p>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="author-avatar bg-white rounded-circle d-flex align-items-center justify-content-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B4C9A" stroke-width="2">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                            </svg>
+                                        </div>
+                                        <span class="small">{{ news[0].author }}</span>
                                     </div>
-                                    <span class="small">{{ news[0].author }}</span>
+                                    <span class="small opacity-75">{{ news[0].date }}</span>
                                 </div>
-                                <span class="small opacity-75">{{ news[0].date }}</span>
                             </div>
-                        </div>
-                        <a :href="`/news/${news[0].slug}`" class="stretched-link"></a>
-                    </article>
+                        </article>
+                    </a>
                 </div>
                 
                 <!-- Side Articles -->
                 <div class="col-lg-6">
                     <div class="row g-4">
                         <div v-for="item in news.slice(1)" :key="item.id" class="col-12">
-                            <article class="news-card news-card-horizontal d-flex bg-white rounded-4 overflow-hidden shadow-sm h-100">
-                                <div class="news-img-wrapper">
-                                    <img 
-                                        :src="item.image" 
-                                        :srcset="item.srcset"
-                                        sizes="(max-width: 768px) 320px, 285px"
-                                        :alt="item.title" 
-                                        class="news-img"
-                                        loading="lazy"
-                                        width="285"
-                                        height="190"
-                                    >
-                                </div>
-                                <div class="p-4 d-flex flex-column justify-content-center">
-                                    <span class="badge bg-purple-soft text-purple rounded-pill align-self-start mb-2">{{ item.category }}</span>
-                                    <h5 class="fw-bold mb-2">{{ item.title }}</h5>
-                                    <p class="text-muted small mb-3">{{ item.excerpt }}</p>
-                                    <div class="d-flex align-items-center gap-3 text-muted small">
-                                        <span>{{ item.author }}</span>
-                                        <span>•</span>
-                                        <span>{{ item.date }}</span>
+                            <a :href="`/news/${item.slug}`" class="text-decoration-none">
+                                <article class="news-card news-card-horizontal d-flex bg-white rounded-4 overflow-hidden shadow-sm h-100">
+                                    <div class="news-img-wrapper">
+                                        <img 
+                                            :src="item.image" 
+                                            :srcset="item.srcset"
+                                            sizes="(max-width: 768px) 320px, 285px"
+                                            :alt="item.title" 
+                                            class="news-img"
+                                            loading="lazy"
+                                            width="285"
+                                            height="190"
+                                        >
                                     </div>
-                                </div>
-                                <a :href="`/news/${item.slug}`" class="stretched-link"></a>
-                            </article>
+                                    <div class="p-4 d-flex flex-column justify-content-center">
+                                        <span class="badge bg-purple-soft text-purple rounded-pill align-self-start mb-2">{{ item.category }}</span>
+                                        <h5 class="fw-bold mb-2 text-dark">{{ item.title }}</h5>
+                                        <p class="text-muted small mb-3">{{ item.excerpt }}</p>
+                                        <div class="d-flex align-items-center gap-3 text-muted small">
+                                            <span>{{ item.author }}</span>
+                                            <span>•</span>
+                                            <span>{{ item.date }}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </a>
                         </div>
                     </div>
                 </div>
