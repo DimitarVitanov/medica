@@ -17,6 +17,37 @@ const getImageUrl = (image) => {
     return `/storage/${image}`;
 };
 
+// Generate srcset for responsive images
+const getImageSrcset = (image) => {
+    if (!image || image.startsWith('http')) return '';
+    
+    const pathInfo = image.split('/');
+    const filename = pathInfo.pop();
+    const directory = pathInfo.join('/');
+    const [name, ext] = filename.split('.');
+    
+    const sizes = [480, 768, 1200, 1600];
+    const srcset = sizes.map(size => {
+        const sizeName = size === 480 ? 'sm' : size === 768 ? 'md' : size === 1200 ? 'lg' : 'xl';
+        return `/storage/${directory}/${name}-${sizeName}.webp ${size}w`;
+    });
+    
+    return srcset.join(', ');
+};
+
+// Preload first slide image for LCP optimization
+const preloadFirstImage = () => {
+    if (props.sliders && props.sliders.length > 0) {
+        const firstImage = getImageUrl(props.sliders[0].image);
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = firstImage;
+        link.fetchpriority = 'high';
+        document.head.appendChild(link);
+    }
+};
+
 const slides = computed(() => {
     if (props.sliders && props.sliders.length > 0) {
         return props.sliders.map(slider => ({
@@ -29,6 +60,8 @@ const slides = computed(() => {
             button_link: slider.button_link,
             button2_link: slider.button2_link,
             image: getImageUrl(slider.image),
+            srcset: getImageSrcset(slider.image),
+            rawImage: slider.image,
         }));
     }
     return [
@@ -56,6 +89,7 @@ const goToSlide = (index) => {
 };
 
 onMounted(() => {
+    preloadFirstImage();
     slideInterval = setInterval(nextSlide, 5000);
 });
 
@@ -125,11 +159,24 @@ onUnmounted(() => {
                                 <!-- Image with purple gradient border -->
                                 <div class="image-outer-frame">
                                     <div class="image-inner">
-                                        <img 
-                                            :src="slides[currentSlide].image" 
-                                            :alt="slides[currentSlide].title"
-                                            class="hero-img"
-                                        />
+                                        <picture>
+                                            <source 
+                                                v-if="slides[currentSlide].srcset"
+                                                :srcset="slides[currentSlide].srcset"
+                                                sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1200px) 1200px, 1600px"
+                                                type="image/webp"
+                                            />
+                                            <img 
+                                                :src="slides[currentSlide].image" 
+                                                :alt="slides[currentSlide].title"
+                                                class="hero-img"
+                                                :loading="currentSlide === 0 ? 'eager' : 'lazy'"
+                                                :fetchpriority="currentSlide === 0 ? 'high' : 'auto'"
+                                                decoding="async"
+                                                width="600"
+                                                height="340"
+                                            />
+                                        </picture>
                                     </div>
                                 </div>
                                 <!-- Badge -->

@@ -24,7 +24,11 @@
 
         <!-- Preload hero image for LCP optimization -->
         @if(isset($page['props']['sliders']) && count($page['props']['sliders']) > 0 && $page['props']['sliders'][0]['image'])
-            <link rel="preload" as="image" href="/storage/{{ $page['props']['sliders'][0]['image'] }}" fetchpriority="high">
+            @php
+                $heroImage = $page['props']['sliders'][0]['image'];
+                $heroImageUrl = str_starts_with($heroImage, 'http') ? $heroImage : '/storage/' . $heroImage;
+            @endphp
+            <link rel="preload" as="image" href="{{ $heroImageUrl }}" fetchpriority="high">
         @endif
 
         <!-- Scripts -->
