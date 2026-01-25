@@ -109,6 +109,7 @@ const locations = computed(() => {
 .working-hours-section {
     background: linear-gradient(135deg, #5B3C8A 0%, #6B4C9A 25%, #7B5CAA 50%, #8B6BAE 75%, #9B7BBE 100%);
     overflow: hidden;
+    padding-top: 2rem;
 }
 
 .bg-overlay {
@@ -123,7 +124,7 @@ const locations = computed(() => {
 }
 
 .hours-card {
-    background: transparent;
+    background: transparent !important;
     padding: 2rem 1.5rem;
     position: relative;
     overflow: hidden;
@@ -136,11 +137,11 @@ const locations = computed(() => {
 }
 
 .hours-card:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08) !important;
 }
 
 .hours-card.card-accent {
-    background: transparent;
+    background: transparent !important;
 }
 
 .card-content {
