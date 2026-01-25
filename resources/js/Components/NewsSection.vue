@@ -21,6 +21,13 @@ const formatDate = (dateString) => {
     });
 };
 
+// Get proper image URL (handle both local storage and external URLs)
+const getImageUrl = (image) => {
+    if (!image) return 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=400&h=300&fit=crop&auto=format&q=75';
+    if (image.startsWith('http')) return image;
+    return `/storage/${image}`;
+};
+
 const news = computed(() => {
     if (props.blogs && props.blogs.length > 0) {
         return props.blogs.map(blog => ({
@@ -29,7 +36,7 @@ const news = computed(() => {
             author: blog.author,
             date: formatDate(blog.published_at),
             excerpt: translateModel(blog, 'excerpt'),
-            image: blog.image || 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=400&h=300&fit=crop',
+            image: getImageUrl(blog.image),
             slug: blog.slug,
             category: blog.category,
         }));
