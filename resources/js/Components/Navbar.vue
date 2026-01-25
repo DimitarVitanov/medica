@@ -61,7 +61,10 @@ const switchLocale = (loc) => {
     <nav class="navbar navbar-expand-lg py-3 position-fixed w-100" :class="{ 'navbar-dark': dark, 'navbar-scrolled': isScrolled }" style="z-index: 1000;">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="/images/logo.png" alt="Медика - Приватна Здравствена Установа" class="navbar-logo" :style="logoStyle">
+                <picture>
+                    <source srcset="/images/logo.webp" type="image/webp">
+                    <img src="/images/logo.png" alt="Медика - Приватна Здравствена Установа" class="navbar-logo" :style="logoStyle" width="120" height="50">
+                </picture>
             </a>
             
             <button 

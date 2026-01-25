@@ -8,7 +8,7 @@
         <title inertia>{{ config('app.name', 'ПЗУ Медика') }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="/images/logo.png">
+        <link rel="icon" type="image/webp" href="/images/logo.webp">
 
         <!-- Preconnect to external domains -->
         <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
@@ -72,10 +72,6 @@
         </style>
     </head>
     <body>
-        <!-- Initial loader - pure CSS, no dependencies, shows instantly -->
-        <style>#il{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#FDFBFE;display:flex;align-items:center;justify-content:center}#il .sp{width:50px;height:50px;border:4px solid #f0f0f0;border-top-color:#6B4C9A;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}</style>
-        <div id="il"><div class="sp"></div></div>
-
         @inertia
 
         <!-- Bootstrap JS - only Collapse component needed for navbar -->
