@@ -72,47 +72,9 @@
         </style>
     </head>
     <body>
-        <!-- Skeleton loader shown immediately while Vue loads -->
-        <div id="skeleton-loader" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:linear-gradient(180deg,#FDFBFE 0%,#FFF 100%);">
-            <nav style="padding:1rem 0;background:transparent;">
-                <div style="max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;">
-                    <div style="width:120px;height:50px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;"></div>
-                    <div style="display:flex;gap:1.5rem;">
-                        <div style="width:60px;height:20px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px;"></div>
-                        <div style="width:60px;height:20px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px;"></div>
-                        <div style="width:60px;height:20px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px;"></div>
-                    </div>
-                </div>
-            </nav>
-            <div style="max-width:1200px;margin:0 auto;padding:4rem 1rem;display:flex;align-items:center;min-height:80vh;">
-                <div style="flex:1;padding-right:2rem;">
-                    <div style="width:200px;height:40px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;margin-bottom:1rem;"></div>
-                    <div style="width:100%;max-width:300px;height:24px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px;margin-bottom:0.75rem;"></div>
-                    <div style="width:80%;max-width:250px;height:16px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px;margin-bottom:1.5rem;"></div>
-                    <div style="display:flex;gap:1rem;">
-                        <div style="width:140px;height:44px;background:linear-gradient(135deg,#6B4C9A 0%,#8B6BAE 100%);border-radius:22px;"></div>
-                        <div style="width:120px;height:44px;background:#f5f5f5;border-radius:22px;border:1px solid #ddd;"></div>
-                    </div>
-                </div>
-                <div style="flex:1;display:flex;justify-content:center;">
-                    <div style="width:100%;max-width:500px;height:340px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:20px;"></div>
-                </div>
-            </div>
-            <style>@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}</style>
-        </div>
-        <script>
-            // Hide skeleton when Vue app is ready
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    const skeleton = document.getElementById('skeleton-loader');
-                    if (skeleton) {
-                        skeleton.style.opacity = '0';
-                        skeleton.style.transition = 'opacity 0.3s ease';
-                        setTimeout(function() { skeleton.style.display = 'none'; }, 300);
-                    }
-                }, 100);
-            });
-        </script>
+        <!-- Initial loader - pure CSS, no dependencies, shows instantly -->
+        <style>#il{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#FDFBFE;display:flex;align-items:center;justify-content:center}#il .sp{width:50px;height:50px;border:4px solid #f0f0f0;border-top-color:#6B4C9A;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}</style>
+        <div id="il"><div class="sp"></div></div>
 
         @inertia
 

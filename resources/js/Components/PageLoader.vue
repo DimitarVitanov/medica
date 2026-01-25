@@ -30,6 +30,10 @@ const finishLoading = () => {
 };
 
 onMounted(() => {
+    // Hide the initial HTML loader when Vue mounts
+    const initialLoader = document.getElementById('il');
+    if (initialLoader) initialLoader.remove();
+    
     // Initial page load - same duration as navigation
     if (isFirstLoad.value) {
         startLoading();
