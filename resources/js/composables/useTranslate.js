@@ -36,7 +36,17 @@ export function useTranslate() {
             const trans = item.translations.find(
                 t => t.field === field && t.locale === locale.value
             );
-            if (trans?.value) return trans.value;
+            if (trans?.value) {
+                // Parse JSON if it's a string that looks like JSON array
+                if (typeof trans.value === 'string' && trans.value.startsWith('[')) {
+                    try {
+                        return JSON.parse(trans.value);
+                    } catch (e) {
+                        return trans.value;
+                    }
+                }
+                return trans.value;
+            }
         }
         
         // Fallback to original field

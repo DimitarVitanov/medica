@@ -12,18 +12,42 @@ const props = defineProps({
     },
 });
 
-// Map department keys to translation keys
+// Map department keys to translation keys (multiple variations for flexibility)
 const departmentTranslationMap = {
+    // Exact matches
     'Општа и Психијатриска Ординација': 'services.generalPsychiatric',
+    'General & Psychiatric Clinic': 'services.generalPsychiatric',
     'Општа и Трудова Ординација': 'services.generalLabor',
+    'General & Occupational Clinic': 'services.generalLabor',
+    'Општа, Семејна и Трудова Ординација': 'services.generalLabor',
     'Гинеколошка Ординација': 'services.gynecology',
+    'Gynecology': 'services.gynecology',
+    'Гинекологија': 'services.gynecology',
     'Лабораторија': 'services.laboratory',
+    'Laboratory': 'services.laboratory',
     'Ординација по Естетска Медицина': 'services.aestheticMedicine',
+    'Aesthetic Medicine': 'services.aestheticMedicine',
+    'Естетска Медицина': 'services.aestheticMedicine',
 };
 
 const translateDepartment = (dept) => {
+    if (!dept) return '';
     const key = departmentTranslationMap[dept];
     return key ? t(key) : dept;
+};
+
+// Translate hours string (replace Macedonian day names with translated ones)
+const translateHours = (hoursStr) => {
+    if (!hoursStr) return `${t('workingHours.monFri')}: 08:00 - 16:00`;
+    // Replace common Macedonian patterns with translations
+    return hoursStr
+        .replace(/Пон до Петок/gi, t('workingHours.monFri'))
+        .replace(/Пон - Пет/gi, t('workingHours.monFri'))
+        .replace(/Mon - Fri/gi, t('workingHours.monFri'))
+        .replace(/Саб/gi, t('workingHours.sat'))
+        .replace(/Sat/gi, t('workingHours.sat'))
+        .replace(/Нед/gi, t('workingHours.sun'))
+        .replace(/Sun/gi, t('workingHours.sun'));
 };
 
 const locations = computed(() => {
@@ -33,7 +57,7 @@ const locations = computed(() => {
             id: index + 1,
             title: t('workingHours.title'),
             department: translateDepartment(loc.department),
-            hours: loc.hours || `${t('workingHours.monFri')}: 08:00 - 16:00`,
+            hours: translateHours(loc.hours),
             address: loc.address || '',
             phone: loc.phone || '034-360-444',
             doctor: loc.doctor || '',

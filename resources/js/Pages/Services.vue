@@ -20,105 +20,45 @@ const props = defineProps({
 
 const showAppointmentModal = ref(false);
 
-const services = [
-    {
-        id: 1,
-        slug: 'opsta-medicina',
-        title: 'Ординација по Општа Медицина',
-        shortDesc: 'Примарна здравствена заштита за целото семејство',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
-        color: '#6B4C9A',
-        features: [
-            'Одржување на здравјето на здравите пациенти',
-            'Одржување на здравјето на болните пациенти',
-            'Превенција на хронични болести',
-            'Превенција на дегенеративни болести',
-        ],
-        description: '',
-    },
-    {
-        id: 2,
-        slug: 'ginekologija',
-        title: 'Ординација по Гинекологија и Акушерство',
-        shortDesc: 'Комплетна грижа за женското здравје',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="6"/></svg>`,
-        color: '#E91E63',
-        features: [
-            'Гинеколошки преглед',
-            '4D Ултразвук',
-            'Вагинален Ултразвук',
-            'ПАП тест',
-            'Микробиолошки брисеви',
-            'Надзор и следење на бременоста со 4D Ултразвук',
-            'Иследување во врска со стерилитет',
-        ],
-        description: '',
-    },
-    {
-        id: 3,
-        slug: 'psihijatrija',
-        title: 'Ординација по Психијатрија',
-        shortDesc: 'Ментално здравје и психолошка поддршка',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0 1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08A2.5 2.5 0 0 0 12 21.5V4.5Z"/><path d="M12 4.5a2.5 2.5 0 0 1 4.96-.46 2.5 2.5 0 0 1 1.98 3 2.5 2.5 0 0 1-1.32 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 21.5V4.5Z"/></svg>`,
-        color: '#9C27B0',
-        features: [],
-        description: `Ние во ПЗУ Медика ви нудиме место на 'ново разбирање' и 'нова надеж' место каде што вие и вашите најмили ќе разберете што и зошто ви се случува, како да се снајдете да си помогнете себеси и на своите најмили да излезат од криза, да ја вратат својата рамнотежа и без страв да продолжат да чекорат понатаму низ животот.
+// Service icons mapping
+const serviceIcons = {
+    'opsta-medicina': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    'ginekologija': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="6"/></svg>`,
+    'psihijatrija': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0 1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08A2.5 2.5 0 0 0 12 21.5V4.5Z"/><path d="M12 4.5a2.5 2.5 0 0 1 4.96-.46 2.5 2.5 0 0 1 1.98 3 2.5 2.5 0 0 1-1.32 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 21.5V4.5Z"/></svg>`,
+    'estetska-medicina': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
+    'laboratorija': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3h6v2H9z"/><path d="M10 5v6.5L6 20h12l-4-8.5V5"/><path d="M8.5 14h7"/></svg>`,
+    'medicina-na-trud': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="6" y="10" width="12" height="12" rx="2"/><path d="M12 10v4"/><path d="M10 12h4"/></svg>`,
+    'semejna-medicina': `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+};
 
-Менталната болест не е судбина, да ја претвориме заедно во шанса за нов, подобар почеток. Не дозволувајте "болеста" да управува со вас и вашата судбина, бидете вие сами господар на својата судбина. Вие управувајте со болеста!
+const serviceColors = {
+    'opsta-medicina': '#6B4C9A',
+    'ginekologija': '#E91E63',
+    'psihijatrija': '#9C27B0',
+    'estetska-medicina': '#FF5722',
+    'laboratorija': '#2196F3',
+    'medicina-na-trud': '#4CAF50',
+    'semejna-medicina': '#00BCD4',
+};
 
-Со нас излезот за секоја ментална болест е можен. Од вас зависи кога ќе се одлучите за тој чекор! Кај нас нема омаловажување, осуди ниту критики! Кај нас ќе најдете разбирање, насочување и предлози за можни опции - нова надеж.`,
-    },
-    {
-        id: 4,
-        slug: 'estetska-medicina',
-        title: 'Ординација по Естетска Медицина',
-        shortDesc: 'Третмани за подмладување и убавина',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
-        color: '#FF5722',
-        features: [],
-        description: `Убавината и здравјето денес се испреплетени повеќе отколку што може да замислите. Секојдневниот модерен живот од Вас бара да бидете секогаш насмеани и ведри, а обврските не ви оставаат доволно време да се грижите за вашето тело.
+const defaultIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`;
 
-Надворешниот изглед е нешто што на секој човек му е многу важно. Да бидете задоволни со својот изглед е основа на самодовербата и животната енергија.
-
-Променете го својот живот, вратете го младешкиот изглед и насмевката на лицето! Ви нудиме врвни и единствени третмани со ботокс, хијалуронска киселина и мезотерапија.
-
-Единствен и брз процес со висока стручност ќе ги исполни сите ваши очекувања. Ние сме во служба на Вашата убавина и ќе ни биде задоволство да ви помогнеме. Вашето задоволство претставува круна на нашиот успех, а ние ќе се трудиме да бидеме круна на вашиот изглед.`,
-    },
-    {
-        id: 5,
-        slug: 'laboratorija',
-        title: 'Дијагностичка Лабораторија',
-        shortDesc: 'Биохемиски анализи и дијагностика',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3h6v2H9z"/><path d="M10 5v6.5L6 20h12l-4-8.5V5"/><path d="M8.5 14h7"/></svg>`,
-        color: '#2196F3',
-        features: [
-            'Собирање на 24-часовна урина',
-            'Спермограм',
-            'Одредување на железо',
-            'Одредување на липиден статус',
-            'Лабораториска анализа',
-        ],
-        description: `ПЗУ Медика располага со специјалистичка биохемиска лабораторија единствена од таков вид по опременост, кадар и простор во Југоисточниот дел на Македонија. Сертифицирана преку месечна надворешна контрола на квалитет PREVECAL за биохемија.`,
-    },
-    {
-        id: 6,
-        slug: 'medicina-na-trud',
-        title: 'Овластена Специјалистичка Ординација по Медицина на Труд',
-        shortDesc: 'Здравствени прегледи за вработување',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="6" y="10" width="12" height="12" rx="2"/><path d="M12 10v4"/><path d="M10 12h4"/></svg>`,
-        color: '#4CAF50',
-        features: [
-            'Дијагностицирање на професионални болести и болести во врска со работата',
-            'Функционално испитување на респираторниот систем - спирометрија',
-            'Peak Flow Meter - флоуметрија',
-            'Функционално испитување на слухот - аудиометрија',
-            'Испитување острина на вид - Shellenova таблица',
-        ],
-        description: `Во Овластената специјалистичка ординација по медицина на труд се извршуваат периодични здравствени прегледи, со кои се оценува нивната здравствена состојба и се дава мислење на нивната работна способност.
-
-Се издаваат Лекарски уверенија за вработување; потоа за патување, престој и школување во странство; за полагање и добивање на лиценца за обезбедување и добивање лиценца за негователка/воспитувачка.`,
-    },
-];
+// Use services from props (database) with translations
+const services = computed(() => {
+    if (props.services && props.services.length > 0) {
+        return props.services.map(service => ({
+            id: service.id,
+            slug: service.slug,
+            title: translateModel(service, 'title'),
+            shortDesc: translateModel(service, 'short_description'),
+            description: translateModel(service, 'description') || '',
+            features: translateModel(service, 'features') || service.features || [],
+            icon: serviceIcons[service.slug] || defaultIcon,
+            color: serviceColors[service.slug] || '#6B4C9A',
+        }));
+    }
+    return [];
+});
 
 const activeService = ref(null);
 
@@ -194,7 +134,7 @@ const closeModal = () => {
                                     {{ feature }}
                                 </li>
                                 <li v-if="service.features.length > 3" class="text-purple small fw-semibold">
-                                    + {{ service.features.length - 3 }} повеќе...
+                                    + {{ service.features.length - 3 }} {{ t('servicesPage.moreFeatures') }}...
                                 </li>
                             </ul>
                             
@@ -213,8 +153,8 @@ const closeModal = () => {
         <!-- CTA -->
         <section class="py-5 bg-purple text-white">
             <div class="container text-center py-4">
-                <h2 class="display-6 fw-bold mb-3">Закажете преглед денес</h2>
-                <p class="lead opacity-75 mb-4">Нашиот тим на специјалисти е тука за вас</p>
+                <h2 class="display-6 fw-bold mb-3">{{ t('servicesPage.ctaTitle') }}</h2>
+                <p class="lead opacity-75 mb-4">{{ t('servicesPage.ctaSubtitle') }}</p>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a href="tel:+38934360444" class="btn btn-light btn-lg rounded-pill px-5 py-3 text-purple fw-bold d-inline-flex align-items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -252,7 +192,7 @@ const closeModal = () => {
                     <div class="modal-body p-4">
                         <!-- Features List -->
                         <div v-if="activeService.features.length" class="mb-4">
-                            <h5 class="fw-bold mb-3 text-purple">Услуги:</h5>
+                            <h5 class="fw-bold mb-3 text-purple">{{ t('services.features') }}:</h5>
                             <ul class="feature-list-modal">
                                 <li v-for="(feature, idx) in activeService.features" :key="idx">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-success me-2">
@@ -271,7 +211,7 @@ const closeModal = () => {
                         </div>
                         
                         <a href="/contact" class="btn btn-purple rounded-pill px-4 py-2 mt-3 d-inline-flex align-items-center gap-2">
-                            <span>Закажи преглед</span>
+                            <span>{{ t('services.bookAppointment') }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14M12 5l7 7-7 7"/>
                             </svg>

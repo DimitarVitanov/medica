@@ -129,6 +129,25 @@ export const translations = {
             followUs: 'Следете нè',
             allRightsReserved: 'Сите права задржани',
         },
+        // About Us Section
+        about: {
+            badge: 'За нас',
+            title: 'Вашето здравје е наш приоритет',
+            leadText: 'ПЗУ Медика е формирана во 1993 година, како прва приватна здравствена установа во општина Струмица.',
+            description: 'Цели 30 години "ПЗУ Медика" работи во голем за зачувување и унапредување на здравјето на своите пациенти. Започна како Ординација по Општа Медицина се развиваше постепено зголемувајќи го својот број на вработени и соделници на стручност.',
+            additionalText: 'ПЗУ Медика располага со две ординации по Општа Медицина, Психијатриска ординација, Гинеколошко акушерска ординација, ординација по Трудова медицина и биохемиска лабораторија.',
+            learnMore: 'Дознај повеќе',
+            yearsExperience: 'Години искуство',
+            happyPatients: 'Задоволни пациенти',
+            specialists: 'Специјалисти',
+            clinics: 'Ординации',
+        },
+        // Services Page
+        servicesPage: {
+            ctaTitle: 'Закажете преглед денес',
+            ctaSubtitle: 'Нашиот тим на специјалисти е тука за вас',
+            moreFeatures: 'повеќе',
+        },
     },
     en: {
         // Navigation
@@ -259,6 +278,25 @@ export const translations = {
             contactInfo: 'Contact Info',
             followUs: 'Follow Us',
             allRightsReserved: 'All rights reserved',
+        },
+        // About Us Section
+        about: {
+            badge: 'About Us',
+            title: 'Your Health is Our Priority',
+            leadText: 'PZU Medica was founded in 1993 as the first private healthcare institution in the municipality of Strumica.',
+            description: 'For 30 years "PZU Medica" has been working to preserve and improve the health of its patients. It started as a General Medicine Clinic and gradually developed, increasing its number of employees and areas of expertise.',
+            additionalText: 'PZU Medica has two General Medicine clinics, a Psychiatric clinic, a Gynecological-obstetric clinic, an Occupational Medicine clinic, and a biochemical laboratory.',
+            learnMore: 'Learn More',
+            yearsExperience: 'Years of Experience',
+            happyPatients: 'Happy Patients',
+            specialists: 'Specialists',
+            clinics: 'Clinics',
+        },
+        // Services Page
+        servicesPage: {
+            ctaTitle: 'Book an Appointment Today',
+            ctaSubtitle: 'Our team of specialists is here for you',
+            moreFeatures: 'more',
         },
     },
 };

@@ -1,5 +1,8 @@
 <script setup>
 import { computed } from 'vue';
+import { useTranslate } from '@/composables/useTranslate';
+
+const { t } = useTranslate();
 
 const props = defineProps({
     aboutData: Object,
@@ -7,53 +10,44 @@ const props = defineProps({
 });
 
 const stats = computed(() => {
-    return props.statsData?.stats || [
-        { number: '27+', label: 'Години искуство' },
-        { number: '50k+', label: 'Задоволни пациенти' },
-        { number: '15+', label: 'Специјалисти' },
-        { number: '6', label: 'Ординации' },
+    return [
+        { number: '30+', label: t('about.yearsExperience') },
+        { number: '40k+', label: t('about.happyPatients') },
+        { number: '15+', label: t('about.specialists') },
+        { number: '5', label: t('about.clinics') },
     ];
 });
 
-const aboutContent = computed(() => {
-    return props.aboutData || {
-        title: 'Вашето здравје е наш приоритет',
-        lead_text: 'ПЗУ Медика е формирана во 1993 година, како прва приватна здравствена установа во општина Струмица.',
-        description: 'Цели 27 години "ПЗУ Медика" работи во голем за зачувување и унапредување на здравјето на своите пациенти.',
-        additional_text: 'ПЗУ Медика располага со две ординации по Општа Медицина, Психијатриска ординација, Гинеколошко акушерска ординација, ординација по Трудова медицина и биохемиска лабораторија.',
-    };
-});
-
-const highlights = [
+const highlights = computed(() => [
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
-        title: 'Општа Медицина',
+        title: t('services.generalMedicine'),
     },
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0 1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08A2.5 2.5 0 0 0 12 21.5V4.5Z"/><path d="M12 4.5a2.5 2.5 0 0 1 4.96-.46 2.5 2.5 0 0 1 1.98 3 2.5 2.5 0 0 1-1.32 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 21.5V4.5Z"/></svg>`,
-        title: 'Психијатрија',
+        title: t('services.psychiatry'),
     },
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 15v6"/><path d="M9 18h6"/></svg>`,
-        title: 'Гинекологија',
+        title: t('services.gynecology'),
     },
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v2H9z"/><path d="M10 5v6.5L6 20h12l-4-8.5V5"/><path d="M8.5 14h7"/></svg>`,
-        title: 'Лабораторија',
+        title: t('services.laboratory'),
     },
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/><path d="M12 12h.01"/></svg>`,
-        title: 'Трудова Медицина',
+        title: t('services.occupationalMedicine'),
     },
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-        title: 'Семејна Медицина',
+        title: t('services.familyMedicine'),
     },
     {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>`,
-        title: 'Естетска Медицина',
+        title: t('services.aestheticMedicine'),
     },
-];
+]);
 </script>
 
 <template>
@@ -64,24 +58,25 @@ const highlights = [
                 <!-- Left Side - Content -->
                 <div class="col-lg-7">
                     <div class="about-content">
-                        <span class="section-badge">За нас</span>
-                        <h2 class="section-title" v-html="aboutContent.title?.replace(' наш приоритет', ' <span class=\'highlight\'>наш приоритет</span>') || 'Вашето здравје е <span class=\'highlight\'>наш приоритет</span>'">
+                        <span class="section-badge">{{ t('about.badge') }}</span>
+                        <h2 class="section-title">
+                            {{ t('about.title') }}
                         </h2>
                         
                         <p class="lead-text">
-                            {{ aboutContent.lead_text }}
+                            {{ t('about.leadText') }}
                         </p>
                         
                         <p class="body-text">
-                            {{ aboutContent.description }}
+                            {{ t('about.description') }}
                         </p>
                         
                         <p class="body-text mb-4">
-                            {{ aboutContent.additional_text }}
+                            {{ t('about.additionalText') }}
                         </p>
                         
                         <a href="/services" class="btn-learn-more">
-                            <span>Дознај повеќе</span>
+                            <span>{{ t('about.learnMore') }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14M12 5l7 7-7 7"/>
                             </svg>

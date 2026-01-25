@@ -10,7 +10,7 @@ class Service extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected array $translatable = ['title', 'short_description', 'description'];
+    protected array $translatable = ['title', 'short_description', 'description', 'features'];
 
     protected $fillable = [
         'title',
