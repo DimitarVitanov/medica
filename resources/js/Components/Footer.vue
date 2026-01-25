@@ -105,7 +105,7 @@ const currentYear = new Date().getFullYear();
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple flex-shrink-0 mt-1">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                             </svg>
-                            <span class="text-white-50 small">{{ contact.address }}</span>
+                            <span class="text-white-50 small">{{ t('footer.address') }}</span>
                         </li>
                         <li class="d-flex align-items-start gap-2 mb-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple flex-shrink-0 mt-1">
@@ -148,12 +148,14 @@ const currentYear = new Date().getFullYear();
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">
                     <p class="text-white-50 small mb-0">
-                        © {{ currentYear }} <strong class="text-white">ПЗУ Медика</strong>. {{ t('footer.allRightsReserved') }}.
+                        © {{ currentYear }} <strong class="text-white">{{ t('footer.clinicName') }}</strong>. {{ t('footer.allRightsReserved') }}.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <!--
                     <a href="/privacy" class="text-white-50 text-decoration-none small me-3 link-hover">Политика на приватност</a>
                     <a href="/terms" class="text-white-50 text-decoration-none small link-hover">Услови за користење</a>
+                    -->
                 </div>
             </div>
         </div>

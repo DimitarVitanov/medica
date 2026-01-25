@@ -139,6 +139,8 @@ export const translations = {
             contactInfo: 'Контакт информации',
             followUs: 'Следете нè',
             allRightsReserved: 'Сите права задржани',
+            address: 'ул. Вачо Китанов бр. 19, Струмица',
+            clinicName: 'ПЗУ Медика',
         },
         // About Us Section
         about: {
@@ -304,6 +306,8 @@ export const translations = {
             contactInfo: 'Contact Info',
             followUs: 'Follow Us',
             allRightsReserved: 'All rights reserved',
+            address: 'Vanjo Kitanov St. 19, Strumica',
+            clinicName: 'PZU Medica',
         },
         // About Us Section
         about: {
