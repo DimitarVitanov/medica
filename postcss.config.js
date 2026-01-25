@@ -59,6 +59,7 @@ export default {
                         /^lh-/,
                         /^overflow-/,
                         /^opacity-/,
+                        /^swiper/,
                     ],
                 },
             },
