@@ -3,23 +3,44 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Preconnect FIRST - before any external requests -->
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+        <link rel="dns-prefetch" href="https://fonts.bunny.net">
+        
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title inertia>{{ config('app.name', 'ПЗУ Медика') }}</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/webp" href="/images/logo.webp">
-
-        <!-- Preconnect to external domains -->
-        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
         
-        <!-- Preload critical fonts -->
+        <!-- Critical CSS inline for faster FCP -->
+        <style>
+            .container{width:100%;padding-right:var(--bs-gutter-x,.75rem);padding-left:var(--bs-gutter-x,.75rem);margin-right:auto;margin-left:auto}
+            @media(min-width:576px){.container{max-width:540px}}
+            @media(min-width:768px){.container{max-width:720px}}
+            @media(min-width:992px){.container{max-width:960px}}
+            @media(min-width:1200px){.container{max-width:1140px}}
+            @media(min-width:1400px){.container{max-width:1320px}}
+            .row{display:flex;flex-wrap:wrap;margin-right:calc(-.5*var(--bs-gutter-x));margin-left:calc(-.5*var(--bs-gutter-x))}
+            .col-12,.col-lg-6{flex:0 0 auto;width:100%}
+            @media(min-width:992px){.col-lg-6{width:50%}}
+            .d-flex{display:flex!important}.align-items-center{align-items:center!important}.justify-content-center{justify-content:center!important}
+            .position-relative{position:relative!important}.position-fixed{position:fixed!important}.w-100{width:100%!important}
+            .text-white{color:#fff!important}.text-center{text-align:center!important}
+            .py-3{padding-top:.75rem!important;padding-bottom:.75rem!important}
+            .navbar{--bs-navbar-padding-y:.5rem;position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}
+        </style>
+
+        <!-- Bootstrap CSS - load async -->
+        <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+        
+        <!-- Fonts - load async -->
         <link rel="preload" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet"></noscript>
-
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Preload hero image for LCP optimization -->
         @if(isset($page['props']['sliders']) && count($page['props']['sliders']) > 0)
