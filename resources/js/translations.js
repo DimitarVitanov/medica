@@ -306,7 +306,7 @@ export const translations = {
             contactInfo: 'Contact Info',
             followUs: 'Follow Us',
             allRightsReserved: 'All rights reserved',
-            address: 'Vanjo Kitanov St. 19, Strumica',
+            address: 'Vancho Kitanov No. 19, Strumica',
             clinicName: 'PZU Medica',
         },
         // About Us Section
