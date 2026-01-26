@@ -42,10 +42,10 @@ const locations = computed(() => {
     
     // Fallback with translations
     return [
-        { id: 1, title: t('workingHours.title'), department: t('services.generalPsychiatric'), hours: `${t('workingHours.monFri')}: 08:00 - 15:00`, address: t('addresses.vanjoKitanov'), phone: '034-360-444' },
+        { id: 1, title: t('workingHours.title'), department: t('services.generalPsychiatric'), hours: `${t('workingHours.monFri')}: 08:00 - 15:00`, address: t('addresses.vanjoKitanov'), phone: '034-340-444' },
         { id: 2, title: t('workingHours.title'), department: t('services.generalLabor'), hours: `${t('workingHours.monFri')}: 08:00 - 20:00`, doctor: t('addresses.ganchePeshev'), phone: '034-326-301' },
         { id: 3, title: t('workingHours.title'), department: t('services.gynecology'), hours: `${t('workingHours.monFri')}: 09:00 - 16:00`, address: t('addresses.blagojJankov'), phone: '034-322-991' },
-        { id: 4, title: t('workingHours.title'), department: t('services.laboratory'), hours: `${t('workingHours.monFri')}: 08:00 - 16:00`, address: t('addresses.bratstvoEdinstvo'), phone: '034-323-444' },
+        { id: 4, title: t('workingHours.title'), department: t('services.laboratory'), hours: `${t('workingHours.monFri')}: 08:00 - 16:00`, address: t('addresses.bratstvoEdinstvo'), phone: '034-320-444' },
         { id: 5, title: t('workingHours.title'), department: t('services.aestheticMedicine'), hours: `${t('workingHours.monFri')}: 08:00 - 16:00`, address: t('addresses.bratstvoEdinstvo'), phone: '034-320-444' },
     ];
 });
