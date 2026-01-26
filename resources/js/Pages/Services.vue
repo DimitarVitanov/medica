@@ -15,6 +15,7 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    workingHours: Object,
     socialLinks: Object,
 });
 
@@ -169,9 +170,9 @@ const closeModal = () => {
             </div>
         </section>
         
-        <Footer :socialLinks="socialLinks" />
+        <Footer :socialLinks="socialLinks" @open-appointment="showAppointmentModal = true" />
         
-        <AppointmentModal :show="showAppointmentModal" @close="showAppointmentModal = false" />
+        <AppointmentModal :show="showAppointmentModal" :workingHours="workingHours" @close="showAppointmentModal = false" />
         
         <!-- Service Modal -->
         <Teleport to="body">
@@ -210,12 +211,12 @@ const closeModal = () => {
                             </p>
                         </div>
                         
-                        <a href="/contact" class="btn btn-purple rounded-pill px-4 py-2 mt-3 d-inline-flex align-items-center gap-2">
+                        <button @click="closeModal(); showAppointmentModal = true;" class="btn btn-purple rounded-pill px-4 py-2 mt-3 d-inline-flex align-items-center gap-2">
                             <span>{{ t('services.bookAppointment') }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14M12 5l7 7-7 7"/>
                             </svg>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

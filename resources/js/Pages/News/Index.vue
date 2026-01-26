@@ -15,6 +15,7 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    workingHours: Object,
     socialLinks: Object,
 });
 
@@ -190,9 +191,9 @@ const blogs = computed(() => {
             </div>
         </section>
         
-        <Footer :socialLinks="socialLinks" />
+        <Footer :socialLinks="socialLinks" @open-appointment="showAppointmentModal = true" />
         
-        <AppointmentModal :show="showAppointmentModal" @close="showAppointmentModal = false" />
+        <AppointmentModal :show="showAppointmentModal" :workingHours="workingHours" @close="showAppointmentModal = false" />
     </div>
 </template>
 

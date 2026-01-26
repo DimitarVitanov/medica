@@ -45,6 +45,7 @@ Route::get('/', function () {
 Route::get('/services', function () {
     return Inertia::render('Services', [
         'services' => Service::with('translations')->active()->ordered()->get(),
+        'workingHours' => Section::getData('working_hours'),
         'socialLinks' => [
             'facebook' => Setting::get('facebook_url', ''),
             'instagram' => Setting::get('instagram_url', ''),
@@ -55,6 +56,7 @@ Route::get('/services', function () {
 Route::get('/news', function () {
     return Inertia::render('News/Index', [
         'blogs' => Blog::with('translations')->published()->latest()->get(),
+        'workingHours' => Section::getData('working_hours'),
         'socialLinks' => [
             'facebook' => Setting::get('facebook_url', ''),
             'instagram' => Setting::get('instagram_url', ''),
@@ -68,6 +70,7 @@ Route::get('/news/{slug}', function ($slug) {
     return Inertia::render('News/Show', [
         'blog' => $blog,
         'relatedBlogs' => Blog::with('translations')->published()->where('id', '!=', $blog->id)->take(2)->get(),
+        'workingHours' => Section::getData('working_hours'),
         'socialLinks' => [
             'facebook' => Setting::get('facebook_url', ''),
             'instagram' => Setting::get('instagram_url', ''),

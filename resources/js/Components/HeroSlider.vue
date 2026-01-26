@@ -11,6 +11,8 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['openAppointment']);
+
 const getImageUrl = (image) => {
     if (!image) return 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop';
     if (image.startsWith('http')) return image;
@@ -128,7 +130,18 @@ onUnmounted(() => {
                                 <p class="hero-description mb-4">{{ slides[currentSlide].description }}</p>
                                 
                                 <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
-                                    <a :href="slides[currentSlide].button_link || '/contact'" class="btn btn-purple rounded-pill px-4 py-2">
+                                    <button 
+                                        v-if="!slides[currentSlide].button_link || slides[currentSlide].button_link === '/contact'"
+                                        @click="emit('openAppointment')" 
+                                        class="btn btn-purple rounded-pill px-4 py-2"
+                                    >
+                                        {{ slides[currentSlide].button_text || t('services.bookAppointment') }}
+                                    </button>
+                                    <a 
+                                        v-else
+                                        :href="slides[currentSlide].button_link" 
+                                        class="btn btn-purple rounded-pill px-4 py-2"
+                                    >
                                         {{ slides[currentSlide].button_text || t('services.bookAppointment') }}
                                     </a>
                                     <a :href="slides[currentSlide].button2_link || '/services'" class="btn btn-light-outline rounded-pill px-4 py-2">

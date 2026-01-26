@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useTranslate } from '@/composables/useTranslate';
+import { usePage } from '@inertiajs/vue3';
 
 const { t } = useTranslate();
+const page = usePage();
 
 const props = defineProps({
     show: Boolean,
@@ -11,13 +13,37 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 
-const departments = computed(() => [
-    { name: t('services.generalPsychiatric'), phone: '034-360-444', hours: `${t('workingHours.monFri')}: 08:00 - 15:00` },
-    { name: t('services.generalLabor'), phone: '034-326-301', hours: `${t('workingHours.monFri')}: 08:00 - 20:00` },
-    { name: t('services.gynecology'), phone: '034-322-991', hours: `${t('workingHours.monFri')}: 09:00 - 16:00` },
-    { name: t('services.laboratory'), phone: '034-323-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
-    { name: t('services.aestheticMedicine'), phone: '034-320-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
-]);
+// Get current locale
+const currentLocale = computed(() => page.props.locale || 'mk');
+const isEnglish = computed(() => currentLocale.value === 'en');
+
+// Get translated field based on locale
+const getLocalizedField = (loc, field) => {
+    if (isEnglish.value && loc[`${field}_en`]) {
+        return loc[`${field}_en`];
+    }
+    return loc[field] || '';
+};
+
+const departments = computed(() => {
+    // If workingHours with locations is passed from admin, use it
+    if (props.workingHours?.locations && props.workingHours.locations.length > 0) {
+        return props.workingHours.locations.map((loc) => ({
+            name: getLocalizedField(loc, 'department'),
+            phone: loc.phone || '034-340-444',
+            hours: getLocalizedField(loc, 'hours'),
+        }));
+    }
+    
+    // Fallback with translations
+    return [
+        { name: t('services.generalPsychiatric'), phone: '034-340-444', hours: `${t('workingHours.monFri')}: 08:00 - 15:00` },
+        { name: t('services.generalLabor'), phone: '034-326-301', hours: `${t('workingHours.monFri')}: 08:00 - 20:00` },
+        { name: t('services.gynecology'), phone: '034-322-991', hours: `${t('workingHours.monFri')}: 09:00 - 16:00` },
+        { name: t('services.laboratory'), phone: '034-320-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
+        { name: t('services.aestheticMedicine'), phone: '034-320-444', hours: `${t('workingHours.monFri')}: 08:00 - 16:00` },
+    ];
+});
 
 const close = () => {
     emit('close');

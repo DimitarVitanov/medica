@@ -40,7 +40,7 @@ const showAppointmentModal = ref(false);
     
     <div>
         <Navbar :logo-height="100" active-link="home" @open-appointment="showAppointmentModal = true" />
-        <HeroSlider :sliders="sliders" />
+        <HeroSlider :sliders="sliders" @open-appointment="showAppointmentModal = true" />
         <div data-animate="fade-up">
             <AboutUs :aboutData="aboutUs" :statsData="stats" />
         </div>
@@ -51,8 +51,8 @@ const showAppointmentModal = ref(false);
             <NewsSection :blogs="blogs" />
         </div>
         <WorkingHours :workingData="workingHours" />
-        <Footer :contactData="contactInfo" :socialLinks="socialLinks" />
+        <Footer :contactData="contactInfo" :socialLinks="socialLinks" @open-appointment="showAppointmentModal = true" />
         
-        <AppointmentModal :show="showAppointmentModal" @close="showAppointmentModal = false" />
+        <AppointmentModal :show="showAppointmentModal" :workingHours="workingHours" @close="showAppointmentModal = false" />
     </div>
 </template>
