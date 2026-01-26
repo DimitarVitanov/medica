@@ -126,7 +126,6 @@ const currentYear = new Date().getFullYear();
                             <div class="text-white-50 small">
                                 <strong class="text-white d-block mb-1">{{ t('contact.workingHours') }}</strong>
                                 <span>{{ t('contact.monFri') }}: 08:00 - 20:00</span><br>
-                                <span>{{ t('contact.sat') }}: 08:00 - 14:00</span>
                             </div>
                         </li>
                     </ul>
