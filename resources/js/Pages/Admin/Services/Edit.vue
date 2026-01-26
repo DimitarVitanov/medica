@@ -73,9 +73,10 @@ const removeFeatureEn = (index) => {
 };
 
 const submit = () => {
-    form.post(`/admin/services/${props.service.id}`, {
+    form.transform((data) => ({
+        ...data,
         _method: 'PUT',
-    });
+    })).post(`/admin/services/${props.service.id}`);
 };
 </script>
 
