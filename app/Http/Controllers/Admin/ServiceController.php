@@ -34,6 +34,11 @@ class ServiceController extends Controller
             'image' => 'nullable|image|max:2048',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
+            // English translations
+            'title_en' => 'nullable|string|max:255',
+            'short_description_en' => 'nullable|string|max:500',
+            'description_en' => 'nullable|string',
+            'features_en' => 'nullable|array',
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
@@ -42,7 +47,25 @@ class ServiceController extends Controller
             $validated['image'] = $request->file('image')->store('services', 'public');
         }
 
-        Service::create($validated);
+        // Extract English translations before creating
+        $translations = [
+            'title' => $request->input('title_en'),
+            'short_description' => $request->input('short_description_en'),
+            'description' => $request->input('description_en'),
+            'features' => $request->input('features_en') ? json_encode($request->input('features_en')) : null,
+        ];
+
+        // Remove translation fields from validated data
+        unset($validated['title_en'], $validated['short_description_en'], $validated['description_en'], $validated['features_en']);
+
+        $service = Service::create($validated);
+
+        // Save English translations
+        foreach ($translations as $field => $value) {
+            if ($value !== null && $value !== '') {
+                $service->setTranslation($field, 'en', $value);
+            }
+        }
 
         return redirect()->route('admin.services.index')
             ->with('success', 'Услугата е успешно креирана.');
@@ -51,7 +74,7 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         return Inertia::render('Admin/Services/Edit', [
-            'service' => $service,
+            'service' => $service->load('translations'),
         ]);
     }
 
@@ -67,6 +90,11 @@ class ServiceController extends Controller
             'image' => 'nullable|image|max:2048',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
+            // English translations
+            'title_en' => 'nullable|string|max:255',
+            'short_description_en' => 'nullable|string|max:500',
+            'description_en' => 'nullable|string',
+            'features_en' => 'nullable|array',
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
@@ -75,7 +103,25 @@ class ServiceController extends Controller
             $validated['image'] = $request->file('image')->store('services', 'public');
         }
 
+        // Extract English translations before updating
+        $translations = [
+            'title' => $request->input('title_en'),
+            'short_description' => $request->input('short_description_en'),
+            'description' => $request->input('description_en'),
+            'features' => $request->input('features_en') ? json_encode($request->input('features_en')) : null,
+        ];
+
+        // Remove translation fields from validated data
+        unset($validated['title_en'], $validated['short_description_en'], $validated['description_en'], $validated['features_en']);
+
         $service->update($validated);
+
+        // Save English translations
+        foreach ($translations as $field => $value) {
+            if ($value !== null && $value !== '') {
+                $service->setTranslation($field, 'en', $value);
+            }
+        }
 
         return redirect()->route('admin.services.index')
             ->with('success', 'Услугата е успешно ажурирана.');
