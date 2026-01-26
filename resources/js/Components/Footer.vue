@@ -12,7 +12,7 @@ const props = defineProps({
 
 const contact = computed(() => {
     return props.contactData || {
-        phone: '034-360-444',
+        phone: '075-214-016',
         email: 'info@medica.mk',
         address: 'ул. Вањо Китанов бр. 19, Струмица',
     };
