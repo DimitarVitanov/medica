@@ -232,7 +232,7 @@ const closeModal = () => {
 
 /* Header */
 .page-header {
-    background: linear-gradient(135deg, #6B4C9A 0%, #8B6BAE 100%);
+    background: linear-gradient(135deg, #9B7BC0 0%, #B89AD4 100%);
     padding-top: 100px;
     padding-bottom: 2rem;
 }
