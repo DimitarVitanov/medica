@@ -99,7 +99,16 @@ const highlights = computed(() => [
                     </div>
                 </div>
             </div>
-            
+                <div class="col-lg-12 text-center ">
+                    <p class="section-label">{{ t('home.ourServices').toUpperCase() }}</p>
+                    <h2 class="section-heading">{{ t('home.servicesSubtitle') }}</h2>
+                </div>
+                <div class="col-lg-12 text-center  ">
+                    <Link href="/services" class="view-all-link">
+                        {{ t('common.viewAll') }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </Link>
+                </div>
             <!-- Bottom Row: Services as horizontal pills -->
             <div class="services-row">
                 <a 
@@ -387,7 +396,43 @@ const highlights = computed(() => [
     background-size: 15px 15px;
     z-index: 1;
 }
+.view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6B4C9A;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
 
+.view-all-link:hover {
+    color: #8B6BAE;
+    gap: 0.75rem;
+}
+
+.section-label {
+    color: #6B4C9A;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+}
+
+.section-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2D2D2D;
+    line-height: 1.2;
+}
+
+.section-heading span {
+    background: linear-gradient(135deg, #6B4C9A 0%, #8B6BAE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 /* Responsive */
 @media (max-width: 991px) {
     .section-title {

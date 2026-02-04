@@ -44,7 +44,7 @@ const showAppointmentModal = ref(false);
         <div data-animate="fade-up">
             <AboutUs :aboutData="aboutUs" :statsData="stats" />
         </div>
-        <div data-animate="fade-up">
+        <div data-animate="fade-up" class="d-none">
             <ServicesSection :services="services" />
         </div>
         <div data-animate="fade-up">
