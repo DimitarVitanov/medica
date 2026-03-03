@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Models\Service;
 use App\Models\Blog;
 use App\Models\Slider;
@@ -90,6 +92,7 @@ Route::get('/contact', function () {
 });
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe.store');
 
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -113,6 +116,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
     Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
+
+    Route::get('/subscribers', [AdminSubscriberController::class, 'index'])->name('subscribers.index');
+    Route::delete('/subscribers/{subscriber}', [AdminSubscriberController::class, 'destroy'])->name('subscribers.destroy');
 });
 
 // Profile Routes

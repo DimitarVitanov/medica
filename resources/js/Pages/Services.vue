@@ -4,6 +4,7 @@ import { ref, computed } from 'vue';
 import Navbar from '@/Components/Navbar.vue';
 import Footer from '@/Components/Footer.vue';
 import AppointmentModal from '@/Components/AppointmentModal.vue';
+import NewsletterSubscription from '@/Components/NewsletterSubscription.vue';
 import { useTranslate } from '@/composables/useTranslate';
 import { useScrollAnimation } from '@/composables/useScrollAnimation';
 
@@ -151,24 +152,8 @@ const closeModal = () => {
             </div>
         </section>
         
-        <!-- CTA -->
-        <section class="py-5 bg-purple text-white">
-            <div class="container text-center py-4">
-                <h2 class="display-6 fw-bold mb-3">{{ t('servicesPage.ctaTitle') }}</h2>
-                <p class="lead opacity-75 mb-4">{{ t('servicesPage.ctaSubtitle') }}</p>
-                <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a href="tel:+38934360444" class="btn btn-light btn-lg rounded-pill px-5 py-3 text-purple fw-bold d-inline-flex align-items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                        </svg>
-                        <span>075-214-016</span>
-                    </a>
-                    <a href="/contact" class="btn btn-outline-light btn-lg rounded-pill px-5 py-3 d-inline-flex align-items-center gap-2">
-                        <span>{{ t('common.contactUs') }}</span>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <!-- Newsletter Subscription -->
+        <NewsletterSubscription />
         
         <Footer :socialLinks="socialLinks" @open-appointment="showAppointmentModal = true" />
         

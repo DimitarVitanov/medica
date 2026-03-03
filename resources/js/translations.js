@@ -81,7 +81,7 @@ export const translations = {
             title: 'Услуги',
             subtitle: 'Комплетна здравствена грижа',
             features: 'Карактеристики',
-            bookAppointment: 'Закажи преглед',
+            bookAppointment: 'Контакт',
             generalMedicine: 'Општа Медицина',
             psychiatry: 'Психијатрија',
             gynecology: 'Гинекологија',
@@ -160,6 +160,18 @@ export const translations = {
             ctaTitle: 'Закажете преглед денес',
             ctaSubtitle: 'Нашиот тим на специјалисти е тука за вас',
             moreFeatures: 'повеќе',
+        },
+        // Newsletter
+        newsletter: {
+            title: 'Претплатете се на нашиот билтен',
+            subtitle: 'Добивајте најнови информации за здравјето, совети и промоции директно на вашата е-пошта.',
+            placeholder: 'Внесете ја вашата е-пошта',
+            subscribe: 'Претплати се',
+            subscribing: 'Се претплаќа...',
+            successTitle: 'Ви благодариме за претплатата!',
+            successMessage: 'Успешно се претплативте на нашиот билтен. Ќе ве известуваме за најновите вести и промоции.',
+            alreadySubscribed: 'Оваа е-пошта е веќе претплатена.',
+            invalidEmail: 'Внесете валидна е-пошта адреса.',
         },
         // News Page
         newsPage: {
@@ -327,6 +339,18 @@ export const translations = {
             ctaTitle: 'Book an Appointment Today',
             ctaSubtitle: 'Our team of specialists is here for you',
             moreFeatures: 'more',
+        },
+        // Newsletter
+        newsletter: {
+            title: 'Subscribe to our newsletter',
+            subtitle: 'Get the latest health information, tips and promotions delivered straight to your inbox.',
+            placeholder: 'Enter your email',
+            subscribe: 'Subscribe',
+            subscribing: 'Subscribing...',
+            successTitle: 'Thank you for subscribing!',
+            successMessage: 'You have successfully subscribed to our newsletter. We will keep you updated with the latest news and promotions.',
+            alreadySubscribed: 'This email is already subscribed.',
+            invalidEmail: 'Please enter a valid email address.',
         },
         // News Page
         newsPage: {

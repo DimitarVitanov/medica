@@ -7,6 +7,7 @@ import AboutUs from '@/Components/AboutUs.vue';
 import ServicesSection from '@/Components/ServicesSection.vue';
 import NewsSection from '@/Components/NewsSection.vue';
 import WorkingHours from '@/Components/WorkingHours.vue';
+import NewsletterSubscription from '@/Components/NewsletterSubscription.vue';
 import Footer from '@/Components/Footer.vue';
 import AppointmentModal from '@/Components/AppointmentModal.vue';
 import { useScrollAnimation } from '@/composables/useScrollAnimation';
@@ -51,6 +52,9 @@ const showAppointmentModal = ref(false);
             <NewsSection :blogs="blogs" />
         </div>
         <WorkingHours :workingData="workingHours" />
+        <div data-animate="fade-up">
+            <NewsletterSubscription variant="light" />
+        </div>
         <Footer :contactData="contactInfo" :socialLinks="socialLinks" @open-appointment="showAppointmentModal = true" />
         
         <AppointmentModal :show="showAppointmentModal" :workingHours="workingHours" @close="showAppointmentModal = false" />
