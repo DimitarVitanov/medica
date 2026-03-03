@@ -74,7 +74,7 @@ const submit = () => {
                             :disabled="form.processing"
                         >
                             <span v-if="form.processing">{{ t('newsletter.subscribing') }}</span>
-                            <span v-else class="d-flex align-items-center gap-2">
+                            <span v-else class="d-flex align-items-center justify-content-center gap-2">
                                 {{ t('newsletter.subscribe') }}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <line x1="5" y1="12" x2="19" y2="12"/>
@@ -187,6 +187,11 @@ const submit = () => {
         width: 100%;
         display: flex !important;
         align-items: center;
+        justify-content: center;
+    }
+
+    .newsletter-form .btn span {
+        width: 100%;
         justify-content: center;
     }
 }
