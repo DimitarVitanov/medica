@@ -303,14 +303,14 @@ class DatabaseSeeder extends Seeder
                 'title' => 'ULTRASOUND',
                 'subtitle' => 'Precise diagnostics for all ages',
                 'description' => 'State-of-the-art ultrasound diagnostics with an experienced team of specialists',
-                'button_text' => 'Book Appointment',
+                'button_text' => 'Contact',
                 'button2_text' => 'More Information',
             ],
             2 => [
                 'title' => 'LABORATORY',
                 'subtitle' => 'Fast and accurate results',
                 'description' => 'Modern biochemical laboratory with certified quality',
-                'button_text' => 'Book Appointment',
+                'button_text' => 'Contact',
                 'button2_text' => 'More Information',
             ],
         ];
