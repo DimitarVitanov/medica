@@ -141,6 +141,7 @@ export const translations = {
             allRightsReserved: 'Сите права задржани',
             address: 'ул. Вачо Китанов бр. 19, Струмица',
             clinicName: 'ПЗУ Медика',
+            privacyPolicy: 'Политика на приватност',
         },
         // About Us Section
         about: {
@@ -320,6 +321,7 @@ export const translations = {
             allRightsReserved: 'All rights reserved',
             address: 'Vancho Kitanov No. 19, Strumica',
             clinicName: 'PZU Medica',
+            privacyPolicy: 'Privacy Policy',
         },
         // About Us Section
         about: {

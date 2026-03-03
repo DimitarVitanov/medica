@@ -91,6 +91,15 @@ Route::get('/contact', function () {
     ]);
 });
 
+Route::get('/privacy-policy', function () {
+    return Inertia::render('PrivacyPolicy', [
+        'socialLinks' => [
+            'facebook' => Setting::get('facebook_url', ''),
+            'instagram' => Setting::get('instagram_url', ''),
+        ],
+    ]);
+});
+
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe.store');
 

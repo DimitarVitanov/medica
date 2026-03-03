@@ -151,10 +151,7 @@ const currentYear = new Date().getFullYear();
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-                    <!--
-                    <a href="/privacy" class="text-white-50 text-decoration-none small me-3 link-hover">Политика на приватност</a>
-                    <a href="/terms" class="text-white-50 text-decoration-none small link-hover">Услови за користење</a>
-                    -->
+                    <Link href="/privacy-policy" class="text-white-50 text-decoration-none small link-hover">{{ t('footer.privacyPolicy') }}</Link>
                 </div>
             </div>
         </div>

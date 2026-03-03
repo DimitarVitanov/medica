@@ -166,18 +166,28 @@ const submit = () => {
 }
 
 @media (max-width: 575px) {
+    .newsletter-form {
+        max-width: 100%;
+        padding: 0 0.5rem;
+    }
+
     .newsletter-form .input-group {
         flex-direction: column;
+        width: 100%;
     }
     
     .newsletter-input {
         border-radius: 50px !important;
         margin-bottom: 0.75rem;
+        width: 100% !important;
     }
     
     .newsletter-form .btn {
         border-radius: 50px !important;
         width: 100%;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>
