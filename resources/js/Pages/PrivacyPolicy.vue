@@ -51,7 +51,7 @@ const props = defineProps({
                                         <li class="mb-2"><strong>Адреса:</strong> ул. Панче Пешев бр. 3, Струмица</li>
                                         <li class="mb-2"><strong>ЕМБС:</strong> 4833392</li>
                                         <li class="mb-2"><strong>ЕДБ:</strong> 4027994116762</li>
-                                        <li class="mb-2"><strong>Е-пошта:</strong> info@medica.mk</li>
+                                        <li class="mb-2"><strong>Е-пошта:</strong> pzumedika@medica.mk</li>
                                         <li><strong>Телефон:</strong> 034-360-444</li>
                                     </ul>
                                 </div>
@@ -132,7 +132,7 @@ const props = defineProps({
                                         <li class="mb-2"><strong>Address:</strong> Panche Peshev St. No. 3, Strumica</li>
                                         <li class="mb-2"><strong>EMBS:</strong> 4833392</li>
                                         <li class="mb-2"><strong>EDB (Tax Number):</strong> 4027994116762</li>
-                                        <li class="mb-2"><strong>Email:</strong> info@medica.mk</li>
+                                        <li class="mb-2"><strong>Email:</strong> pzumedika@medica.mk</li>
                                         <li><strong>Phone:</strong> 034-360-444</li>
                                     </ul>
                                 </div>
