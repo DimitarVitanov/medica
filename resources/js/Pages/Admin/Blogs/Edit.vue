@@ -1,27 +1,51 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 const props = defineProps({
     blog: Object,
 });
 
+const formatDate = (date) => {
+    if (!date) return new Date().toISOString().split('T')[0];
+    return new Date(date).toISOString().split('T')[0];
+};
+
 const form = useForm({
-    _method: 'PUT',
     title: props.blog.title,
     author: props.blog.author,
     category: props.blog.category,
     excerpt: props.blog.excerpt || '',
     content: props.blog.content,
     image: null,
-    published_at: props.blog.published_at || new Date().toISOString().split('T')[0],
+    published_at: formatDate(props.blog.published_at),
     is_published: props.blog.is_published,
 });
 
 const categories = ['Здравје', 'Естетика', 'Дијагностика', 'Известувања', 'Совети'];
 
+const converting = ref(false);
+
+const isWebp = computed(() => {
+    return props.blog.image && props.blog.image.toLowerCase().endsWith('.webp');
+});
+
+const imageUrl = computed(() => {
+    if (!props.blog.image) return null;
+    return `/storage/${props.blog.image}`;
+});
+
 const submit = () => {
     form.post(`/admin/blogs/${props.blog.id}`);
+};
+
+const convertToWebp = () => {
+    converting.value = true;
+    router.post(`/admin/blogs/${props.blog.id}/convert-image`, {}, {
+        preserveScroll: true,
+        onFinish: () => { converting.value = false; },
+    });
 };
 </script>
 
@@ -73,8 +97,32 @@ const submit = () => {
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Слика</label>
-                                <input type="file" @input="form.image = $event.target.files[0]" class="form-control">
-                                <small v-if="blog.image" class="text-muted">Тековна: {{ blog.image }}</small>
+                                <input type="file" @input="form.image = $event.target.files[0]" class="form-control" accept="image/*">
+                                <div v-if="form.errors.image" class="text-danger small mt-1">{{ form.errors.image }}</div>
+
+                                <!-- Current Image Preview -->
+                                <div v-if="blog.image" class="mt-3 p-3 bg-light rounded">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <small class="text-muted fw-semibold">Тековна слика:</small>
+                                        <span class="badge" :class="isWebp ? 'bg-success' : 'bg-warning text-dark'">
+                                            {{ isWebp ? 'WebP' : blog.image.split('.').pop().toUpperCase() }}
+                                        </span>
+                                    </div>
+                                    <img :src="imageUrl" :alt="blog.title" class="img-fluid rounded mb-2" style="max-height: 200px;">
+                                    <div class="d-flex align-items-center gap-2 mt-2">
+                                        <small class="text-muted text-truncate flex-grow-1">{{ blog.image }}</small>
+                                        <button
+                                            v-if="!isWebp"
+                                            type="button"
+                                            @click="convertToWebp"
+                                            :disabled="converting"
+                                            class="btn btn-sm btn-outline-success flex-shrink-0"
+                                        >
+                                            <span v-if="converting" class="spinner-border spinner-border-sm me-1"></span>
+                                            {{ converting ? 'Конвертирање...' : 'Конвертирај во WebP' }}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row mb-4">

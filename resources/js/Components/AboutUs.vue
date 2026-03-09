@@ -10,6 +10,10 @@ const props = defineProps({
 });
 
 const stats = computed(() => {
+    if (props.statsData?.stats && props.statsData.stats.length > 0) {
+        return props.statsData.stats;
+    }
+    // Fallback if no DB data
     return [
         { number: '30+', label: t('about.yearsExperience') },
         { number: '40k+', label: t('about.happyPatients') },

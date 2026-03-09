@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -30,7 +32,7 @@ class BlogController extends Controller
             'category' => 'required|string|max:100',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
@@ -38,7 +40,7 @@ class BlogController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('blogs', 'public');
+            $validated['image'] = ImageHelper::storeAsWebp($request->file('image'), 'blogs');
         }
 
         Blog::create($validated);
@@ -62,7 +64,7 @@ class BlogController extends Controller
             'category' => 'required|string|max:100',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
@@ -70,7 +72,13 @@ class BlogController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('blogs', 'public');
+            // Delete old image
+            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+                Storage::disk('public')->delete($blog->image);
+            }
+            $validated['image'] = ImageHelper::storeAsWebp($request->file('image'), 'blogs');
+        } else {
+            unset($validated['image']);
         }
 
         $blog->update($validated);
@@ -79,8 +87,35 @@ class BlogController extends Controller
             ->with('success', 'Блогот е успешно ажуриран.');
     }
 
+    /**
+     * Convert an existing blog image to WebP format.
+     */
+    public function convertImage(Blog $blog)
+    {
+        if (!$blog->image) {
+            return back()->with('error', 'Блогот нема слика.');
+        }
+
+        if (str_ends_with(strtolower($blog->image), '.webp')) {
+            return back()->with('success', 'Сликата е веќе во WebP формат.');
+        }
+
+        $newPath = ImageHelper::convertToWebp($blog->image);
+
+        if ($newPath) {
+            $blog->update(['image' => $newPath]);
+            return back()->with('success', 'Сликата е успешно конвертирана во WebP формат.');
+        }
+
+        return back()->with('error', 'Грешка при конвертирање на сликата.');
+    }
+
     public function destroy(Blog $blog)
     {
+        if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+            Storage::disk('public')->delete($blog->image);
+        }
+
         $blog->delete();
 
         return redirect()->route('admin.blogs.index')

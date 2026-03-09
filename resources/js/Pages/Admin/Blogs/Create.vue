@@ -68,7 +68,9 @@ const submit = () => {
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Слика</label>
-                                <input type="file" @input="form.image = $event.target.files[0]" class="form-control">
+                                <input type="file" @input="form.image = $event.target.files[0]" class="form-control" accept="image/*">
+                                <div v-if="form.errors.image" class="text-danger small mt-1">{{ form.errors.image }}</div>
+                                <small class="text-muted">Сликата автоматски ќе се конвертира во WebP формат.</small>
                             </div>
 
                             <div class="row mb-4">
