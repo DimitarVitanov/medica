@@ -37,7 +37,7 @@ const imageUrl = computed(() => {
 });
 
 const submit = () => {
-    form.post(`/admin/blogs/${props.blog.id}`);
+    form.post(`/admin/blogs/${props.blog.id}/update`);
 };
 
 const convertToWebp = () => {

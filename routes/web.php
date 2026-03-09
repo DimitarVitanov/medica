@@ -108,9 +108,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
     Route::resource('services', ServiceController::class);
-    Route::resource('blogs', BlogController::class);
-    Route::post('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.updatePost');
+    Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.updatePost');
     Route::post('/blogs/{blog}/convert-image', [BlogController::class, 'convertImage'])->name('blogs.convertImage');
+    Route::resource('blogs', BlogController::class);
     Route::resource('sliders', SliderController::class);
     
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
