@@ -32,7 +32,7 @@ class BlogController extends Controller
             'category' => 'required|string|max:100',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,bmp,webp|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/webp|max:5120',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
@@ -64,7 +64,7 @@ class BlogController extends Controller
             'category' => 'required|string|max:100',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,bmp,webp|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/webp|max:5120',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
