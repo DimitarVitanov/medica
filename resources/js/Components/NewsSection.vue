@@ -178,6 +178,7 @@ const news = computed(() => {
 /* Featured Card */
 .news-card-featured {
     min-height: 420px;
+    max-height: 500px;
     cursor: pointer;
 }
 
@@ -185,6 +186,7 @@ const news = computed(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.5s ease;
 }
 
