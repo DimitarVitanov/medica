@@ -49,8 +49,14 @@ export function useTranslate() {
             }
         }
         
-        // Fallback to original field
-        return item[field] || '';
+        // Fallback to original field (supports nested paths like 'data.title')
+        const parts = field.split('.');
+        let value = item;
+        for (const p of parts) {
+            value = value?.[p];
+            if (value === undefined) break;
+        }
+        return value || '';
     };
 
     return { 

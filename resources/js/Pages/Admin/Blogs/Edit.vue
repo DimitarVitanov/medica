@@ -7,6 +7,7 @@ const props = defineProps({
 });
 
 const form = useForm({
+    _method: 'PUT',
     title: props.blog.title,
     author: props.blog.author,
     category: props.blog.category,
@@ -20,9 +21,7 @@ const form = useForm({
 const categories = ['Здравје', 'Естетика', 'Дијагностика', 'Известувања', 'Совети'];
 
 const submit = () => {
-    form.post(`/admin/blogs/${props.blog.id}`, {
-        _method: 'PUT',
-    });
+    form.post(`/admin/blogs/${props.blog.id}`);
 };
 </script>
 

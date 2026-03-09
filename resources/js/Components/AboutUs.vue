@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useTranslate } from '@/composables/useTranslate';
 
-const { t } = useTranslate();
+const { t, translateModel } = useTranslate();
 
 const props = defineProps({
     aboutData: Object,
@@ -60,19 +60,19 @@ const highlights = computed(() => [
                     <div class="about-content">
                         <span class="section-badge">{{ t('about.badge') }}</span>
                         <h2 class="section-title">
-                            {{ t('about.title') }}
+                            {{ aboutData ? translateModel(aboutData, 'data.title') : t('about.title') }}
                         </h2>
                         
                         <p class="lead-text">
-                            {{ t('about.leadText') }}
+                            {{ aboutData ? translateModel(aboutData, 'data.lead_text') : t('about.leadText') }}
                         </p>
                         
                         <p class="body-text">
-                            {{ t('about.description') }}
+                            {{ aboutData ? translateModel(aboutData, 'data.description') : t('about.description') }}
                         </p>
                         
                         <p class="body-text mb-4">
-                            {{ t('about.additionalText') }}
+                            {{ aboutData ? translateModel(aboutData, 'data.additional_text') : t('about.additionalText') }}
                         </p>
                         
                         <a href="/services" class="btn-learn-more">

@@ -27,7 +27,7 @@ Route::get('/', function () {
         'sliders' => Slider::with('translations')->active()->ordered()->get(),
         'services' => Service::with('translations')->active()->ordered()->get(),
         'blogs' => Blog::with('translations')->orderBy('id','desc')->take(3)->get(),
-        'aboutUs' => Section::getData('about_us'),
+        'aboutUs' => Section::with('translations')->where('key', 'about_us')->first(),
         'stats' => Section::getData('stats'),
         'workingHours' => Section::getData('working_hours'),
         'contactInfo' => Section::with('translations')->where('key', 'contact')->first()?->data,
