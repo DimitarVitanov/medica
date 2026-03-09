@@ -72,9 +72,12 @@ class BlogController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('image')) {
-            // Delete old image
-            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                Storage::disk('public')->delete($blog->image);
+            // Delete old image and its responsive variants
+            if ($blog->image) {
+                ImageHelper::deleteResponsiveVariants($blog->image);
+                if (Storage::disk('public')->exists($blog->image)) {
+                    Storage::disk('public')->delete($blog->image);
+                }
             }
             $validated['image'] = ImageHelper::storeAsWebp($request->file('image'), 'blogs');
         } else {
@@ -112,8 +115,11 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog)
     {
-        if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-            Storage::disk('public')->delete($blog->image);
+        if ($blog->image) {
+            ImageHelper::deleteResponsiveVariants($blog->image);
+            if (Storage::disk('public')->exists($blog->image)) {
+                Storage::disk('public')->delete($blog->image);
+            }
         }
 
         $blog->delete();

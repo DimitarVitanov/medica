@@ -90,8 +90,6 @@ const news = computed(() => {
                                 :alt="news[0].title" 
                                 class="featured-img"
                                 loading="lazy"
-                                width="480"
-                                height="320"
                             >
                             <div class="featured-overlay"></div>
                             <div class="featured-content position-absolute bottom-0 start-0 p-4 text-white">
@@ -128,8 +126,6 @@ const news = computed(() => {
                                             :alt="item.title" 
                                             class="news-img"
                                             loading="lazy"
-                                            width="285"
-                                            height="190"
                                         >
                                     </div>
                                     <div class="p-4 d-flex flex-column justify-content-center">
