@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\LabAnalysisController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
@@ -17,6 +18,7 @@ use App\Models\Blog;
 use App\Models\Slider;
 use App\Models\Setting;
 use App\Models\Section;
+use App\Models\LabAnalysisCategory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -80,6 +82,21 @@ Route::get('/news/{slug}', function ($slug) {
     ]);
 });
 
+Route::get('/laboratory', function () {
+    return Inertia::render('Laboratory', [
+        'categories' => LabAnalysisCategory::with(['translations', 'activeAnalyses.translations'])
+            ->active()
+            ->ordered()
+            ->get(),
+        'disclaimer' => Section::with('translations')->where('key', 'lab_disclaimer')->first(),
+        'workingHours' => Section::getData('working_hours'),
+        'socialLinks' => [
+            'facebook' => Setting::get('facebook_url', ''),
+            'instagram' => Setting::get('instagram_url', ''),
+        ],
+    ]);
+});
+
 Route::get('/contact', function () {
     return Inertia::render('Contact', [
         'workingHours' => Section::getData('working_hours'),
@@ -130,6 +147,19 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     Route::get('/subscribers', [AdminSubscriberController::class, 'index'])->name('subscribers.index');
     Route::delete('/subscribers/{subscriber}', [AdminSubscriberController::class, 'destroy'])->name('subscribers.destroy');
+
+    // Lab Analyses
+    Route::get('/lab-analyses', [LabAnalysisController::class, 'index'])->name('lab-analyses.index');
+    Route::get('/lab-analyses/categories/create', [LabAnalysisController::class, 'createCategory'])->name('lab-analyses.categories.create');
+    Route::post('/lab-analyses/categories', [LabAnalysisController::class, 'storeCategory'])->name('lab-analyses.categories.store');
+    Route::get('/lab-analyses/categories/{category}/edit', [LabAnalysisController::class, 'editCategory'])->name('lab-analyses.categories.edit');
+    Route::put('/lab-analyses/categories/{category}', [LabAnalysisController::class, 'updateCategory'])->name('lab-analyses.categories.update');
+    Route::delete('/lab-analyses/categories/{category}', [LabAnalysisController::class, 'destroyCategory'])->name('lab-analyses.categories.destroy');
+    Route::get('/lab-analyses/categories/{category}/analyses/create', [LabAnalysisController::class, 'createAnalysis'])->name('lab-analyses.analyses.create');
+    Route::post('/lab-analyses/categories/{category}/analyses', [LabAnalysisController::class, 'storeAnalysis'])->name('lab-analyses.analyses.store');
+    Route::get('/lab-analyses/analyses/{analysis}/edit', [LabAnalysisController::class, 'editAnalysis'])->name('lab-analyses.analyses.edit');
+    Route::put('/lab-analyses/analyses/{analysis}', [LabAnalysisController::class, 'updateAnalysis'])->name('lab-analyses.analyses.update');
+    Route::delete('/lab-analyses/analyses/{analysis}', [LabAnalysisController::class, 'destroyAnalysis'])->name('lab-analyses.analyses.destroy');
 });
 
 // Profile Routes

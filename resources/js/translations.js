@@ -4,7 +4,8 @@ export const translations = {
         nav: {
             home: 'Почетна',
             services: 'Услуги',
-            news: 'Новости',
+            blog: 'Блог',
+            laboratory: 'Лабораторија',
             contact: 'Контакт',
             about: 'За нас',
         },
@@ -184,7 +185,8 @@ export const translations = {
         nav: {
             home: 'Home',
             services: 'Services',
-            news: 'News',
+            blog: 'Blog',
+            laboratory: 'Laboratory',
             contact: 'Contact',
             about: 'About Us',
         },
