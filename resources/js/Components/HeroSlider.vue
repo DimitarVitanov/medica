@@ -19,9 +19,9 @@ const getImageUrl = (image) => {
     return `/storage/${image}`;
 };
 
-// Generate srcset for responsive images
-const getImageSrcset = (image) => {
-    if (!image || image.startsWith('http')) return '';
+// Generate srcset for responsive images (only if variants were generated)
+const getImageSrcset = (image, hasVariants = false) => {
+    if (!image || image.startsWith('http') || !hasVariants) return '';
     
     const pathInfo = image.split('/');
     const filename = pathInfo.pop();
@@ -62,7 +62,7 @@ const slides = computed(() => {
             button_link: slider.button_link,
             button2_link: slider.button2_link,
             image: getImageUrl(slider.image),
-            srcset: getImageSrcset(slider.image),
+            srcset: getImageSrcset(slider.image, slider.has_variants || false),
             rawImage: slider.image,
         }));
     }
