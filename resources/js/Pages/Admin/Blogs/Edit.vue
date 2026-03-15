@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import RichTextEditor from '@/Components/RichTextEditor.vue';
 
 const props = defineProps({
     blog: Object,
@@ -92,7 +93,7 @@ const convertToWebp = () => {
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Содржина *</label>
-                                <textarea v-model="form.content" rows="10" class="form-control" required></textarea>
+                                <RichTextEditor v-model="form.content" />
                             </div>
 
                             <div class="mb-3">

@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import RichTextEditor from '@/Components/RichTextEditor.vue';
 
 const form = useForm({
     title: '',
@@ -63,7 +64,7 @@ const submit = () => {
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Содржина *</label>
-                                <textarea v-model="form.content" rows="10" class="form-control" required></textarea>
+                                <RichTextEditor v-model="form.content" />
                             </div>
 
                             <div class="mb-3">
