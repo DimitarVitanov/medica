@@ -187,6 +187,35 @@ const blogs = computed(() => {
                             </div>
                         </article>
                     </div>
+
+                    <!-- Remaining blogs - 3 column grid -->
+                    <div v-for="blog in blogs.slice(3)" :key="blog.id" class="col-lg-4 col-md-6">
+                        <article class="blog-card h-100 bg-white rounded-4 overflow-hidden shadow-sm">
+                            <a :href="`/news/${blog.slug}`" class="d-block blog-img-wrapper-small">
+                                <img :src="blog.image" :alt="blog.title" class="blog-img">
+                                <span class="badge position-absolute top-0 end-0 m-3 px-3 py-2" :class="blog.categoryColor">
+                                    {{ blog.category }}
+                                </span>
+                            </a>
+                            <div class="p-4">
+                                <h5 class="fw-bold mb-2">
+                                    <a :href="`/news/${blog.slug}`" class="text-decoration-none text-dark blog-title">
+                                        {{ blog.title }}
+                                    </a>
+                                </h5>
+                                <p class="text-muted small mb-3">{{ blog.excerpt }}</p>
+                                <div class="d-flex align-items-center justify-content-between border-top pt-3">
+                                    <div class="d-flex align-items-center gap-2 text-muted small">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                        </svg>
+                                        <span>{{ blog.author }}</span>
+                                    </div>
+                                    <span class="text-muted small">{{ blog.date }}</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </section>
@@ -295,6 +324,13 @@ const blogs = computed(() => {
 
 .bg-info {
     background: #17a2b8 !important;
+}
+
+.blog-img-wrapper-small {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    display: block;
 }
 
 @media (max-width: 991px) {
