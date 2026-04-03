@@ -13,6 +13,7 @@ const navItems = [
     { name: 'Секции', href: '/admin/sections', icon: 'sections', route: 'admin.sections.*' },
     { name: 'Услуги', href: '/admin/services', icon: 'services', route: 'admin.services.*' },
     { name: 'Блогови', href: '/admin/blogs', icon: 'blogs', route: 'admin.blogs.*' },
+    { name: 'Дневна Доза', href: '/admin/daily-doses', icon: 'dailydose', route: 'admin.daily-doses.*' },
     { name: 'Лаб. Анализи', href: '/admin/lab-analyses', icon: 'lab', route: 'admin.lab-analyses.*' },
     { name: 'Слајдери', href: '/admin/sliders', icon: 'sliders', route: 'admin.sliders.*' },
     { name: 'Преводи', href: '/admin/translations', icon: 'translations', route: 'admin.translations.*' },
@@ -59,6 +60,7 @@ const logout = () => {
                                         <svg v-if="item.icon === 'sections'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18"/></svg>
                                         <svg v-if="item.icon === 'services'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                                         <svg v-if="item.icon === 'blogs'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                        <svg v-if="item.icon === 'dailydose'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
                                         <svg v-if="item.icon === 'lab'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3h6v2H9z"/><path d="M10 5v6.5L6 20h12l-4-8.5V5"/><path d="M8.5 14h7"/></svg>
                                         <svg v-if="item.icon === 'sliders'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-3.086-3.086a2 2 0 00-2.828 0L6 21"/></svg>
                                         <svg v-if="item.icon === 'translations'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>

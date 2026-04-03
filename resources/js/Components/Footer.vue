@@ -31,6 +31,7 @@ const quickLinks = computed(() => [
     { name: t('nav.services'), href: '/services' },
     { name: t('nav.laboratory'), href: '/laboratory' },
     { name: t('nav.blog'), href: '/news' },
+    { name: t('nav.dailyDose'), href: '/daily-dose' },
     { name: t('nav.contact'), href: '/contact' },
 ]);
 

@@ -6,6 +6,7 @@ import HeroSlider from '@/Components/HeroSlider.vue';
 import AboutUs from '@/Components/AboutUs.vue';
 import ServicesSection from '@/Components/ServicesSection.vue';
 import NewsSection from '@/Components/NewsSection.vue';
+import DailyDoseSection from '@/Components/DailyDoseSection.vue';
 import WorkingHours from '@/Components/WorkingHours.vue';
 import NewsletterSubscription from '@/Components/NewsletterSubscription.vue';
 import Footer from '@/Components/Footer.vue';
@@ -18,6 +19,7 @@ const props = defineProps({
     sliders: Array,
     services: Array,
     blogs: Array,
+    dailyDoses: Array,
     aboutUs: Object,
     stats: Object,
     workingHours: Object,
@@ -50,6 +52,9 @@ const showAppointmentModal = ref(false);
         </div>
         <div data-animate="fade-up">
             <NewsSection :blogs="blogs" />
+        </div>
+        <div data-animate="fade-up">
+            <DailyDoseSection :doses="dailyDoses" />
         </div>
         <div data-animate="fade-up">
             <NewsletterSubscription variant="light" />

@@ -6,6 +6,7 @@ export const translations = {
             services: 'Услуги',
             blog: 'Блог',
             laboratory: 'Лабораторија',
+            dailyDose: 'Дневна Доза',
             contact: 'Контакт',
             about: 'За нас',
         },
@@ -179,6 +180,18 @@ export const translations = {
         newsPage: {
             backToBlog: 'Назад кон блог',
         },
+        // Daily Dose
+        dailyDose: {
+            title: 'Дневна Доза',
+            subtitle: 'Што се случува во Медика',
+            latestUpdates: 'Последни новости од нашата клиника',
+            readMore: 'Прочитај повеќе',
+            viewAll: 'Сите новости',
+            backToTimeline: 'Назад кон хронологија',
+            recentPosts: 'Неодамнешни објави',
+            noPostsYet: 'Наскоро ќе споделиме нови моменти од Медика!',
+            publishedOn: 'Објавено на',
+        },
     },
     en: {
         // Navigation
@@ -187,6 +200,7 @@ export const translations = {
             services: 'Services',
             blog: 'Blog',
             laboratory: 'Laboratory',
+            dailyDose: 'Daily Dose',
             contact: 'Contact',
             about: 'About Us',
         },
@@ -359,6 +373,18 @@ export const translations = {
         // News Page
         newsPage: {
             backToBlog: 'Back to Blog',
+        },
+        // Daily Dose
+        dailyDose: {
+            title: 'Daily Dose',
+            subtitle: 'What\'s happening at Medica',
+            latestUpdates: 'Latest updates from our clinic',
+            readMore: 'Read more',
+            viewAll: 'All updates',
+            backToTimeline: 'Back to timeline',
+            recentPosts: 'Recent posts',
+            noPostsYet: 'We\'ll be sharing new moments from Medica soon!',
+            publishedOn: 'Published on',
         },
     },
 };

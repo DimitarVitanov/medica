@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\LabAnalysisController;
+use App\Http\Controllers\Admin\DailyDoseController;
+use App\Models\DailyDose;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
@@ -29,6 +31,7 @@ Route::get('/', function () {
         'sliders' => Slider::with('translations')->active()->ordered()->get(),
         'services' => Service::with('translations')->active()->ordered()->get(),
         'blogs' => Blog::with('translations')->orderBy('id','desc')->take(3)->get(),
+        'dailyDoses' => DailyDose::with('translations')->published()->latest()->take(3)->get(),
         'aboutUs' => Section::with('translations')->where('key', 'about_us')->first(),
         'stats' => Section::getData('stats'),
         'workingHours' => Section::getData('working_hours'),
@@ -97,6 +100,31 @@ Route::get('/laboratory', function () {
     ]);
 });
 
+Route::get('/daily-dose', function () {
+    return Inertia::render('DailyDose/Index', [
+        'doses' => DailyDose::with('translations')->published()->latest()->get(),
+        'workingHours' => Section::getData('working_hours'),
+        'socialLinks' => [
+            'facebook' => Setting::get('facebook_url', ''),
+            'instagram' => Setting::get('instagram_url', ''),
+        ],
+    ]);
+});
+
+Route::get('/daily-dose/{slug}', function ($slug) {
+    $dose = DailyDose::with('translations')->where('slug', $slug)->firstOrFail();
+    $dose->incrementViews();
+    return Inertia::render('DailyDose/Show', [
+        'dose' => $dose,
+        'recentDoses' => DailyDose::with('translations')->published()->where('id', '!=', $dose->id)->latest()->take(3)->get(),
+        'workingHours' => Section::getData('working_hours'),
+        'socialLinks' => [
+            'facebook' => Setting::get('facebook_url', ''),
+            'instagram' => Setting::get('instagram_url', ''),
+        ],
+    ]);
+});
+
 Route::get('/contact', function () {
     return Inertia::render('Contact', [
         'workingHours' => Section::getData('working_hours'),
@@ -147,6 +175,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     Route::get('/subscribers', [AdminSubscriberController::class, 'index'])->name('subscribers.index');
     Route::delete('/subscribers/{subscriber}', [AdminSubscriberController::class, 'destroy'])->name('subscribers.destroy');
+
+    // Daily Doses
+    Route::resource('daily-doses', DailyDoseController::class)->except(['show']);
+    Route::post('/daily-doses/{daily_dose}/update', [DailyDoseController::class, 'update'])->name('daily-doses.updatePost');
 
     // Lab Analyses
     Route::get('/lab-analyses', [LabAnalysisController::class, 'index'])->name('lab-analyses.index');

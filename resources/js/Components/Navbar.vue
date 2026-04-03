@@ -29,6 +29,7 @@ const navLinks = computed(() => [
     { name: t('nav.services'), href: '/services', key: 'services' },
     { name: t('nav.laboratory'), href: '/laboratory', key: 'laboratory' },
     { name: t('nav.blog'), href: '/news', key: 'blog' },
+    { name: t('nav.dailyDose'), href: '/daily-dose', key: 'dailyDose' },
     { name: t('nav.contact'), href: '/contact', key: 'contact' },
 ]);
 
