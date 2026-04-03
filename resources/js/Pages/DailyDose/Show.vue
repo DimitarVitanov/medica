@@ -129,11 +129,7 @@ const recent = computed(() => {
 
                             <!-- Footer -->
                             <div class="border-top pt-4 mt-5">
-                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                                    <div class="d-flex align-items-center gap-2 text-muted small">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                        <span>{{ dose.views }} {{ t('news.views') }}</span>
-                                    </div>
+                                <div class="d-flex justify-content-end">
                                     <a href="/daily-dose" class="btn btn-purple rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                                         <span>{{ t('dailyDose.backToTimeline') }}</span>
