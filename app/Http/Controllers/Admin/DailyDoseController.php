@@ -32,10 +32,20 @@ class DailyDoseController extends Controller
             'category' => 'nullable|string|max:100',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
+            'title_en' => 'nullable|string|max:255',
+            'excerpt_en' => 'nullable|string|max:500',
+            'content_en' => 'nullable|string',
             'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,bmp,webp|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/webp|max:10240',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
+
+        $translations = [
+            'title' => $validated['title_en'] ?? null,
+            'excerpt' => $validated['excerpt_en'] ?? null,
+            'content' => $validated['content_en'] ?? null,
+        ];
+        unset($validated['title_en'], $validated['excerpt_en'], $validated['content_en']);
 
         $validated['slug'] = Str::slug($validated['title']) . '-' . Str::random(5);
 
@@ -43,7 +53,14 @@ class DailyDoseController extends Controller
             $validated['image'] = ImageHelper::storeAsWebp($request->file('image'), 'daily-doses');
         }
 
-        DailyDose::create($validated);
+        $dose = DailyDose::create($validated);
+
+        // Save English translations
+        foreach ($translations as $field => $value) {
+            if ($value !== null && $value !== '') {
+                $dose->setTranslation($field, 'en', $value);
+            }
+        }
 
         return redirect()->route('admin.daily-doses.index')
             ->with('success', 'Дневната доза е успешно креирана.');
@@ -52,7 +69,7 @@ class DailyDoseController extends Controller
     public function edit(DailyDose $dailyDose)
     {
         return Inertia::render('Admin/DailyDoses/Edit', [
-            'dose' => $dailyDose,
+            'dose' => $dailyDose->load('translations'),
         ]);
     }
 
@@ -64,10 +81,20 @@ class DailyDoseController extends Controller
             'category' => 'nullable|string|max:100',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
+            'title_en' => 'nullable|string|max:255',
+            'excerpt_en' => 'nullable|string|max:500',
+            'content_en' => 'nullable|string',
             'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,bmp,webp|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/webp|max:10240',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
+
+        $translations = [
+            'title' => $validated['title_en'] ?? null,
+            'excerpt' => $validated['excerpt_en'] ?? null,
+            'content' => $validated['content_en'] ?? null,
+        ];
+        unset($validated['title_en'], $validated['excerpt_en'], $validated['content_en']);
 
         $validated['slug'] = Str::slug($validated['title']) . '-' . Str::random(5);
 
@@ -84,6 +111,11 @@ class DailyDoseController extends Controller
         }
 
         $dailyDose->update($validated);
+
+        // Save English translations
+        foreach ($translations as $field => $value) {
+            $dailyDose->setTranslation($field, 'en', $value ?? '');
+        }
 
         return redirect()->route('admin.daily-doses.index')
             ->with('success', 'Дневната доза е успешно ажурирана.');

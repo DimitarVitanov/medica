@@ -1,7 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import RichTextEditor from '@/Components/RichTextEditor.vue';
+
+const activeTab = ref('mk');
 
 const form = useForm({
     title: '',
@@ -9,6 +12,9 @@ const form = useForm({
     category: '',
     excerpt: '',
     content: '',
+    title_en: '',
+    excerpt_en: '',
+    content_en: '',
     image: null,
     published_at: new Date().toISOString().split('T')[0],
     is_published: false,
@@ -37,12 +43,6 @@ const submit = () => {
                 <div class="col-lg-8">
                     <form @submit.prevent="submit" class="card border-0 shadow-sm">
                         <div class="card-body p-4">
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Наслов *</label>
-                                <input v-model="form.title" type="text" class="form-control" :class="{ 'is-invalid': form.errors.title }" required>
-                                <div v-if="form.errors.title" class="invalid-feedback">{{ form.errors.title }}</div>
-                            </div>
-
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Автор *</label>
@@ -57,14 +57,55 @@ const submit = () => {
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Краток опис</label>
-                                <textarea v-model="form.excerpt" rows="2" class="form-control" placeholder="Краток опис за листата..."></textarea>
+                            <!-- Language Tabs -->
+                            <ul class="nav nav-tabs mb-3">
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link" :class="{ active: activeTab === 'mk' }" @click="activeTab = 'mk'">
+                                        🇲🇰 Македонски
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link" :class="{ active: activeTab === 'en' }" @click="activeTab = 'en'">
+                                        🇬🇧 English
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <!-- Macedonian Fields -->
+                            <div v-show="activeTab === 'mk'">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Наслов *</label>
+                                    <input v-model="form.title" type="text" class="form-control" :class="{ 'is-invalid': form.errors.title }" required>
+                                    <div v-if="form.errors.title" class="invalid-feedback">{{ form.errors.title }}</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Краток опис</label>
+                                    <textarea v-model="form.excerpt" rows="2" class="form-control" placeholder="Краток опис за листата..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Содржина *</label>
+                                    <RichTextEditor v-model="form.content" />
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Содржина *</label>
-                                <RichTextEditor v-model="form.content" />
+                            <!-- English Fields -->
+                            <div v-show="activeTab === 'en'">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Title (EN)</label>
+                                    <input v-model="form.title_en" type="text" class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Short Description (EN)</label>
+                                    <textarea v-model="form.excerpt_en" rows="2" class="form-control" placeholder="Short description for listing..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Content (EN)</label>
+                                    <RichTextEditor v-model="form.content_en" />
+                                </div>
                             </div>
 
                             <div class="mb-3">
