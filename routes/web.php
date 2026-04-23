@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\LabAnalysisController;
 use App\Http\Controllers\Admin\DailyDoseController;
 use App\Models\DailyDose;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Models\Service;
@@ -24,6 +25,9 @@ use App\Models\LabAnalysisCategory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Sitemap
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 // Public Routes
 Route::get('/', function () {

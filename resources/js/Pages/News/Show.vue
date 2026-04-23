@@ -68,6 +68,44 @@ const blog = computed(() => {
     return null;
 });
 
+const articleSchema = computed(() => {
+    if (!blog.value) return '';
+    return JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": blog.value.title,
+        "description": blog.value.excerpt || blog.value.content.replace(/<[^>]*>/g, '').substring(0, 155),
+        "image": blog.value.image,
+        "author": {
+            "@type": "Person",
+            "name": blog.value.author
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "ПЗУ Медика",
+            "logo": { "@type": "ImageObject", "url": "https://medica.mk/images/logo.webp" }
+        },
+        "datePublished": props.blog.published_at,
+        "dateModified": props.blog.updated_at || props.blog.published_at,
+        "mainEntityOfPage": `https://medica.mk/news/${blog.value.slug}`,
+        "articleSection": blog.value.category,
+        "inLanguage": "mk"
+    });
+});
+
+const breadcrumbSchema = computed(() => {
+    if (!blog.value) return '';
+    return JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+            { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://medica.mk/news" },
+            { "@type": "ListItem", "position": 3, "name": blog.value.title, "item": `https://medica.mk/news/${blog.value.slug}` }
+        ]
+    });
+});
+
 const displayRelatedBlogs = computed(() => {
     if (props.relatedBlogs && props.relatedBlogs.length > 0) {
         return props.relatedBlogs.map(b => ({
@@ -113,6 +151,9 @@ const displayRelatedBlogs = computed(() => {
         <meta name="twitter:title" :content="`${blog.title} - ПЗУ Медика`" />
         <meta name="twitter:description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 120)" />
         <meta name="twitter:image" :content="blog.image" />
+
+        <component :is="'script'" type="application/ld+json" v-html="articleSchema" />
+        <component :is="'script'" type="application/ld+json" v-html="breadcrumbSchema" />
     </Head>
     
     <div class="blog-page">

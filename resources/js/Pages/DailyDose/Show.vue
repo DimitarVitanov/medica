@@ -42,6 +42,34 @@ const dose = computed(() => ({
     views: props.dose.views,
 }));
 
+const articleSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": dose.value.title,
+    "description": dose.value.excerpt || dose.value.content.replace(/<[^>]*>/g, '').substring(0, 155),
+    "image": dose.value.image || undefined,
+    "author": { "@type": "Organization", "name": dose.value.author || "ПЗУ Медика" },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ПЗУ Медика",
+        "logo": { "@type": "ImageObject", "url": "https://medica.mk/images/logo.webp" }
+    },
+    "datePublished": props.dose.published_at,
+    "dateModified": props.dose.updated_at || props.dose.published_at,
+    "mainEntityOfPage": `https://medica.mk/daily-dose/${dose.value.slug}`,
+    "inLanguage": "mk"
+}));
+
+const breadcrumbSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+        { "@type": "ListItem", "position": 2, "name": "Дневна Доза", "item": "https://medica.mk/daily-dose" },
+        { "@type": "ListItem", "position": 3, "name": dose.value.title, "item": `https://medica.mk/daily-dose/${dose.value.slug}` }
+    ]
+}));
+
 const recent = computed(() => {
     return (props.recentDoses || []).map(d => ({
         id: d.id,
@@ -68,6 +96,9 @@ const recent = computed(() => {
         <meta property="og:image" v-if="dose.image" :content="dose.image" />
         <meta property="og:locale" content="mk_MK" />
         <meta property="article:author" :content="dose.author" />
+
+        <component :is="'script'" type="application/ld+json" v-html="articleSchema" />
+        <component :is="'script'" type="application/ld+json" v-html="breadcrumbSchema" />
     </Head>
 
     <div class="dd-show-page">

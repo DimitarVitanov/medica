@@ -62,6 +62,26 @@ const services = computed(() => {
     return [];
 });
 
+const servicesSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "Медицински Услуги - ПЗУ Медика Струмица",
+    "description": "Комплетни медицински услуги: Општа медицина, Гинекологија, Психијатрија, Естетска медицина, Лабораторија, Медицина на труд.",
+    "url": "https://medica.mk/services",
+    "mainEntity": services.value.map(s => ({
+        "@type": "MedicalProcedure",
+        "name": s.title,
+        "description": s.shortDesc,
+    })),
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+            { "@type": "ListItem", "position": 2, "name": "Услуги", "item": "https://medica.mk/services" }
+        ]
+    }
+}));
+
 const activeService = ref(null);
 
 const openModal = (service) => {
@@ -100,6 +120,8 @@ const closeModal = () => {
         <meta name="twitter:title" content="Медицински Услуги - ПЗУ Медика Струмица" />
         <meta name="twitter:description" content="Гинекологија, Психијатрија, Естетска медицина, Лабораторија. Закажете: 034-360-444." />
         <meta name="twitter:image" content="https://medica.mk/images/og-services.jpg" />
+
+        <component :is="'script'" type="application/ld+json" v-html="servicesSchema" />
     </Head>
     
     <div class="services-page">

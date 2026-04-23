@@ -34,7 +34,7 @@ const showAppointmentModal = ref(false);
 <template>
     <Head :title="seo?.title || 'ПЗУ Медика - Приватна Здравствена Установа'">
         <meta name="description" :content="seo?.description || 'ПЗУ Медика - Приватна здравствена установа во Струмица.'">
-        <meta name="keywords" :content="seo?.keywords || 'медика, струмица, доктор, здравје'">
+        <meta name="keywords" :content="seo?.keywords || 'медика, поликлиника медика, поликлиника медика струмица, ПЗУ Медика, клиника струмица, доктор струмица, здравје, приватна болница струмица'">
         <meta property="og:title" :content="seo?.title || 'ПЗУ Медика'">
         <meta property="og:description" :content="seo?.description || 'Приватна здравствена установа во Струмица.'">
         <meta property="og:image" :content="seo?.og_image || '/images/logo.webp'">
