@@ -95,7 +95,7 @@ const labSchema = computed(() => JSON.stringify({
     "description": locale.value === 'mk' ? 'Цени на лабораториски анализи во ПЗУ Медика Струмица.' : 'Laboratory analysis prices at PZU Medica Strumica.',
     "url": "https://medica.mk/laboratory",
     "provider": {
-        "@type": "MedicalBusiness",
+        "@type": "MedicalClinic",
         "name": "ПЗУ Медика",
         "@id": "https://medica.mk/#organization"
     },

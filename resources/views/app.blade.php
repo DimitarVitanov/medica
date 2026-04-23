@@ -70,7 +70,7 @@
         @endphp
         <script type="application/ld+json">{!! json_encode([
             '@@context' => 'https://schema.org',
-            '@type' => 'MedicalBusiness',
+            '@type' => 'MedicalClinic',
             '@id' => 'https://medica.mk/#organization',
             'name' => 'ПЗУ Медика',
             'alternateName' => ['PZU Medica', 'Поликлиника Медика', 'Поликлиника Медика Струмица'],
@@ -101,11 +101,11 @@
             ],
             'sameAs' => array_values($sameAs),
             'medicalSpecialty' => [
-                'GeneralPractice',
-                'Gynecologic',
-                'Psychiatric',
-                'Dermatology',
-                'LaboratoryScience',
+                'https://schema.org/PrimaryCare',
+                'https://schema.org/Gynecologic',
+                'https://schema.org/Psychiatric',
+                'https://schema.org/Dermatology',
+                'https://schema.org/LaboratoryScience',
             ],
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
         <script type="application/ld+json">{!! json_encode([

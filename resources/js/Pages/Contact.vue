@@ -136,7 +136,7 @@ const contactSchema = computed(() => JSON.stringify({
     "description": "Контактирајте ја ПЗУ Медика Струмица. Закажете преглед на 034-360-444.",
     "url": "https://medica.mk/contact",
     "mainEntity": {
-        "@type": "MedicalBusiness",
+        "@type": "MedicalClinic",
         "@id": "https://medica.mk/#organization"
     },
     "breadcrumb": {
