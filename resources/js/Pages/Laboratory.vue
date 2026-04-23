@@ -87,12 +87,53 @@ const clearSearch = () => {
 const formatPrice = (price) => {
     return Math.round(parseFloat(price));
 };
+
+const labSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": locale.value === 'mk' ? 'Лабораториски Анализи - ПЗУ Медика Струмица' : 'Laboratory Analyses - PZU Medica Strumica',
+    "description": locale.value === 'mk' ? 'Цени на лабораториски анализи во ПЗУ Медика Струмица.' : 'Laboratory analysis prices at PZU Medica Strumica.',
+    "url": "https://medica.mk/laboratory",
+    "provider": {
+        "@type": "MedicalBusiness",
+        "name": "ПЗУ Медика",
+        "@id": "https://medica.mk/#organization"
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+            { "@type": "ListItem", "position": 2, "name": "Лабораторија", "item": "https://medica.mk/laboratory" }
+        ]
+    }
+}));
 </script>
 
 <template>
     <Head>
-        <title>{{ locale === 'mk' ? 'Лабораториски Анализи - ПЗУ Медика Струмица' : 'Laboratory Analyses - PZU Medica Strumica' }}</title>
-        <meta name="description" :content="locale === 'mk' ? 'Цени на лабораториски анализи во ПЗУ Медика Струмица. Биохемиска лабораторија со витамини, ензими, електролити и повеќе.' : 'Laboratory analysis prices at PZU Medica Strumica. Biochemical laboratory with vitamins, enzymes, electrolytes and more.'" />
+        <title>{{ locale === 'mk' ? 'Лабораториски Анализи - ПЗУ Медика Струмица | Цени' : 'Laboratory Analyses - PZU Medica Strumica | Prices' }}</title>
+        <meta name="description" :content="locale === 'mk' ? 'Цени на лабораториски анализи во ПЗУ Медика Струмица. Биохемиска лабораторија со витамини, ензими, електролити, хормони, тумор маркери и повеќе. Тел: 034-320-444.' : 'Laboratory analysis prices at PZU Medica Strumica. Biochemical laboratory with vitamins, enzymes, electrolytes and more. Tel: 034-320-444.'" />
+        <meta name="keywords" :content="locale === 'mk' ? 'лабораторија струмица, лабораториски анализи струмица, цени анализи, биохемиска лабораторија, крвна слика, хормони анализи, медика лабораторија, поликлиника медика лабораторија' : 'laboratory strumica, lab analysis strumica, blood test prices, biochemistry lab, medica laboratory'" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="author" content="ПЗУ Медика" />
+        <meta name="geo.region" content="MK-10" />
+        <meta name="geo.placename" content="Струмица" />
+        <link rel="canonical" href="https://medica.mk/laboratory" />
+
+        <meta property="og:title" :content="locale === 'mk' ? 'Лабораториски Анализи - ПЗУ Медика Струмица' : 'Laboratory Analyses - PZU Medica Strumica'" />
+        <meta property="og:description" :content="locale === 'mk' ? 'Цени на лабораториски анализи. Биохемиска лабораторија со витамини, ензими, електролити и повеќе.' : 'Laboratory analysis prices. Biochemical lab with vitamins, enzymes and more.'" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://medica.mk/laboratory" />
+        <meta property="og:image" content="https://medica.mk/images/logo.webp" />
+        <meta property="og:locale" content="mk_MK" />
+        <meta property="og:site_name" content="ПЗУ Медика" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" :content="locale === 'mk' ? 'Лабораториски Анализи - ПЗУ Медика Струмица' : 'Laboratory Analyses - PZU Medica Strumica'" />
+        <meta name="twitter:description" :content="locale === 'mk' ? 'Цени на лабораториски анализи. Тел: 034-320-444.' : 'Lab analysis prices. Tel: 034-320-444.'" />
+        <meta name="twitter:image" content="https://medica.mk/images/logo.webp" />
+
+        <component :is="'script'" type="application/ld+json" v-html="labSchema" />
     </Head>
 
     <div class="laboratory-page">

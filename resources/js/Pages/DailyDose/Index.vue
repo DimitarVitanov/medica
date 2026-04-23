@@ -62,6 +62,22 @@ const items = computed(() => {
     }));
 });
 
+const doseListSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Дневна Доза - ПЗУ Медика Струмица",
+    "description": "Најнови случувања и новости од ПЗУ Медика.",
+    "url": "https://medica.mk/daily-dose",
+    "publisher": { "@type": "Organization", "name": "ПЗУ Медика", "@id": "https://medica.mk/#organization" },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+            { "@type": "ListItem", "position": 2, "name": "Дневна Доза", "item": "https://medica.mk/daily-dose" }
+        ]
+    }
+}));
+
 // Group by year + month for timeline sections
 const groupedByMonth = computed(() => {
     const groups = {};
@@ -88,6 +104,14 @@ const groupedByMonth = computed(() => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://medica.mk/daily-dose" />
         <meta property="og:locale" content="mk_MK" />
+        <meta property="og:site_name" content="ПЗУ Медика" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" :content="`${t('dailyDose.title')} - ПЗУ Медика`" />
+        <meta name="twitter:description" :content="t('dailyDose.latestUpdates')" />
+        <meta name="twitter:image" content="https://medica.mk/images/logo.webp" />
+
+        <component :is="'script'" type="application/ld+json" v-html="doseListSchema" />
     </Head>
 
     <div class="dd-page">

@@ -129,6 +129,25 @@ const allPhones = computed(() => {
 
 const allEmails = ['info@medica.mk'];
 
+const contactSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Контакт - ПЗУ Медика Струмица",
+    "description": "Контактирајте ја ПЗУ Медика Струмица. Закажете преглед на 034-360-444.",
+    "url": "https://medica.mk/contact",
+    "mainEntity": {
+        "@type": "MedicalBusiness",
+        "@id": "https://medica.mk/#organization"
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+            { "@type": "ListItem", "position": 2, "name": "Контакт", "item": "https://medica.mk/contact" }
+        ]
+    }
+}));
+
 const submitForm = () => {
     form.post('/contact', {
         preserveScroll: true,
@@ -168,6 +187,8 @@ const submitForm = () => {
         <meta name="twitter:title" content="Контакт - ПЗУ Медика Струмица" />
         <meta name="twitter:description" content="Закажете преглед: 034-360-444. Адреса: ул. Вањо Китанов бр. 19, Струмица." />
         <meta name="twitter:image" content="https://medica.mk/images/og-contact.jpg" />
+
+        <component :is="'script'" type="application/ld+json" v-html="contactSchema" />
     </Head>
     
     <div class="contact-page">

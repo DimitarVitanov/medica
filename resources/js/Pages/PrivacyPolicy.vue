@@ -15,8 +15,16 @@ const props = defineProps({
 
 <template>
     <Head>
-        <title v-if="locale === 'en'">Privacy Policy - PZU Poliklinika Medica</title>
-        <title v-else>Политика на приватност - ПЗУ Поликлиника Медика</title>
+        <title>{{ locale === 'en' ? 'Privacy Policy - PZU Poliklinika Medica' : 'Политика на приватност - ПЗУ Поликлиника Медика' }}</title>
+        <meta name="description" :content="locale === 'en' ? 'Privacy policy of PZU Medica Strumica. How we handle your personal data.' : 'Политика на приватност на ПЗУ Медика Струмица. Како ги обработуваме вашите лични податоци.'" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://medica.mk/privacy-policy" />
+        <meta property="og:title" :content="locale === 'en' ? 'Privacy Policy - PZU Medica' : 'Политика на приватност - ПЗУ Медика'" />
+        <meta property="og:description" :content="locale === 'en' ? 'Privacy policy of PZU Medica Strumica.' : 'Политика на приватност на ПЗУ Медика Струмица.'" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://medica.mk/privacy-policy" />
+        <meta property="og:locale" content="mk_MK" />
+        <meta property="og:site_name" content="ПЗУ Медика" />
     </Head>
 
     <div class="privacy-page">

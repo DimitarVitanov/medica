@@ -87,7 +87,9 @@ const recent = computed(() => {
     <Head>
         <title>{{ dose.title }} - {{ t('dailyDose.title') }} | ПЗУ Медика</title>
         <meta name="description" :content="dose.excerpt || dose.content.replace(/<[^>]*>/g, '').substring(0, 155)" />
-        <meta name="robots" content="index, follow" />
+        <meta name="keywords" :content="`${dose.title}, дневна доза медика, поликлиника медика, ПЗУ Медика Струмица, ${dose.category || ''}`" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="author" :content="dose.author" />
         <link rel="canonical" :href="`https://medica.mk/daily-dose/${dose.slug}`" />
         <meta property="og:title" :content="`${dose.title} - ПЗУ Медика`" />
         <meta property="og:description" :content="dose.excerpt || dose.content.replace(/<[^>]*>/g, '').substring(0, 155)" />
@@ -95,7 +97,13 @@ const recent = computed(() => {
         <meta property="og:url" :content="`https://medica.mk/daily-dose/${dose.slug}`" />
         <meta property="og:image" v-if="dose.image" :content="dose.image" />
         <meta property="og:locale" content="mk_MK" />
+        <meta property="og:site_name" content="ПЗУ Медика" />
         <meta property="article:author" :content="dose.author" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" :content="`${dose.title} - ПЗУ Медика`" />
+        <meta name="twitter:description" :content="dose.excerpt || dose.content.replace(/<[^>]*>/g, '').substring(0, 120)" />
+        <meta name="twitter:image" v-if="dose.image" :content="dose.image" />
 
         <component :is="'script'" type="application/ld+json" v-html="articleSchema" />
         <component :is="'script'" type="application/ld+json" v-html="breadcrumbSchema" />

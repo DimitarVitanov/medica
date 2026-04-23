@@ -60,6 +60,22 @@ const optimizeUnsplashUrl = (url) => {
     return `${baseUrl}?w=600&h=400&fit=crop&auto=format&q=75`;
 };
 
+const newsSchema = computed(() => JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Блог и Новости - ПЗУ Медика Струмица",
+    "description": "Најнови медицински новости и совети за здравје од специјалистите на ПЗУ Медика Струмица.",
+    "url": "https://medica.mk/news",
+    "publisher": { "@type": "Organization", "name": "ПЗУ Медика", "@id": "https://medica.mk/#organization" },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Почетна", "item": "https://medica.mk" },
+            { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://medica.mk/news" }
+        ]
+    }
+}));
+
 const blogs = computed(() => {
     if (props.blogs && props.blogs.length > 0) {
         return props.blogs.map(blog => ({
@@ -100,6 +116,8 @@ const blogs = computed(() => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Блог и Новости - ПЗУ Медика" />
         <meta name="twitter:description" content="Медицински совети и новости од нашите специјалисти." />
+
+        <component :is="'script'" type="application/ld+json" v-html="newsSchema" />
     </Head>
     
     <div class="news-page">
