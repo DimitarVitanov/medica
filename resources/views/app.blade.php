@@ -63,64 +63,62 @@
         @endif
 
         <!-- Schema.org JSON-LD -->
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "MedicalBusiness",
-            "@id": "https://medica.mk/#organization",
-            "name": "ПЗУ Медика",
-            "alternateName": ["PZU Medica", "Поликлиника Медика", "Поликлиника Медика Струмица"],
-            "url": "https://medica.mk",
-            "logo": "https://medica.mk/images/logo.webp",
-            "image": "https://medica.mk/images/logo.webp",
-            "description": "Приватна здравствена установа во Струмица - Општа медицина, Гинекологија, Психијатрија, Естетска медицина, Лабораторија, Медицина на труд.",
-            "telephone": "+389-34-360-444",
-            "email": "info@medica.mk",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "ул. Вањо Китанов бр. 19",
-                "addressLocality": "Струмица",
-                "addressCountry": "MK",
-                "postalCode": "2400"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 41.4375,
-                "longitude": 22.6427
-            },
-            "priceRange": "$$",
-            "currenciesAccepted": "MKD",
-            "paymentAccepted": "Cash, Credit Card",
-            "areaServed": {
-                "@type": "City",
-                "name": "Струмица"
-            },
-            "sameAs": [
-                "{{ \App\Models\Setting::get('facebook_url', '') }}",
-                "{{ \App\Models\Setting::get('instagram_url', '') }}"
+        @php
+            $fbUrl = \App\Models\Setting::get('facebook_url', '');
+            $igUrl = \App\Models\Setting::get('instagram_url', '');
+            $sameAs = array_filter([$fbUrl, $igUrl]);
+        @endphp
+        <script type="application/ld+json">{!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'MedicalBusiness',
+            '@id' => 'https://medica.mk/#organization',
+            'name' => 'ПЗУ Медика',
+            'alternateName' => ['PZU Medica', 'Поликлиника Медика', 'Поликлиника Медика Струмица'],
+            'url' => 'https://medica.mk',
+            'logo' => 'https://medica.mk/images/logo.webp',
+            'image' => 'https://medica.mk/images/logo.webp',
+            'description' => 'Приватна здравствена установа во Струмица - Општа медицина, Гинекологија, Психијатрија, Естетска медицина, Лабораторија, Медицина на труд.',
+            'telephone' => '+389-34-360-444',
+            'email' => 'info@medica.mk',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'ул. Вањо Китанов бр. 19',
+                'addressLocality' => 'Струмица',
+                'addressCountry' => 'MK',
+                'postalCode' => '2400',
             ],
-            "medicalSpecialty": [
-                "GeneralPractice",
-                "Gynecologic",
-                "Psychiatric",
-                "Dermatology",
-                "LaboratoryScience"
-            ]
-        }
-        </script>
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "url": "https://medica.mk",
-            "name": "ПЗУ Медика",
-            "alternateName": ["PZU Medica Strumica", "Поликлиника Медика"],
-            "inLanguage": ["mk", "en"],
-            "publisher": {
-                "@id": "https://medica.mk/#organization"
-            }
-        }
-        </script>
+            'geo' => [
+                '@type' => 'GeoCoordinates',
+                'latitude' => 41.4375,
+                'longitude' => 22.6427,
+            ],
+            'priceRange' => '$$',
+            'currenciesAccepted' => 'MKD',
+            'paymentAccepted' => 'Cash, Credit Card',
+            'areaServed' => [
+                '@type' => 'City',
+                'name' => 'Струмица',
+            ],
+            'sameAs' => array_values($sameAs),
+            'medicalSpecialty' => [
+                'GeneralPractice',
+                'Gynecologic',
+                'Psychiatric',
+                'Dermatology',
+                'LaboratoryScience',
+            ],
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+        <script type="application/ld+json">{!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'url' => 'https://medica.mk',
+            'name' => 'ПЗУ Медика',
+            'alternateName' => ['PZU Medica Strumica', 'Поликлиника Медика'],
+            'inLanguage' => ['mk', 'en'],
+            'publisher' => [
+                '@id' => 'https://medica.mk/#organization',
+            ],
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
 
         <!-- Scripts -->
         @routes
