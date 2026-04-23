@@ -69,7 +69,7 @@
             $sameAs = array_filter([$fbUrl, $igUrl]);
         @endphp
         <script type="application/ld+json">{!! json_encode([
-            '@context' => 'https://schema.org',
+            '@@context' => 'https://schema.org',
             '@type' => 'MedicalBusiness',
             '@id' => 'https://medica.mk/#organization',
             'name' => 'ПЗУ Медика',
@@ -109,7 +109,7 @@
             ],
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
         <script type="application/ld+json">{!! json_encode([
-            '@context' => 'https://schema.org',
+            '@@context' => 'https://schema.org',
             '@type' => 'WebSite',
             'url' => 'https://medica.mk',
             'name' => 'ПЗУ Медика',
