@@ -103,6 +103,7 @@ const groupedByMonth = computed(() => {
         <meta property="og:description" :content="t('dailyDose.latestUpdates')" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://medica.mk/daily-dose" />
+        <meta property="og:image" content="https://medica.mk/images/logo.webp" />
         <meta property="og:locale" content="mk_MK" />
         <meta property="og:site_name" content="ПЗУ Медика" />
 

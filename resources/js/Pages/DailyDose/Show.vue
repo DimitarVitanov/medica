@@ -5,6 +5,7 @@ import Navbar from '@/Components/Navbar.vue';
 import Footer from '@/Components/Footer.vue';
 import AppointmentModal from '@/Components/AppointmentModal.vue';
 import { useTranslate } from '@/composables/useTranslate';
+import { absoluteSiteUrl } from '@/composables/useAbsoluteSiteUrl';
 
 const { t, translateModel } = useTranslate();
 
@@ -42,12 +43,14 @@ const dose = computed(() => ({
     views: props.dose.views,
 }));
 
+const doseImageAbsolute = computed(() => absoluteSiteUrl(dose.value.image));
+
 const articleSchema = computed(() => JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": dose.value.title,
     "description": dose.value.excerpt || dose.value.content.replace(/<[^>]*>/g, '').substring(0, 155),
-    "image": dose.value.image || undefined,
+    "image": doseImageAbsolute.value || undefined,
     "author": { "@type": "Organization", "name": dose.value.author || "ПЗУ Медика" },
     "publisher": {
         "@type": "Organization",
@@ -95,7 +98,7 @@ const recent = computed(() => {
         <meta property="og:description" :content="dose.excerpt || dose.content.replace(/<[^>]*>/g, '').substring(0, 155)" />
         <meta property="og:type" content="article" />
         <meta property="og:url" :content="`https://medica.mk/daily-dose/${dose.slug}`" />
-        <meta property="og:image" v-if="dose.image" :content="dose.image" />
+        <meta property="og:image" v-if="doseImageAbsolute" :content="doseImageAbsolute" />
         <meta property="og:locale" content="mk_MK" />
         <meta property="og:site_name" content="ПЗУ Медика" />
         <meta property="article:author" :content="dose.author" />
@@ -103,7 +106,7 @@ const recent = computed(() => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" :content="`${dose.title} - ПЗУ Медика`" />
         <meta name="twitter:description" :content="dose.excerpt || dose.content.replace(/<[^>]*>/g, '').substring(0, 120)" />
-        <meta name="twitter:image" v-if="dose.image" :content="dose.image" />
+        <meta name="twitter:image" v-if="doseImageAbsolute" :content="doseImageAbsolute" />
 
         <component :is="'script'" type="application/ld+json" v-html="articleSchema" />
         <component :is="'script'" type="application/ld+json" v-html="breadcrumbSchema" />

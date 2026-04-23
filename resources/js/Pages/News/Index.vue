@@ -116,6 +116,7 @@ const blogs = computed(() => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Блог и Новости - ПЗУ Медика" />
         <meta name="twitter:description" content="Медицински совети и новости од нашите специјалисти." />
+        <meta name="twitter:image" content="https://medica.mk/images/og-blog.jpg" />
 
         <component :is="'script'" type="application/ld+json" v-html="newsSchema" />
     </Head>

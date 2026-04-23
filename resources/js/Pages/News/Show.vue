@@ -5,8 +5,17 @@ import Navbar from '@/Components/Navbar.vue';
 import Footer from '@/Components/Footer.vue';
 import AppointmentModal from '@/Components/AppointmentModal.vue';
 import { useTranslate } from '@/composables/useTranslate';
+import { absoluteSiteUrl } from '@/composables/useAbsoluteSiteUrl';
 
 const { t, translateModel } = useTranslate();
+
+const stripHtml = (html) => (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+
+const toIso8601 = (value) => {
+    if (!value) return '';
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? '' : d.toISOString();
+};
 
 const props = defineProps({
     slug: {
@@ -68,14 +77,36 @@ const blog = computed(() => {
     return null;
 });
 
+const blogImageAbsolute = computed(() => (blog.value ? absoluteSiteUrl(blog.value.image) : null));
+
+const blogSeoDescription = computed(() => {
+    if (!blog.value) return '';
+    const fromExcerpt = stripHtml(blog.value.excerpt);
+    if (fromExcerpt) {
+        return fromExcerpt.length > 160 ? `${fromExcerpt.slice(0, 157)}...` : fromExcerpt;
+    }
+    const plain = stripHtml(blog.value.content);
+    if (!plain) return '';
+    return plain.length > 155 ? `${plain.slice(0, 152)}...` : plain;
+});
+
+const blogTwitterDescription = computed(() => {
+    const s = blogSeoDescription.value;
+    if (!s) return '';
+    return s.length > 120 ? `${s.slice(0, 117)}...` : s;
+});
+
+const articlePublishedIso = computed(() => toIso8601(props.blog?.published_at));
+const articleModifiedIso = computed(() => toIso8601(props.blog?.updated_at || props.blog?.published_at));
+
 const articleSchema = computed(() => {
     if (!blog.value) return '';
     return JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": blog.value.title,
-        "description": blog.value.excerpt || blog.value.content.replace(/<[^>]*>/g, '').substring(0, 155),
-        "image": blog.value.image,
+        "description": blogSeoDescription.value || blog.value.title,
+        "image": blogImageAbsolute.value || undefined,
         "author": {
             "@type": "Person",
             "name": blog.value.author
@@ -126,7 +157,7 @@ const displayRelatedBlogs = computed(() => {
 <template>
     <Head>
         <title>{{ blog.title }} - ПЗУ Медика Струмица | Медицински Блог</title>
-        <meta name="description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 155) + '...'" />
+        <meta name="description" :content="blogSeoDescription" />
         <meta name="keywords" :content="`${blog.title}, ${blog.category}, медицина струмица, здравје, ПЗУ Медика, ${blog.author}`" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="author" :content="blog.author" />
@@ -134,23 +165,24 @@ const displayRelatedBlogs = computed(() => {
         
         <!-- Open Graph -->
         <meta property="og:title" :content="`${blog.title} - ПЗУ Медика Струмица`" />
-        <meta property="og:description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 155)" />
+        <meta property="og:description" :content="blogSeoDescription" />
         <meta property="og:type" content="article" />
         <meta property="og:url" :content="`https://medica.mk/news/${blog.slug}`" />
-        <meta property="og:image" :content="blog.image" />
+        <meta property="og:image" :content="blogImageAbsolute" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="mk_MK" />
         <meta property="og:site_name" content="ПЗУ Медика" />
         <meta property="article:author" :content="blog.author" />
-        <meta property="article:published_time" :content="blog.date" />
+        <meta property="article:published_time" :content="articlePublishedIso" />
+        <meta property="article:modified_time" :content="articleModifiedIso" />
         <meta property="article:section" :content="blog.category" />
         
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" :content="`${blog.title} - ПЗУ Медика`" />
-        <meta name="twitter:description" :content="blog.content.replace(/<[^>]*>/g, '').substring(0, 120)" />
-        <meta name="twitter:image" :content="blog.image" />
+        <meta name="twitter:description" :content="blogTwitterDescription" />
+        <meta name="twitter:image" :content="blogImageAbsolute" />
 
         <component :is="'script'" type="application/ld+json" v-html="articleSchema" />
         <component :is="'script'" type="application/ld+json" v-html="breadcrumbSchema" />
