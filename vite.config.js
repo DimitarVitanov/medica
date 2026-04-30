@@ -29,9 +29,21 @@ export default defineConfig({
                     if (id.includes('@inertiajs')) {
                         return 'inertia';
                     }
+                    // Tiptap/ProseMirror — admin-only, ~200KB (never loaded on public pages)
+                    if (id.includes('tiptap') || id.includes('prosemirror')) {
+                        return 'tiptap';
+                    }
                     // Split Swiper (lazy loaded anyway)
                     if (id.includes('swiper')) {
                         return 'swiper';
+                    }
+                    // Lenis smooth scroll — deferred, loaded async
+                    if (id.includes('lenis')) {
+                        return 'lenis';
+                    }
+                    // Ziggy routes
+                    if (id.includes('ziggy')) {
+                        return 'ziggy';
                     }
                     // Other vendor modules
                     if (id.includes('node_modules')) {

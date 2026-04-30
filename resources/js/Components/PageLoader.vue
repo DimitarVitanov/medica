@@ -30,14 +30,14 @@ const finishLoading = () => {
 };
 
 onMounted(() => {
-    // Initial page load - same duration as navigation
+    // Brief branded flash on initial load (200ms — fast enough for Core Web Vitals)
     if (isFirstLoad.value) {
         startLoading();
-        setTimeout(finishLoading, 800);
+        setTimeout(finishLoading, 200);
         isFirstLoad.value = false;
     }
     
-    // Inertia navigation events
+    // Inertia navigation events for SPA navigation
     router.on('start', startLoading);
     router.on('finish', finishLoading);
 });

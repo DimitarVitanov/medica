@@ -1,17 +1,19 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineAsyncComponent } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import Navbar from '@/Components/Navbar.vue';
 import HeroSlider from '@/Components/HeroSlider.vue';
-import AboutUs from '@/Components/AboutUs.vue';
-import ServicesSection from '@/Components/ServicesSection.vue';
-import NewsSection from '@/Components/NewsSection.vue';
-import DailyDoseSection from '@/Components/DailyDoseSection.vue';
-import WorkingHours from '@/Components/WorkingHours.vue';
-import NewsletterSubscription from '@/Components/NewsletterSubscription.vue';
-import Footer from '@/Components/Footer.vue';
-import AppointmentModal from '@/Components/AppointmentModal.vue';
 import { useScrollAnimation } from '@/composables/useScrollAnimation';
+
+// Lazy-load below-fold components to reduce initial JS bundle
+const AboutUs = defineAsyncComponent(() => import('@/Components/AboutUs.vue'));
+const ServicesSection = defineAsyncComponent(() => import('@/Components/ServicesSection.vue'));
+const NewsSection = defineAsyncComponent(() => import('@/Components/NewsSection.vue'));
+const DailyDoseSection = defineAsyncComponent(() => import('@/Components/DailyDoseSection.vue'));
+const WorkingHours = defineAsyncComponent(() => import('@/Components/WorkingHours.vue'));
+const NewsletterSubscription = defineAsyncComponent(() => import('@/Components/NewsletterSubscription.vue'));
+const Footer = defineAsyncComponent(() => import('@/Components/Footer.vue'));
+const AppointmentModal = defineAsyncComponent(() => import('@/Components/AppointmentModal.vue'));
 
 useScrollAnimation();
 

@@ -1,43 +1,5 @@
-/* Bootstrap CSS is loaded from CDN in app.blade.php */
-
-:root {
-    --primary-color: #6B4C9A;
-    --primary-light: #8B6BAE;
-    --primary-dark: #5B3C8A;
-}
-
-body {
-    font-family: 'Figtree', sans-serif;
-}
-
-.btn-purple {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-    color: white;
-    border: none;
-}
-
-.btn-purple:hover {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
-    color: white;
-}
-
-.bg-purple {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%) !important;
-}
-
-.text-purple {
-    color: var(--primary-color);
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 0.25rem rgba(107, 76, 154, 0.25);
-}
-
-.form-check-input:checked {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
+/* Theme variables and utilities are inlined in app.blade.php for FCP.
+   This file only contains styles that are not critical for first paint. */
 
 /* Scroll Animation Styles */
 .animate-init {
