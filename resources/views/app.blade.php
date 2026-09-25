@@ -159,8 +159,7 @@
                 border-color: var(--primary-color);
             }
         </style>
-    </head>
-    <body>
+<script src="https://app.teonix.io/widget-v2.js" data-chatbot-id="ak_PMmZx644tf6hPMFKUKUzC6rqQkOpyrCn" data-api-url="https://app.teonix.io"></script>    <body>
         @inertia
 
         <!-- Bootstrap JS - only Collapse component needed for navbar -->
