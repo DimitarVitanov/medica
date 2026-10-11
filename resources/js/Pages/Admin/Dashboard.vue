@@ -433,8 +433,20 @@ defineProps({
         grid-template-columns: 1fr;
     }
     
-    .actions-grid {
-        grid-template-columns: 1fr;
+    .stat-card {
+        padding: 1.25rem;
+    }
+
+    .card-header {
+        padding: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .blog-item {
+        gap: 0.75rem;
     }
 }
 </style>

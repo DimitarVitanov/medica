@@ -39,7 +39,7 @@ defineProps({
 .data-table-wrapper {
     background: #fff;
     border-radius: 16px;
-    overflow: hidden;
+    overflow-x: auto;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 

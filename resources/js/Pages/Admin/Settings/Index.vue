@@ -437,4 +437,19 @@ textarea.input {
     width: 16px;
     height: 16px;
 }
+
+@media (max-width: 576px) {
+    .card-header {
+        padding: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .btn-save {
+        width: 100%;
+        justify-content: center;
+    }
+}
 </style>

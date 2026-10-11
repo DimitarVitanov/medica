@@ -282,4 +282,14 @@ const setLink = () => {
     float: left;
     height: 0;
 }
+
+@media (max-width: 768px) {
+    .editor-content {
+        max-height: 60vh;
+    }
+
+    .editor-content :deep(.tiptap) {
+        overflow-wrap: anywhere;
+    }
+}
 </style>

@@ -392,6 +392,7 @@ const deleteAnalysis = (id) => {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
+        padding: 1rem;
     }
 }
 </style>

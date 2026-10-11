@@ -369,6 +369,7 @@ const debouncedSave = debounce(saveTranslation, 800);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    min-width: 0;
 }
 
 .field-label {
@@ -387,6 +388,7 @@ const debouncedSave = debounce(saveTranslation, 800);
     border-radius: 8px;
     min-height: 42px;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .field-arrow {
@@ -429,6 +431,26 @@ const debouncedSave = debounce(saveTranslation, 800);
     
     .tabs {
         overflow-x: auto;
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
+    }
+
+    .locale-switch {
+        flex-wrap: wrap;
+    }
+
+    .item-header {
+        padding: 1rem;
+    }
+
+    .fields-grid {
+        padding: 1rem;
+    }
+
+    .empty-state {
+        padding: 3rem 1rem;
     }
     
     .field-row {

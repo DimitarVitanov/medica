@@ -205,5 +205,10 @@ const sectionIcons = {
     .sections-grid {
         grid-template-columns: 1fr;
     }
+
+    .section-card {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
 }
 </style>

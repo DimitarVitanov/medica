@@ -1,10 +1,19 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import FlashMessage from '@/Components/FlashMessage.vue';
 
 const sidebarCollapsed = ref(false);
 const mobileOpen = ref(false);
+
+// Lock page scroll behind the mobile drawer
+watch(mobileOpen, (open) => {
+    document.body.style.overflow = open ? 'hidden' : '';
+});
+
+onUnmounted(() => {
+    document.body.style.overflow = '';
+});
 
 const navItems = [
     { name: 'Контролна табла', href: '/admin', icon: 'dashboard', route: 'admin.dashboard' },
@@ -95,13 +104,13 @@ const logout = () => {
             <!-- Header -->
             <header class="header">
                 <div class="header-left">
-                    <button @click="mobileOpen = !mobileOpen" class="mobile-menu-btn mobile-only">
+                    <button @click="mobileOpen = !mobileOpen" class="mobile-menu-btn mobile-only" aria-label="Мени">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                     </button>
                     <slot name="header" />
                 </div>
                 <div class="header-right">
-                    <Link href="/" target="_blank" class="header-btn">
+                    <Link href="/" target="_blank" class="header-btn" title="Отвори сајт">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         <span>Отвори сајт</span>
                     </Link>
@@ -140,63 +149,65 @@ const logout = () => {
     transition: width 0.25s ease, transform 0.25s ease;
 }
 
-.sidebar.collapsed {
-    width: 76px;
-}
+@media (min-width: 1025px) {
+    .sidebar.collapsed {
+        width: 76px;
+    }
 
-.sidebar.collapsed .brand-name,
-.sidebar.collapsed .nav-text,
-.sidebar.collapsed .nav-label,
-.sidebar.collapsed .user-info {
-    display: none;
-}
+    .sidebar.collapsed .brand-name,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .nav-label,
+    .sidebar.collapsed .user-info {
+        display: none;
+    }
 
-.sidebar.collapsed .brand {
-    justify-content: center;
-    padding: 1.25rem 0.5rem;
-    position: relative;
-}
+    .sidebar.collapsed .brand {
+        justify-content: center;
+        padding: 1.25rem 0.5rem;
+        position: relative;
+    }
 
-.sidebar.collapsed .brand-link {
-    justify-content: center;
-}
+    .sidebar.collapsed .brand-link {
+        justify-content: center;
+    }
 
-.sidebar.collapsed .brand-icon {
-    width: 44px;
-    height: 44px;
-}
+    .sidebar.collapsed .brand-icon {
+        width: 44px;
+        height: 44px;
+    }
 
-.sidebar.collapsed .collapse-btn.collapsed-state {
-    display: flex;
-    position: absolute;
-    right: -14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    color: #667eea;
-}
+    .sidebar.collapsed .collapse-btn.collapsed-state {
+        display: flex;
+        position: absolute;
+        right: -14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 28px;
+        height: 28px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        color: #667eea;
+    }
 
-.sidebar.collapsed .nav-link {
-    justify-content: center;
-    padding: 0.75rem;
-}
+    .sidebar.collapsed .nav-link {
+        justify-content: center;
+        padding: 0.75rem;
+    }
 
-.sidebar.collapsed .sidebar-footer {
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 0.75rem 0.5rem;
-}
+    .sidebar.collapsed .sidebar-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 0.5rem;
+    }
 
-.sidebar.collapsed .user-card {
-    justify-content: center;
-}
+    .sidebar.collapsed .user-card {
+        justify-content: center;
+    }
 
-.sidebar.collapsed .logout-btn {
-    width: 100%;
+    .sidebar.collapsed .logout-btn {
+        width: 100%;
+    }
 }
 
 .sidebar-inner {
@@ -422,6 +433,7 @@ const logout = () => {
 /* ===== MAIN ===== */
 .main {
     flex: 1;
+    min-width: 0;
     margin-left: 260px;
     display: flex;
     flex-direction: column;
@@ -429,8 +441,10 @@ const logout = () => {
     transition: margin-left 0.25s ease;
 }
 
-.sidebar.collapsed ~ .main {
-    margin-left: 76px;
+@media (min-width: 1025px) {
+    .sidebar.collapsed ~ .main {
+        margin-left: 76px;
+    }
 }
 
 /* Header */
@@ -452,12 +466,27 @@ const logout = () => {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.header-left :deep(> div) {
+    flex: 1;
+    min-width: 0;
+}
+
+.header-left :deep(h1),
+.header-left :deep(h2),
+.header-left :deep(h5) {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .header-right {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
 }
 
 .header-btn {
@@ -498,6 +527,7 @@ const logout = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
 }
 
@@ -530,29 +560,120 @@ const logout = () => {
     .sidebar {
         transform: translateX(-100%);
         width: 260px;
+        max-width: 85vw;
     }
-    
+
     .sidebar.mobile-open {
         transform: translateX(0);
     }
-    
-    .sidebar.collapsed {
-        width: 260px;
-    }
-    
+
     .main {
         margin-left: 0;
     }
-    
-    .sidebar.collapsed ~ .main {
-        margin-left: 0;
-    }
-    
+
     .desktop-only { display: none; }
     .mobile-only { display: flex; }
-    
+
+    .header {
+        padding: 0.75rem 1rem;
+    }
+
     .content {
         padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        gap: 0.75rem;
+    }
+
+    .header-left {
+        gap: 0.75rem;
+    }
+
+    .header-left :deep(.page-title),
+    .header-left :deep(h2) {
+        font-size: 1.15rem;
+    }
+
+    .header-left :deep(h5) {
+        font-size: 1rem;
+    }
+
+    .header-left :deep(a.text-muted) {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    /* Icon-only "open site" button */
+    .header-btn {
+        padding: 0.625rem;
+    }
+
+    .header-btn span {
+        display: none;
+    }
+
+    /* Bootstrap pages: drop the extra gutter, the content padding is enough */
+    .content :deep(.container-fluid) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .content :deep(.card-body.p-4) {
+        padding: 1rem !important;
+    }
+
+    .content :deep(.form-card) {
+        padding: 1.25rem;
+    }
+
+    .content :deep(.form-row) {
+        gap: 0;
+    }
+
+    /* Tables keep readable columns and scroll sideways inside their wrapper */
+    .content :deep(.table-wrapper),
+    .content :deep(.table-responsive) {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .content :deep(.data-table),
+    .content :deep(.table-responsive > .table) {
+        min-width: 600px;
+    }
+
+    .content :deep(.data-table th),
+    .content :deep(.data-table td) {
+        padding: 0.75rem 0.875rem;
+    }
+
+    .content :deep(.pagination) {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 0.25rem;
+    }
+
+    /* 16px inputs stop iOS Safari from zooming the page on focus */
+    .content :deep(input:not([type="checkbox"]):not([type="radio"]):not([type="color"])),
+    .content :deep(select),
+    .content :deep(textarea) {
+        font-size: 16px;
+    }
+}
+
+/* Below Bootstrap's md breakpoint col-md-* stack; gutterless rows need vertical spacing */
+@media (max-width: 767.98px) {
+    .content :deep(.row:not([class*="g-"]) > [class*="col-md-"] + [class*="col-md-"]) {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-left :deep(.page-subtitle) {
+        display: none;
     }
 }
 </style>

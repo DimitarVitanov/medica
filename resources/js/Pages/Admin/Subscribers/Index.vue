@@ -34,8 +34,8 @@ const deleteSubscriber = (id) => {
         <template #header>
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h2 class="h4 mb-1 text-white">Претплатници на билтен</h2>
-                    <p class="text-white-50 mb-0 small">
+                    <h2 class="h4 mb-1 text-dark">Претплатници на билтен</h2>
+                    <p class="text-muted mb-0 small">
                         <span class="badge bg-success me-2">{{ activeCount }} активни</span>
                         Вкупно {{ totalCount }} претплатници
                     </p>

@@ -30,15 +30,15 @@ const deleteContact = () => {
     
     <AuthenticatedLayout>
         <template #header>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <div>
-                    <h2 class="h4 mb-1 text-white">{{ contact.subject }}</h2>
-                    <p class="text-white-50 mb-0 small">
+                    <h2 class="h4 mb-1 text-dark">{{ contact.subject }}</h2>
+                    <p class="text-muted mb-0 small">
                         Од: {{ contact.name }} &bull; {{ formatDate(contact.created_at) }}
                     </p>
                 </div>
                 <div class="d-flex gap-2">
-                    <Link href="/admin/contacts" class="btn btn-outline-light btn-sm">
+                    <Link href="/admin/contacts" class="btn btn-outline-secondary btn-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
                             <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
                         </svg>
@@ -55,13 +55,13 @@ const deleteContact = () => {
         </template>
         
         <div class="container-fluid py-4">
-            <div class="row">
+            <div class="row g-4">
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
                             <div class="mb-4 pb-3 border-bottom">
                                 <h5 class="mb-3">{{ contact.subject }}</h5>
-                                <div class="d-flex gap-4 text-muted small">
+                                <div class="d-flex flex-wrap column-gap-4 row-gap-2 text-muted small">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
@@ -139,5 +139,6 @@ const deleteContact = () => {
     font-size: 1rem;
     line-height: 1.7;
     color: #374151;
+    overflow-wrap: anywhere;
 }
 </style>
